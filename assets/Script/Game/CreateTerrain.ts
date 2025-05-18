@@ -18,44 +18,119 @@ export default class CreateTerrain extends cc.Component {
     waterPrefab: cc.Prefab = null;
     
     @property(Number)
-    terrainWidth: number = 100;
+    terrainWidth: number = 150;
 
     @property(Number)
-    terrainHeight: number = 100;
+    terrainHeight: number = 150;
 
     @property(Number)
     blockSize: number = 32;
 
     @property(Number)
-    scale: number = 10;
+    scale: number = 15;
+
+    @property(Number)
+    seed: number = 12345;
+
+    private altitudeGrid: number[][] = [];
+    private map : string[][] = [];
+    private riverStartX: number[] = [];
+    private riverStartY: number[] = [];
 
 
     start(): void {
-        // this.generateTerrain(12345); // Example seed
         this.mapGrid.setPosition(cc.v2(-this.terrainWidth * this.blockSize / 2, -this.terrainHeight * this.blockSize / 2));
-        this.generateTerrain(12345);
+        this.generateTerrain(this.seed);
     }
 
-    generateTerrain (seed : number) { //has called in gameController
-        const noise = new Noise(seed);
+    generateTerrain (seed : number) {
+        const altitudeNoise = new Noise(seed);
 
+        // 生成海拔
+        for(let x = 0; x < this.terrainWidth; x++) {
+            this.altitudeGrid[x] = [];
+            for(let y = 0; y < this.terrainHeight; y++) {
+                this.altitudeGrid[x][y] = altitudeNoise.perlin2(x / this.scale, y / this.scale);
+                console.log(this.altitudeGrid[x][y]);
+                if (this.altitudeGrid[x][y] > 0.5) {
+                    // 夠高處10%生出河流源頭
+                    if (Math.random() < 0.1) {
+                        this.riverStartX.push(x);
+                        this.riverStartY.push(y);
+                    }
+                }
+            }
+        }
+
+        // 生成地形
         for(let x = 0; x < this.terrainWidth; x++) {
             for(let y = 0; y < this.terrainHeight; y++) {
-                const value = noise.perlin2(x / this.scale, y / this.scale);
-                let blockType = 'tree'; // Default block type
-
-                if (value < -0.1) {
-                    blockType = 'grass';
-                } else if (value < 0.1) {
+                const altitude = this.altitudeGrid[x][y];
+                let blockType = 'grass';
+                if (altitude < -0.5) {
                     blockType = 'water';
-                } else if (value < 0.3) {
+                } else if (altitude < 0) {
+                    blockType = 'grass';
+                } else if (altitude < 0.4) {
                     blockType = 'stone';
+                } else {
+                    blockType = 'tree';
                 }
-
                 this.placeBlock(blockType, x * this.blockSize, y * this.blockSize);
             }
         }
 
+        // 目前效果不太好
+        // 從所有源頭生成河流
+        for (let i = 0; i < this.riverStartX.length; i++) {
+            const startX = this.riverStartX[i];
+            const startY = this.riverStartY[i];
+            this.generateRiver(startX, startY);
+        }
+    }
+
+    generateRiver (startX: number, startY: number) {
+        let x = startX;
+        let y = startY;
+        if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
+            return;
+        }
+        this.placeBlock('water', x * this.blockSize, y * this.blockSize);
+        this.placeBlock('water', x * this.blockSize, (y + 1) * this.blockSize);
+        this.placeBlock('water', x * this.blockSize, (y - 1) * this.blockSize);
+        this.placeBlock('water', (x + 1) * this.blockSize, y * this.blockSize);
+        this.placeBlock('water', (x - 1) * this.blockSize, y * this.blockSize);
+        this.placeBlock('water', (x + 1) * this.blockSize, (y + 1) * this.blockSize);
+        this.placeBlock('water', (x - 1) * this.blockSize, (y + 1) * this.blockSize);
+        this.placeBlock('water', (x + 1) * this.blockSize, (y - 1) * this.blockSize);
+        this.placeBlock('water', (x - 1) * this.blockSize, (y - 1) * this.blockSize);
+        let lowestAltitude = this.altitudeGrid[x][y];
+        let nextX = x;
+        let nextY = y;
+
+        if (this.altitudeGrid[x-1][y] < lowestAltitude) {
+            lowestAltitude = this.altitudeGrid[x-1][y];
+            nextX = x - 1;
+            nextY = y;
+        }
+        if (this.altitudeGrid[x+1][y] < lowestAltitude) {
+            lowestAltitude = this.altitudeGrid[x+1][y];
+            nextX = x + 1;
+            nextY = y;
+        }
+        if (this.altitudeGrid[x][y-1] < lowestAltitude) {
+            lowestAltitude = this.altitudeGrid[x][y-1];
+            nextX = x;
+            nextY = y - 1;
+        }
+        if (this.altitudeGrid[x][y+1] < lowestAltitude) {
+            lowestAltitude = this.altitudeGrid[x][y+1];
+            nextX = x;
+            nextY = y + 1;
+        }
+        if (nextX !== x || nextY !== y) {
+            this.generateRiver(nextX, nextY);
+        }
     }
 
     placeBlock (blockType: string, x: number, y: number) {
@@ -82,7 +157,6 @@ export default class CreateTerrain extends cc.Component {
         blockNode.parent = this.node; // Assuming this script is attached to the parent node
         blockNode.active = true;
     }
-
     
 
     // onLoad () {}

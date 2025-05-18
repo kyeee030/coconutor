@@ -542,10 +542,11 @@
     "waterPrefab": {
       "__uuid__": "d29a6a84-e839-4b68-a066-471479b9a284"
     },
-    "terrainWidth": 100,
-    "terrainHeight": 100,
+    "terrainWidth": 150,
+    "terrainHeight": 150,
     "blockSize": 32,
     "scale": 15,
+    "seed": 12345,
     "_id": "9fLFWj32RAZIu+UoMMtSz4"
   }
 ]

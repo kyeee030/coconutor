@@ -272,8 +272,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        0,
-        0,
+        -3200,
+        -3200,
         0,
         0,
         0,
@@ -542,11 +542,18 @@
     "waterPrefab": {
       "__uuid__": "d29a6a84-e839-4b68-a066-471479b9a284"
     },
-    "terrainWidth": 150,
-    "terrainHeight": 150,
+    "terrainWidth": 200,
+    "terrainHeight": 200,
     "blockSize": 32,
     "scale": 15,
-    "seed": 12345,
+    "seed": 1653146514651,
+    "seaLevel": -0.5,
+    "planeSize": 0.5,
+    "mountainSize": 0.3,
+    "biomeMixArea": 0.1,
+    "biomeMix": 0.3,
+    "riverProbability": 0.05,
+    "riverSpread": 0.5,
     "_id": "9fLFWj32RAZIu+UoMMtSz4"
   }
 ]

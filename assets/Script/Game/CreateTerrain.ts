@@ -73,10 +73,10 @@ export default class CreateTerrain extends cc.Component {
 
 
 
-    private altitudeGrid: number[][] = [];
-    private map : string[][] = [];
-    private riverStartX: number[] = [];
-    private riverStartY: number[] = [];
+    private _altitudeGrid: number[][] = [];
+    private _map : string[][] = [];
+    private _riverStartX: number[] = [];
+    private _riverStartY: number[] = [];
 
 
     start(): void {
@@ -89,15 +89,15 @@ export default class CreateTerrain extends cc.Component {
 
         // 生成海拔
         for(let x = 0; x < this.terrainWidth; x++) {
-            this.altitudeGrid[x] = [];
+            this._altitudeGrid[x] = [];
             for(let y = 0; y < this.terrainHeight; y++) {
-                this.altitudeGrid[x][y] = altitudeNoise.perlin2(x / this.scale, y / this.scale);
+                this._altitudeGrid[x][y] = altitudeNoise.perlin2(x / this.scale, y / this.scale);
                 // console.log(this.altitudeGrid[x][y]);
-                if (this.altitudeGrid[x][y] > 0.5) {
+                if (this._altitudeGrid[x][y] > 0.5) {
                     // 夠高處10%生出河流源頭
                     if (Math.random() < this.riverProbability) {
-                        this.riverStartX.push(x);
-                        this.riverStartY.push(y);
+                        this._riverStartX.push(x);
+                        this._riverStartY.push(y);
                     }
                 }
             }
@@ -105,9 +105,9 @@ export default class CreateTerrain extends cc.Component {
 
         // 生成地形
         for(let x = 0; x < this.terrainWidth; x++) {
-            this.map[x] = [];
+            this._map[x] = [];
             for(let y = 0; y < this.terrainHeight; y++) {
-                const altitude = this.altitudeGrid[x][y];
+                const altitude = this._altitudeGrid[x][y];
                 let blockType = 'grass'; // 預設為草地
                 if (altitude < this.seaLevel) {
                     blockType = 'water';
@@ -122,18 +122,18 @@ export default class CreateTerrain extends cc.Component {
                 } else {
                     blockType = 'stone';
                 }
-                this.map[x][y] = blockType;
+                this._map[x][y] = blockType;
                 this.placeBlock(blockType, x * this.blockSize, y * this.blockSize);
             }
         }
 
         // 目前效果不太好
         // 從所有源頭生成河流
-        console.log(this.riverStartX);
-        console.log(this.riverStartY);
-        for (let i = 0; i < this.riverStartX.length; i++) {
-            const startX = this.riverStartX[i];
-            const startY = this.riverStartY[i];
+        console.log(this._riverStartX);
+        console.log(this._riverStartY);
+        for (let i = 0; i < this._riverStartX.length; i++) {
+            const startX = this._riverStartX[i];
+            const startY = this._riverStartY[i];
             this.generateRiver(startX, startY);
         }
     }
@@ -209,13 +209,16 @@ export default class CreateTerrain extends cc.Component {
                     break; // 超出邊界
                 }
 
-                if (this.altitudeGrid[x][y] < -0.5) {
+                if (this._altitudeGrid[x][y] < -0.5) {
                     break; // 到達海平面
                 }
 
-                this.placeBlock('water', x * this.blockSize, y * this.blockSize);
+                if(this._map[x][y] != 'water') {
+                    this._map[x][y] = 'water';
+                    this.placeBlock('water', x * this.blockSize, y * this.blockSize);
+                }
 
-                let lowestAltitude = this.altitudeGrid[x][y];
+                let lowestAltitude = this._altitudeGrid[x][y];
                 let nextX = x;
                 let nextY = y;
 
@@ -230,23 +233,23 @@ export default class CreateTerrain extends cc.Component {
                     }
                 } else {
                     // 水往下流
-                    if (x + 1 < this.terrainWidth && this.altitudeGrid[x + 1][y] < lowestAltitude) {
-                        lowestAltitude = this.altitudeGrid[x + 1][y];
+                    if (x + 1 < this.terrainWidth && this._altitudeGrid[x + 1][y] < lowestAltitude) {
+                        lowestAltitude = this._altitudeGrid[x + 1][y];
                         nextX = x + 1;
                         nextY = y;
                     }
-                    if (x - 1 >= 0 && this.altitudeGrid[x - 1][y] < lowestAltitude) {
-                        lowestAltitude = this.altitudeGrid[x - 1][y];
+                    if (x - 1 >= 0 && this._altitudeGrid[x - 1][y] < lowestAltitude) {
+                        lowestAltitude = this._altitudeGrid[x - 1][y];
                         nextX = x - 1;
                         nextY = y;
                     }
-                    if (y + 1 < this.terrainHeight && this.altitudeGrid[x][y + 1] < lowestAltitude) {
-                        lowestAltitude = this.altitudeGrid[x][y + 1];
+                    if (y + 1 < this.terrainHeight && this._altitudeGrid[x][y + 1] < lowestAltitude) {
+                        lowestAltitude = this._altitudeGrid[x][y + 1];
                         nextX = x;
                         nextY = y + 1;
                     }
-                    if (y - 1 >= 0 && this.altitudeGrid[x][y - 1] < lowestAltitude) {
-                        lowestAltitude = this.altitudeGrid[x][y - 1];
+                    if (y - 1 >= 0 && this._altitudeGrid[x][y - 1] < lowestAltitude) {
+                        lowestAltitude = this._altitudeGrid[x][y - 1];
                         nextX = x;
                         nextY = y - 1;
                     }
@@ -293,6 +296,13 @@ export default class CreateTerrain extends cc.Component {
         blockNode.active = true;
     }
     
+    isWalkable (x: number, y: number) {
+        if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
+            return false; // 超出邊界
+        }
+        const blockType = this._map[x][y];
+        return blockType !== 'water' && blockType !== 'tree' && blockType !== ''; // 水和樹木不可通行
+    }
 
     // onLoad () {}
 

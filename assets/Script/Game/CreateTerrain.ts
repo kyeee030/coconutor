@@ -17,6 +17,9 @@ export default class CreateTerrain extends cc.Component {
     treePrefab: cc.Prefab = null;
     @property(cc.Prefab)
     waterPrefab: cc.Prefab = null;
+    @property(cc.Prefab)
+    orePrefab: cc.Prefab = null;
+
     // prefab
 
     @property(Number)
@@ -65,6 +68,9 @@ export default class CreateTerrain extends cc.Component {
     riverSpread: number = 0.5;
     // 河流擴散程度
 
+    @property(Number)
+    resourceDensity: number = 0.1;
+
 
 
     private altitudeGrid: number[][] = [];
@@ -106,13 +112,13 @@ export default class CreateTerrain extends cc.Component {
                 if (altitude < this.seaLevel) {
                     blockType = 'water';
                 } else if (altitude < this.seaLevel + this.planeSize) {
-                    blockType = 'grass';
+                    blockType = Math.random() < this.resourceDensity ? 'tree' : 'grass';
                 } else if (altitude < this.seaLevel + this.planeSize + this.mountainSize - this.biomeMixArea) {
                     blockType = Math.random() < this.biomeMix ? 'stone' : 'grass';
                 } else if (altitude < this.seaLevel + this.planeSize + this.mountainSize) {
                     blockType = Math.random() < this.biomeMix ? 'grass' : 'stone';
                 } else if (altitude < this.seaLevel + this.planeSize + this.mountainSize + this.biomeMixArea) {
-                    blockType = 'stone';
+                    blockType = Math.random() < this.resourceDensity ? 'ore' : 'stone';
                 } else {
                     blockType = 'stone';
                 }
@@ -194,69 +200,69 @@ export default class CreateTerrain extends cc.Component {
     // }
 
     generateRiver(startX: number, startY: number) {
-    try {
-        let x = startX;
-        let y = startY;
+        try {
+            let x = startX;
+            let y = startY;
 
-        while (true) {
-            if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
-                break; // 超出邊界
+            while (true) {
+                if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
+                    break; // 超出邊界
+                }
+
+                if (this.altitudeGrid[x][y] < -0.5) {
+                    break; // 到達海平面
+                }
+
+                this.placeBlock('water', x * this.blockSize, y * this.blockSize);
+
+                let lowestAltitude = this.altitudeGrid[x][y];
+                let nextX = x;
+                let nextY = y;
+
+                if (Math.random() < this.riverSpread) {
+                    // 隨機擴散
+                    const randomDirection = Math.floor(Math.random() * 4);
+                    switch (randomDirection) {
+                        case 0: nextX = x + 1; break; // 向右
+                        case 1: nextX = x - 1; break; // 向左
+                        case 2: nextY = y + 1; break; // 向上
+                        case 3: nextY = y - 1; break; // 向下
+                    }
+                } else {
+                    // 水往下流
+                    if (x + 1 < this.terrainWidth && this.altitudeGrid[x + 1][y] < lowestAltitude) {
+                        lowestAltitude = this.altitudeGrid[x + 1][y];
+                        nextX = x + 1;
+                        nextY = y;
+                    }
+                    if (x - 1 >= 0 && this.altitudeGrid[x - 1][y] < lowestAltitude) {
+                        lowestAltitude = this.altitudeGrid[x - 1][y];
+                        nextX = x - 1;
+                        nextY = y;
+                    }
+                    if (y + 1 < this.terrainHeight && this.altitudeGrid[x][y + 1] < lowestAltitude) {
+                        lowestAltitude = this.altitudeGrid[x][y + 1];
+                        nextX = x;
+                        nextY = y + 1;
+                    }
+                    if (y - 1 >= 0 && this.altitudeGrid[x][y - 1] < lowestAltitude) {
+                        lowestAltitude = this.altitudeGrid[x][y - 1];
+                        nextX = x;
+                        nextY = y - 1;
+                    }
+                }
+
+                if (nextX === x && nextY === y) {
+                    break;
+                }
+
+                x = nextX;
+                y = nextY;
             }
-
-            if (this.altitudeGrid[x][y] < -0.5) {
-                break; // 到達海平面
-            }
-
-            this.placeBlock('water', x * this.blockSize, y * this.blockSize);
-
-            let lowestAltitude = this.altitudeGrid[x][y];
-            let nextX = x;
-            let nextY = y;
-
-            if (Math.random() < this.riverSpread) {
-                // 隨機擴散
-                const randomDirection = Math.floor(Math.random() * 4);
-                switch (randomDirection) {
-                    case 0: nextX = x + 1; break; // 向右
-                    case 1: nextX = x - 1; break; // 向左
-                    case 2: nextY = y + 1; break; // 向上
-                    case 3: nextY = y - 1; break; // 向下
-                }
-            } else {
-                // 水往下流
-                if (x + 1 < this.terrainWidth && this.altitudeGrid[x + 1][y] < lowestAltitude) {
-                    lowestAltitude = this.altitudeGrid[x + 1][y];
-                    nextX = x + 1;
-                    nextY = y;
-                }
-                if (x - 1 >= 0 && this.altitudeGrid[x - 1][y] < lowestAltitude) {
-                    lowestAltitude = this.altitudeGrid[x - 1][y];
-                    nextX = x - 1;
-                    nextY = y;
-                }
-                if (y + 1 < this.terrainHeight && this.altitudeGrid[x][y + 1] < lowestAltitude) {
-                    lowestAltitude = this.altitudeGrid[x][y + 1];
-                    nextX = x;
-                    nextY = y + 1;
-                }
-                if (y - 1 >= 0 && this.altitudeGrid[x][y - 1] < lowestAltitude) {
-                    lowestAltitude = this.altitudeGrid[x][y - 1];
-                    nextX = x;
-                    nextY = y - 1;
-                }
-            }
-
-            if (nextX === x && nextY === y) {
-                break;
-            }
-
-            x = nextX;
-            y = nextY;
+        } catch (error) {
+            console.error('Error generating river:', error);
         }
-    } catch (error) {
-        console.error('Error generating river:', error);
     }
-}
 
     placeBlock (blockType: string, x: number, y: number) {
         let blockPrefab: cc.Prefab = null;
@@ -273,13 +279,17 @@ export default class CreateTerrain extends cc.Component {
             case 'water':
                 blockPrefab = this.waterPrefab;
                 break;
+            case 'ore':
+                blockPrefab = this.orePrefab;
+                break;
             default:
                 cc.error('Unknown block type:', blockType);
                 return;
         }
         const blockNode = cc.instantiate(blockPrefab);
         blockNode.setPosition(x, y);
-        blockNode.parent = this.node; // Assuming this script is attached to the parent node
+        // blockNode.opacity = 255 * ((this.altitudeGrid[Math.floor(x / this.blockSize)][Math.floor(y / this.blockSize)]) + 0.55); // 效果不好
+        blockNode.parent = this.mapGrid;
         blockNode.active = true;
     }
     

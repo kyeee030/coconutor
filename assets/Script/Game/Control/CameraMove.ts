@@ -23,20 +23,32 @@ export default class NewClass extends cc.Component {
     @property(Number)
     private moveSpeed: number = 10;
 
+    private _camera: cc.Camera = null;
     private _cameraRBody: cc.RigidBody = null;
     private _keyboardControl: any = null;
     private _moveDirection: Direction = Direction.NONE;
 
     onLoad () {
         this._cameraRBody = this.node.getComponent(cc.RigidBody);
-
+        this._camera = this.node.getComponent(cc.Camera);
         this._keyboardControl = this.node.getComponent("KeyboardControl");
+
         if (!this._keyboardControl) {
             cc.error("CameraMove: KeyboardControl component not found!");
             return;
         }
+        if (!this._cameraRBody) {
+            cc.error("CameraMove: RigidBody component not found!");
+            return;
+        }
+        if (!this._camera) {
+            cc.error("CameraMove: Camera component not found!");
+            return;
+        }
 
         cc.director.getPhysicsManager().enabled = true;
+
+        // cc.systemEvent.on('mousewheel', this.onMouseWheel, this); // 沒用
     }
 
     update (dt) {
@@ -89,6 +101,11 @@ export default class NewClass extends cc.Component {
         } else {
             this._moveDirection = Direction.NONE;
         }
+    }
+
+    onMouseWheel (event: cc.Event.EventMouse) {
+        const delta = event.getScrollY();
+        this._camera.zoomRatio += delta * 0.1;
     }
 
 }

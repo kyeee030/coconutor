@@ -302,14 +302,26 @@ export default class CreateTerrain extends cc.Component {
         }
         const blockType = this._map[x][y];
         return blockType !== 'water' && blockType !== 'tree' && blockType !== ''; // 水和樹木不可通行
-    }
+    } // 輸入網格座標
+
+    positionWalkable (x: number, y: number): boolean {
+        const posX = Math.floor(x / this.blockSize);
+        const posY = Math.floor(y / this.blockSize);
+        return this.isWalkable(posX, posY);
+    } // 輸入實際座標
 
     getBlockType (x: number, y: number): string {
         if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
             return 'OUT OF BORDER'; // 超出邊界
         }
         return this._map[x][y];
-    }
+    } // 輸入網格座標
+
+    positionBlockType (x: number, y: number): string {
+        const posX = Math.floor(x / this.blockSize);
+        const posY = Math.floor(y / this.blockSize);
+        return this.getBlockType(posX, posY);
+    } // 輸入實際座標
 
     // onLoad () {}
 

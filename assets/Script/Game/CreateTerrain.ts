@@ -75,6 +75,8 @@ export default class CreateTerrain extends cc.Component {
 
     private _altitudeGrid: number[][] = [];
     private _map : string[][] = [];
+    private _resourceGrid: string[][] = [];
+    private _resourceObjects: cc.Node[][] = [];
     private _riverStartX: number[] = [];
     private _riverStartY: number[] = [];
 
@@ -90,6 +92,9 @@ export default class CreateTerrain extends cc.Component {
         // 生成海拔
         for(let x = 0; x < this.terrainWidth; x++) {
             this._altitudeGrid[x] = [];
+            this._map[x] = [];
+            this._resourceGrid[x] = [];
+            this._resourceObjects[x] = [];
             for(let y = 0; y < this.terrainHeight; y++) {
                 this._altitudeGrid[x][y] = altitudeNoise.perlin2(x / this.scale, y / this.scale);
                 // console.log(this.altitudeGrid[x][y]);
@@ -105,25 +110,29 @@ export default class CreateTerrain extends cc.Component {
 
         // 生成地形
         for(let x = 0; x < this.terrainWidth; x++) {
-            this._map[x] = [];
             for(let y = 0; y < this.terrainHeight; y++) {
                 const altitude = this._altitudeGrid[x][y];
                 let blockType = 'grass'; // 預設為草地
+                let resource = null; // 資源類型
                 if (altitude < this.seaLevel) {
                     blockType = 'water';
                 } else if (altitude < this.seaLevel + this.planeSize) {
-                    blockType = Math.random() < this.resourceDensity ? 'tree' : 'grass';
+                    blockType = 'grass';
+                    resource = Math.random() < this.resourceDensity ? 'tree' : null; // 以resource density為機率生成樹木
                 } else if (altitude < this.seaLevel + this.planeSize + this.mountainSize - this.biomeMixArea) {
                     blockType = Math.random() < this.biomeMix ? 'stone' : 'grass';
                 } else if (altitude < this.seaLevel + this.planeSize + this.mountainSize) {
                     blockType = Math.random() < this.biomeMix ? 'grass' : 'stone';
                 } else if (altitude < this.seaLevel + this.planeSize + this.mountainSize + this.biomeMixArea) {
-                    blockType = Math.random() < this.resourceDensity ? 'ore' : 'stone';
+                    blockType = 'stone';
+                    resource = Math.random() < this.resourceDensity ? 'ore' : null; // 以resource density為機率生成礦石
                 } else {
                     blockType = 'stone';
                 }
                 this._map[x][y] = blockType;
-                this.placeBlock(blockType, x * this.blockSize, y * this.blockSize);
+                this._resourceGrid[x][y] = resource;
+                this.placeBlock(blockType, x, y);
+                this.placeResource(resource, x, y);
             }
         }
 
@@ -137,67 +146,6 @@ export default class CreateTerrain extends cc.Component {
             this.generateRiver(startX, startY);
         }
     }
-
-    // stack overflow
-    // generateRiver (startX: number, startY: number) {
-    //     try {
-    //         let x = startX;
-    //         let y = startY;
-
-    //         if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
-    //             return; // 超出邊界
-    //         }
-
-    //         if (this.altitudeGrid[x][y] < -0.5) {
-    //             return; // 到達海平面
-    //         }
-
-    //         this.placeBlock('water', x * this.blockSize, y * this.blockSize);
-
-    //         let lowestAltitude = this.altitudeGrid[x][y];
-    //         let nextX = x;
-    //         let nextY = y;
-            
-            
-    //         if (Math.random() < this.riverSpread) {
-    //             // 隨機擴散
-    //             const randomDirection = Math.floor(Math.random() * 4);
-    //             switch (randomDirection) {
-    //                 case 0: nextX = x + 1; break; // 向右
-    //                 case 1: nextX = x - 1; break; // 向左
-    //                 case 2: nextY = y + 1; break; // 向上
-    //                 case 3: nextY = y - 1; break; // 向下
-    //             }
-    //         } else {
-    //             // 水往下流
-    //             if(x + 1 < this.terrainWidth && this.altitudeGrid[x + 1][y] < lowestAltitude) {
-    //                 lowestAltitude = this.altitudeGrid[x + 1][y];
-    //                 nextX = x + 1;
-    //                 nextY = y;
-    //             }
-    //             if(x - 1 >= 0 && this.altitudeGrid[x - 1][y] < lowestAltitude) {
-    //                 lowestAltitude = this.altitudeGrid[x - 1][y];
-    //                 nextX = x - 1;
-    //                 nextY = y;
-    //             }
-    //             if(y + 1 < this.terrainHeight && this.altitudeGrid[x][y + 1] < lowestAltitude) {
-    //                 lowestAltitude = this.altitudeGrid[x][y + 1];
-    //                 nextX = x;
-    //                 nextY = y + 1;
-    //             }
-    //             if(y - 1 >= 0 && this.altitudeGrid[x][y - 1] < lowestAltitude) {
-    //                 lowestAltitude = this.altitudeGrid[x][y - 1];
-    //                 nextX = x;
-    //                 nextY = y - 1;
-    //             }
-    //         }
-    //         this.generateRiver(nextX, nextY);
-
-            
-    //     } catch (error) {
-    //         console.error('Error generating river:', error);
-    //     }
-    // }
 
     generateRiver(startX: number, startY: number) {
         try {
@@ -215,7 +163,7 @@ export default class CreateTerrain extends cc.Component {
 
                 if(this._map[x][y] != 'water') {
                     this._map[x][y] = 'water';
-                    this.placeBlock('water', x * this.blockSize, y * this.blockSize);
+                    this.placeBlock('water', x, y);
                 }
 
                 let lowestAltitude = this._altitudeGrid[x][y];
@@ -267,7 +215,33 @@ export default class CreateTerrain extends cc.Component {
         }
     }
 
+    placeResource (resourceType: string, x: number, y: number) {
+        if(!resourceType) return;
+
+        let resourcePrefab: cc.Prefab = null;
+        switch (resourceType) {
+            case 'tree':
+                resourcePrefab = this.treePrefab;
+                break;
+            case 'ore':
+                resourcePrefab = this.orePrefab;
+                break;
+            default:
+                cc.error('Unknown resource type:', resourceType);
+                return;
+        }
+        const resourceNode = cc.instantiate(resourcePrefab);
+        resourceNode.setPosition(x * this.blockSize, y * this.blockSize);
+        resourceNode.parent = this.mapGrid;
+        resourceNode.active = true;
+        this._resourceObjects[x][y] = resourceNode; // 儲存資源物件
+    }
+
     placeBlock (blockType: string, x: number, y: number) {
+        if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
+            cc.error('Block position out of bounds:', x, y);
+            return; // 超出邊界
+        }
         let blockPrefab: cc.Prefab = null;
         switch (blockType) {
             case 'grass':
@@ -290,7 +264,7 @@ export default class CreateTerrain extends cc.Component {
                 return;
         }
         const blockNode = cc.instantiate(blockPrefab);
-        blockNode.setPosition(x, y);
+        blockNode.setPosition(x * this.blockSize, y * this.blockSize);
         // blockNode.opacity = 255 * ((this.altitudeGrid[Math.floor(x / this.blockSize)][Math.floor(y / this.blockSize)]) + 0.55); // 效果不好
         blockNode.parent = this.mapGrid;
         blockNode.active = true;

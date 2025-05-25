@@ -304,6 +304,13 @@ export default class CreateTerrain extends cc.Component {
         return blockType !== 'water' && blockType !== 'tree' && blockType !== ''; // 水和樹木不可通行
     }
 
+    getBlockType (x: number, y: number): string {
+        if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
+            return 'OUT OF BORDER'; // 超出邊界
+        }
+        return this._map[x][y];
+    }
+
     // onLoad () {}
 
     // start () {}

@@ -230,7 +230,7 @@
       "a": 255
     },
     "_depth": -1,
-    "_zoomRatio": 0.75,
+    "_zoomRatio": 1,
     "_targetTexture": null,
     "_fov": 60,
     "_orthoSize": 10,

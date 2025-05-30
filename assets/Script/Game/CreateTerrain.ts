@@ -87,6 +87,8 @@ export default class CreateTerrain extends cc.Component {
     }
 
     generateTerrain (seed : number) {
+        console.log('Generating terrain with seed:', seed);
+
         const altitudeNoise = new Noise(seed);
 
         // 生成海拔

@@ -3,6 +3,7 @@ import TimeSystem from "./Environment/TimeSystem";
 import { IncidentType } from "./Environment/IncidentSystem";
 import IncidentSystem from "./Environment/IncidentSystem";
 import InfoManager from "./UI/InfoManager";
+import Cursor from "./UI/GameTools/cursor";
 
 const {ccclass, property} = cc._decorator;
 
@@ -22,6 +23,12 @@ export default class GameController extends cc.Component {
     @property(cc.Node)
     InfoManager: cc.Node = null;
 
+    @property(cc.Node)
+    cursorNode: cc.Node = null;
+
+    @property(cc.Button)
+    BuildingButton: cc.Button = null;
+
 
     // system components
     public timeSystem: TimeSystem;
@@ -31,6 +38,7 @@ export default class GameController extends cc.Component {
     private gameTime: number = 0;
     private incident : IncidentType = IncidentType.NONE;
     private infoManager: InfoManager = null;
+    private buildingMode: boolean = false;
 
     //====== System Callback==========//
     onLoad(){}
@@ -49,6 +57,8 @@ export default class GameController extends cc.Component {
 
     // ====== Private Methods ========== //
     private init () {
+
+        // get required components
         this.infoManager = this.InfoManager.getComponent(InfoManager);
         this.timeSystem = this.node.getComponent(TimeSystem);
         this.terrain = this.node.getComponent(CreateTerrain);
@@ -58,10 +68,30 @@ export default class GameController extends cc.Component {
             return;
         }
 
+
+        // start systems
         this.timeSystem.start();
         this.terrain.start();
         this.incidentSystem.start();
         console.log("GameController initialized with TimeSystem and CreateTerrain.");
+
+        // add event listeners
+        this.BuildingButton.node.on('click', this.updateBuildingMode, this);
+        // initialize local variables
+        this.gameTime = 0;
+        this.incident = IncidentType.NONE;
+        this.infoManager.updateWavesLabel(0);
+        this.infoManager.updateDay(this.timeSystem.getCurrentTimeState());
+        this.infoManager.updateGameTime(this.gameTime);
+        this.infoManager.updateIncident(this.incident);
+        this.buildingMode = false;
+    }
+
+    private updateBuildingMode() {
+        this.buildingMode = !this.buildingMode;
+        if (this.buildingMode) {
+            this.cursorNode.getComponent(Cursor).enterBuildingMode();
+        }
     }
 
     private updateIncidentSystem(dt : number){

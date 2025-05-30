@@ -20,10 +20,7 @@
         "__id__": 11
       },
       {
-        "__id__": 12
-      },
-      {
-        "__id__": 13
+        "__id__": 16
       }
     ],
     "_active": true,
@@ -405,7 +402,20 @@
     },
     "_children": [],
     "_active": true,
-    "_components": [],
+    "_components": [
+      {
+        "__id__": 12
+      },
+      {
+        "__id__": 13
+      },
+      {
+        "__id__": 14
+      },
+      {
+        "__id__": 15
+      }
+    ],
     "_prefab": null,
     "_opacity": 255,
     "_color": {
@@ -453,6 +463,83 @@
     "_groupIndex": 0,
     "groupIndex": 0,
     "_id": "95C1H6z8tD8ZkVdLP/6DND"
+  },
+  {
+    "__type__": "c3571a3LepMEJbOkSV3hLlz",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 11
+    },
+    "_enabled": true,
+    "mapGrid": {
+      "__id__": 8
+    },
+    "grassPrefab": {
+      "__uuid__": "67b31dc3-f27b-48f5-ac49-31b87d9be65d"
+    },
+    "stonePrefab": {
+      "__uuid__": "86b39637-7f57-433a-8474-58d19d887bea"
+    },
+    "treePrefab": {
+      "__uuid__": "59adacbb-fd9e-466a-82f1-792110c3dd9d"
+    },
+    "waterPrefab": {
+      "__uuid__": "d29a6a84-e839-4b68-a066-471479b9a284"
+    },
+    "orePrefab": {
+      "__uuid__": "993c600b-4e80-49bc-b1d7-ac97b935851f"
+    },
+    "terrainWidth": 150,
+    "terrainHeight": 150,
+    "blockSize": 32,
+    "scale": 15,
+    "seed": 12345,
+    "seaLevel": -0.5,
+    "planeSize": 0.5,
+    "mountainSize": 0.5,
+    "biomeMixArea": 0.05,
+    "biomeMix": 0.3,
+    "riverProbability": 0.3,
+    "riverSpread": 0.5,
+    "resourceDensity": 0.1,
+    "_id": "e1UKi3y7JJe5xBv42smkni"
+  },
+  {
+    "__type__": "f98e97zPipPFbVSx+mOQDMC",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 11
+    },
+    "_enabled": true,
+    "GameDuration": 300,
+    "_id": "c9sZAGCKFP5K2tGuU1rzhH"
+  },
+  {
+    "__type__": "52139c4BkBPXKWbDgrUmb6U",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 11
+    },
+    "_enabled": true,
+    "timeInterval": 5,
+    "dayTime": 100,
+    "nightTime": 100,
+    "_id": "10wvP4R/lKqqjIv6hZAoJ8"
+  },
+  {
+    "__type__": "1321e2nhb1AXap5VssS69hk",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 11
+    },
+    "_enabled": true,
+    "incidentInterval": 10,
+    "incidentRate": 0.1,
+    "_id": "34NTc30H1B1p68SZ0cA6fb"
   },
   {
     "__type__": "cc.Node",
@@ -511,108 +598,5 @@
     "_groupIndex": 0,
     "groupIndex": 0,
     "_id": "acjThx4OZOnLZXkn1EK3Ty"
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "TerrainGenerator",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 1
-    },
-    "_children": [],
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 14
-      }
-    ],
-    "_prefab": null,
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
-    },
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_trs": {
-      "__type__": "TypedArray",
-      "ctor": "Float64Array",
-      "array": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        1,
-        1
-      ]
-    },
-    "_eulerAngles": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
-    "_id": "aaNNxwIudCT7Dolx4cWPFN"
-  },
-  {
-    "__type__": "c3571a3LepMEJbOkSV3hLlz",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 13
-    },
-    "_enabled": true,
-    "mapGrid": {
-      "__id__": 8
-    },
-    "grassPrefab": {
-      "__uuid__": "67b31dc3-f27b-48f5-ac49-31b87d9be65d"
-    },
-    "stonePrefab": {
-      "__uuid__": "86b39637-7f57-433a-8474-58d19d887bea"
-    },
-    "treePrefab": {
-      "__uuid__": "59adacbb-fd9e-466a-82f1-792110c3dd9d"
-    },
-    "waterPrefab": {
-      "__uuid__": "d29a6a84-e839-4b68-a066-471479b9a284"
-    },
-    "orePrefab": {
-      "__uuid__": "993c600b-4e80-49bc-b1d7-ac97b935851f"
-    },
-    "terrainWidth": 200,
-    "terrainHeight": 200,
-    "blockSize": 32,
-    "scale": 40,
-    "seed": 1653146514651,
-    "seaLevel": -0.5,
-    "planeSize": 0.5,
-    "mountainSize": 0.3,
-    "biomeMixArea": 0.1,
-    "biomeMix": 0.3,
-    "riverProbability": 0.05,
-    "riverSpread": 0.8,
-    "resourceDensity": 0.1,
-    "_id": "9fLFWj32RAZIu+UoMMtSz4"
   }
 ]

@@ -1,11 +1,14 @@
 import CreateTerrain from "./CreateTerrain";
+import TimeSystem from "./Environment/TimeSystem";
+import { IncidentType } from "./Environment/IncidentSystem";
+import IncidentSystem from "./Environment/IncidentSystem";
 
 const {ccclass, property} = cc._decorator;
 
 export enum GameState {
-    PREPARATION = 0,
-    DAY = 1,
-    NIGHT = 2,
+    INIT = 0,
+    DEFFENSING = 1,
+    BUILDING = 2,
     ENDING = 3
 }
 
@@ -13,80 +16,75 @@ export enum GameState {
 export default class GameController extends cc.Component {
 
     @property
-    timer: number;
+    GameDuration: number = 300;
 
-    preStatusTime: number;
 
-    @property
-    gameState: GameState;
+    // system components
+    public timeSystem: TimeSystem;
+    public terrain: CreateTerrain;
+    public incidentSystem: IncidentSystem;
 
-    @property
-    dayTime: number;
+    private gameTime: number = 0;
+    private incident : IncidentType = IncidentType.NONE;
 
-    preparationTime: number;
-
+    //====== System Callback==========//
+    onLoad(){}
+    
 
     start () {
         this.init();
     }
 
-    init () {
-        this.schedule(this.timerCallBack, 1)
-        this.timer = 0;
-        this.preStatusTime = 0;
-        this.gameState = GameState.PREPARATION;
-        this.dayTime = (this.dayTime==null) ? 10 : this.dayTime;
-        this.preparationTime = 3;
-        CreateTerrain.generateTerrain();
+    update(dt: number){
+        this.updateGameTime(dt);
+        this.updateIncidentSystem(dt);
     }
 
-    timerCallBack () { //timer
-        this.timer +=1;
-        switch (this.gameState) {
-            case GameState.PREPARATION:
-                if (this.timer - this.preStatusTime == this.preparationTime)
-                    this.gameState = GameState.DAY;
-            break;
-            case GameState.DAY:
-                if (this.timer - this.preStatusTime == this.dayTime)
-                    this.gameState = GameState.NIGHT;
-            break;
-            case GameState.NIGHT:
-                if (this.timer - this.preStatusTime == this.dayTime)
-                    this.gameState = GameState.DAY;
-            break;
-            default:
-            break;
+
+    // ====== Private Methods ========== //
+    private init () {
+        this.timeSystem = this.node.getComponent(TimeSystem);
+        this.terrain = this.node.getComponent(CreateTerrain);
+        this.incidentSystem = this.node.getComponent(IncidentSystem);
+        if (!this.timeSystem || !this.terrain || !this.incidentSystem) {
+            console.error("GameController: Missing required components (TimeSystem or CreateTerrain)");
+            return;
+        }
+
+        this.timeSystem.start();
+        this.terrain.start();
+        this.incidentSystem.start();
+        console.log("GameController initialized with TimeSystem and CreateTerrain.");
+    }
+
+    private updateIncidentSystem(dt : number){
+        this.incidentSystem.updateIncidentSystem(dt);
+        this.incident = this.incidentSystem.getCurrentIncident();
+        if (this.incident !== IncidentType.NONE) {
+            console.log("Current incident: " + IncidentType[this.incident]);
         }
     }
 
-    // update (dt) {}
-}
+    private updateGameTime(dt: number) {
+        this.timeSystem.updateGameTime(dt);
+        this.gameTime = this.timeSystem.getGameTime();
+        if (this.gameTime >= this.GameDuration) {
+            console.log("Game duration reached. Ending game.");
+            this.endGame();
+        }
+    }
 
-//
-//                       _oo0oo_
-//                      o8888888o
-//                      88" . "88
-//                      (| -_- |)
-//                      0\  =  /0
-//                    ___/`---'\___
-//                  .' \\|     |// '.
-//                 / \\|||  :  |||// \
-//                / _||||| -:- |||||- \
-//               |   | \\\  -  /// |   |
-//               | \_|  ''\---/''  |_/ |
-//               \  .-\__  '-'  ___/-. /
-//             ___'. .'  /--.--\  `. .'___
-//          ."" '<  `.___\_<|>_/___.' >' "".
-//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//         \  \ `_.   \_ __\ /__ _/   .-` /  /
-//     =====`-.____`.___ \_____/___.-`___.-'=====
-//                       `=---='
-//
-//
-//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-//               佛祖保佑         永无BUG
-//
-//
-//
+    private endGame(){
+        console.log("Ending game...");
+    }
+    
+    // Public API ========== //
+    public getGameTime(): number {
+        return this.gameTime;
+    }
+
+    public callEndTime(){
+        this.endGame();
+    }
+
+}

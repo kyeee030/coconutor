@@ -2,6 +2,7 @@ import CreateTerrain from "./CreateTerrain";
 import TimeSystem from "./Environment/TimeSystem";
 import { IncidentType } from "./Environment/IncidentSystem";
 import IncidentSystem from "./Environment/IncidentSystem";
+import InfoManager from "./UI/InfoManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -18,6 +19,9 @@ export default class GameController extends cc.Component {
     @property
     GameDuration: number = 300;
 
+    @property(cc.Node)
+    InfoManager: cc.Node = null;
+
 
     // system components
     public timeSystem: TimeSystem;
@@ -26,6 +30,7 @@ export default class GameController extends cc.Component {
 
     private gameTime: number = 0;
     private incident : IncidentType = IncidentType.NONE;
+    private infoManager: InfoManager = null;
 
     //====== System Callback==========//
     onLoad(){}
@@ -38,11 +43,13 @@ export default class GameController extends cc.Component {
     update(dt: number){
         this.updateGameTime(dt);
         this.updateIncidentSystem(dt);
+        this.updateUI();
     }
 
 
     // ====== Private Methods ========== //
     private init () {
+        this.infoManager = this.InfoManager.getComponent(InfoManager);
         this.timeSystem = this.node.getComponent(TimeSystem);
         this.terrain = this.node.getComponent(CreateTerrain);
         this.incidentSystem = this.node.getComponent(IncidentSystem);
@@ -72,6 +79,13 @@ export default class GameController extends cc.Component {
             console.log("Game duration reached. Ending game.");
             this.endGame();
         }
+    }
+
+    private updateUI() {
+        this.infoManager.updateWavesLabel(this.timeSystem.getWaveCount());
+        this.infoManager.updateDay(this.timeSystem.getCurrentTimeState());
+        this.infoManager.updateGameTime(this.gameTime);
+        this.infoManager.updateIncident(this.incident);
     }
 
     private endGame(){

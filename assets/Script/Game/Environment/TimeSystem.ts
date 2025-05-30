@@ -19,20 +19,25 @@ export default class TimeSystem extends cc.Component {
 
     private timeState: TimeState = TimeState.DAY;
     private gameTime: number = 0;
+    private waveCount: number = 0;
 
     onLoad(){
         this.gameTime = 0;
+        this.waveCount = 0;
         this.timeState = TimeState.DAY;
     }
 
     start(){
         this.gameTime = 0;
+        this.waveCount = 0;
+        this.timeState = TimeState.DAY;
     }
 
     private updateTimeStateMachine() {
         if( this.timeState === TimeState.DAY && this.gameTime >= this.dayTime) {
             this.gameTime = 0;
             this.timeState = TimeState.NIGHT;
+            this.waveCount++;
             console.log("Transitioning to NIGHT");
         }
         else if(this.timeState === TimeState.NIGHT && this.gameTime >= this.nightTime) {
@@ -53,12 +58,16 @@ export default class TimeSystem extends cc.Component {
     }
 
     public getGameTime(): number{
-        return this.gameTime;
+        return Math.floor(this.gameTime);
     }
 
     public updateGameTime(dt: number){
         this.gameTime += dt;
         this.updateTimeStateMachine();
+    }
+
+    public getWaveCount(): number {
+        return this.waveCount;
     }
 
 }

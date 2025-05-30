@@ -21,7 +21,7 @@ export default class InfoManager extends cc.Component {
     
     public updateWavesLabel(waves: number): void {
         if (this.waveLabel) {
-            this.waveLabel.string = `Wave: ${waves}`;
+            this.waveLabel.string = `${waves}`;
         } else {
             console.warn("waveLabel is not set!");
         }

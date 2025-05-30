@@ -1,9 +1,9 @@
 import CreateTerrain from "./CreateTerrain";
-import TimeSystem from "./Environment/TimeSystem";
+import TimeSystem, { TimeState } from "./Environment/TimeSystem";
 import { IncidentType } from "./Environment/IncidentSystem";
 import IncidentSystem from "./Environment/IncidentSystem";
 import InfoManager from "./UI/InfoManager";
-import Cursor from "./UI/GameTools/cursor";
+import Cursor, { CursorMode } from "./UI/GameTools/cursor";
 
 const {ccclass, property} = cc._decorator;
 
@@ -52,6 +52,7 @@ export default class GameController extends cc.Component {
         this.updateGameTime(dt);
         this.updateIncidentSystem(dt);
         this.updateUI();
+        this.updateEnemy();
     }
 
 
@@ -77,6 +78,8 @@ export default class GameController extends cc.Component {
 
         // add event listeners
         this.BuildingButton.node.on('click', this.updateBuildingMode, this);
+        cc.systemEvent.on('building-position', this.onBuildingPlaced, this);
+
         // initialize local variables
         this.gameTime = 0;
         this.incident = IncidentType.NONE;
@@ -88,11 +91,12 @@ export default class GameController extends cc.Component {
     }
 
     private updateBuildingMode() {
-        this.buildingMode = !this.buildingMode;
-        if (this.buildingMode) {
-            this.cursorNode.getComponent(Cursor).enterBuildingMode();
+        const cursor = this.cursorNode.getComponent(Cursor);
+        if(cursor.getCurrentMode() === CursorMode.NORMAL){
+            this.cursorNode.getComponent(Cursor).changeState(CursorMode.BUILDING);
         }
     }
+
 
     private updateIncidentSystem(dt : number){
         this.incidentSystem.updateIncidentSystem(dt);
@@ -116,6 +120,25 @@ export default class GameController extends cc.Component {
         this.infoManager.updateDay(this.timeSystem.getCurrentTimeState());
         this.infoManager.updateGameTime(this.gameTime);
         this.infoManager.updateIncident(this.incident);
+    }
+
+    private updateEnemy() {
+        if(this.timeSystem.getCurrentTimeState() === TimeState.NIGHT) {
+            // TODO1: call enemy start
+            console.log("start enemy attack");
+            this.callEnemy();
+        }
+    }
+
+    private callEnemy(){
+        // TODO2: call your generate function, and store the enemy object tag or access in gameController.
+        console.log("enemy attack from the boundry");
+    }
+
+    private onBuildingPlaced(event : cc.Event.EventCustom) {
+        const position = event.getUserData();
+        // TODO3: call your building function with parameter position.x and position.y
+        console.log(`the position get from cursor.ts:  ${position.x}, ${position.y}`);
     }
 
     private endGame(){

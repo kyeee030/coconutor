@@ -38,15 +38,15 @@ export default class IncidentSystem extends cc.Component {
             switch (this.currentIncident) {
                 case IncidentType.FIRE:
                     // Handle fire incident logic here
-                    console.log("Handling fire incident...");
+                    // console.log("Handling fire incident...");
                     break;
                 case IncidentType.FLOOD:
                     // Handle flood incident logic here
-                    console.log("Handling flood incident...");
+                    // console.log("Handling flood incident...");
                     break;
                 case IncidentType.EARTHQUAKE:
                     // Handle earthquake incident logic here
-                    console.log("Handling earthquake incident...");
+                    // console.log("Handling earthquake incident...");
                     break;
                 case IncidentType.NONE:
                 default:
@@ -58,7 +58,7 @@ export default class IncidentSystem extends cc.Component {
         private checkForIncident() {
             if (Math.random() < this.incidentRate) {
                 this.currentIncident = this.generateRandomIncident();
-                console.log("Incident occurred: " + IncidentType[this.currentIncident]);
+                // console.log("Incident occurred: " + IncidentType[this.currentIncident]);
                 // Here you can trigger the incident handling logic
             } else {
                 this.currentIncident = IncidentType.NONE;

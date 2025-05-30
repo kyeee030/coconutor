@@ -34,11 +34,11 @@ class NormalState extends CursorState {
     }
 
     onMouseMove(event: cc.Event.EventMouse): void {
-        const mousePos = event.getLocation();
-        const worldPos = this.cursor.cursorNode.parent.convertToNodeSpaceAR(mousePos);
-        this.cursor.mouse_x = worldPos.x;
-        this.cursor.mouse_y = worldPos.y;
-        this.cursor.cursorNode.setPosition(worldPos);
+        // const mousePos = event.getLocation();
+        // const worldPos = this.cursor.cursorNode.parent.convertToNodeSpaceAR(mousePos);
+        // this.cursor.mouse_x = worldPos.x;
+        // this.cursor.mouse_y = worldPos.y;
+        // this.cursor.cursorNode.setPosition(worldPos);
     }
 
     onMouseDown(event: cc.Event.EventMouse): void {
@@ -48,50 +48,56 @@ class NormalState extends CursorState {
 
 // Building cursor state
 class BuildingState extends CursorState {
-    private buildingPreview: cc.Node = null;
 
     enter(): void {
-        // Create preview block
-        if (this.cursor.canBuildBlock) {
-            this.buildingPreview = cc.instantiate(this.cursor.canBuildBlock);
-            this.cursor.node.parent.addChild(this.buildingPreview);
-            
-            // Set initial position to current mouse position
-            this.buildingPreview.setPosition(this.cursor.mouse_x, this.cursor.mouse_y);
-            cc.systemEvent.on(cc.Node.EventType.MOUSE_MOVE, this.onMouseMove, this);
-        }
+        cc.systemEvent.on(cc.Node.EventType.MOUSE_MOVE, this.onMouseMove, this);
     }
 
     exit(): void {
         // Remove preview
         cc.systemEvent.off(cc.Node.EventType.MOUSE_MOVE, this.onMouseMove, this);
-        if (this.buildingPreview) {
-            this.buildingPreview.destroy();
-            this.buildingPreview = null;
-        }
     }
 
     onMouseMove(event: cc.Event.EventMouse): void {
-        const mousePos = event.getLocation();
-        const worldPos = this.cursor.cursorNode.parent.convertToNodeSpaceAR(mousePos);
-        this.cursor.mouse_x = worldPos.x;
-        this.cursor.mouse_y = worldPos.y;
-        this.cursor.cursorNode.setPosition(worldPos);
-        console.log(`BuildingState: Mouse moved to (${worldPos.x}, ${worldPos.y})`);
-        // Update preview position
-        if (this.buildingPreview) {
-            this.buildingPreview.setPosition(worldPos);
-        }
+        // Get screen position
+        const screenPos = event.getLocation();
+        
+        // Convert to world position (relative to canvas)
+        const worldPos = this.cursor.node.parent.convertToNodeSpaceAR(screenPos);
+        
+        // Apply offsets
+        this.cursor.mouse_x = worldPos.x + this.cursor.mouse_x_offset;
+        this.cursor.mouse_y = worldPos.y + this.cursor.mouse_y_offset;
+        
+        // Update cursor position
+        this.cursor.cursorNode.setPosition(this.cursor.mouse_x, this.cursor.mouse_y);
     }
 
     onMouseDown(event: cc.Event.EventMouse): void {
+        // Get screen position
+        const screenPos = event.getLocation();
+        
+        // Convert to world position
+        const worldPos = this.cursor.node.parent.convertToNodeSpaceAR(screenPos);
+        
+        // Apply offsets (same as in onMouseMove)
+        const buildingX = worldPos.x + this.cursor.mouse_x_offset;
+        const buildingY = worldPos.y + this.cursor.mouse_y_offset;
+        
+        // Emit an event to notify GameController
+        const buildEvent = new cc.Event.EventCustom('building-position', true);
+        buildEvent.setUserData({x: buildingX, y: buildingY});
+        cc.systemEvent.dispatchEvent(buildEvent);
+        
         // Place building at current position
         const building = cc.instantiate(this.cursor.canBuildBlock);
         this.cursor.node.parent.addChild(building);
-        building.setPosition(this.cursor.mouse_x, this.cursor.mouse_y);
+        building.setPosition(buildingX, buildingY);
         
         // Return to normal state
+        console.log(`BuildingState: Placed building at (${buildingX}, ${buildingY})`);
         this.cursor.changeState(CursorMode.NORMAL);
+        console.log("BuildingState: Changed to NORMAL state");
     }
 }
 
@@ -106,6 +112,12 @@ export default class Cursor extends cc.Component {
 
     @property(cc.Prefab)
     cannotBuildBlock: cc.Prefab = null;
+
+    @property(cc.Integer)
+    mouse_x_offset: number = 0;
+
+    @property(cc.Integer)
+    mouse_y_offset: number = 0;
 
     // Public properties for use by states
     public mouse_x: number = 0;
@@ -133,6 +145,17 @@ export default class Cursor extends cc.Component {
         this.node.off(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
     }
 
+    public getCurrentMode(): CursorMode {
+        // Find which mode corresponds to the current state
+        let foundMode: CursorMode = CursorMode.NORMAL;
+        this.states.forEach((state, mode) => {
+            if (state === this.currentState) {
+                foundMode = mode;
+            }
+        });
+        return foundMode;
+    }
+
     // Method to change the current state
     public changeState(newMode: CursorMode): void {
         // Exit current state if it exists
@@ -147,11 +170,6 @@ export default class Cursor extends cc.Component {
         } else {
             console.error(`No state found for mode: ${newMode}`);
         }
-    }
-
-    // Public method to enter building mode
-    public enterBuildingMode(): void {
-        this.changeState(CursorMode.BUILDING);
     }
 
     // Event handlers that delegate to current state

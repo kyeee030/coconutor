@@ -17,7 +17,7 @@ enum Direction {
 }
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class CameraMove extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     @property(Number)

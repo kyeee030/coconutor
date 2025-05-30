@@ -37,7 +37,7 @@ export default class CreateTerrain extends cc.Component {
     // 地形規模
 
     @property(Number)
-    seed: number = 12345;
+    seed: number = -1;
     // 隨機種子
 
     // **以下參數皆位在+-1之間，主要分布於+-0.5，<-0.5或>0.5的很少出現**
@@ -83,13 +83,15 @@ export default class CreateTerrain extends cc.Component {
 
     start(): void {
         this.mapGrid.setPosition(cc.v2(-this.terrainWidth * this.blockSize / 2, -this.terrainHeight * this.blockSize / 2));
-        this.generateTerrain(this.seed);
+        this.generateTerrain();
     }
 
-    generateTerrain (seed : number) {
-        console.log('Generating terrain with seed:', seed);
+    generateTerrain () {
+        const randomSeed = this.seed >= 0 ? this.seed : Math.floor(Math.random() * 1000000);
 
-        const altitudeNoise = new Noise(seed);
+        const altitudeNoise = new Noise(randomSeed);
+        
+        console.log('Generating terrain with seed:', randomSeed);
 
         // 生成海拔
         for(let x = 0; x < this.terrainWidth; x++) {

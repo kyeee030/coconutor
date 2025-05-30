@@ -138,6 +138,10 @@ export default class CreateTerrain extends cc.Component {
         }
     }
 
+    public generateMap(){
+        this.generateTerrain(this.seed);
+    }
+
     // stack overflow
     // generateRiver (startX: number, startY: number) {
     //     try {

@@ -8,6 +8,13 @@ export enum GameState {
     NIGHT = 2,
     ENDING = 3
 }
+//------------------//
+
+interface BlockInfo {
+    type: string; 
+    building: string;
+}
+//------------------//
 
 @ccclass
 export default class GameController extends cc.Component {
@@ -37,7 +44,7 @@ export default class GameController extends cc.Component {
         this.gameState = GameState.PREPARATION;
         this.dayTime = (this.dayTime==null) ? 10 : this.dayTime;
         this.preparationTime = 3;
-        CreateTerrain.generateTerrain();
+        //CreateTerrain.generateTerrain();
     }
 
     timerCallBack () { //timer

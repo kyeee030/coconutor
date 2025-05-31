@@ -62,26 +62,31 @@ export default class CameraMove extends cc.Component {
         }
         this.updateDirection();
 
-        switch (this._moveDirection) {
-            case Direction.UP:
-                this._cameraRBody.linearVelocity = cc.v2(0, this.moveSpeed);
-                break;
-            case Direction.DOWN:
-                this._cameraRBody.linearVelocity = cc.v2(0, -this.moveSpeed);
-                break;
-            case Direction.LEFT:
-                this._cameraRBody.linearVelocity = cc.v2(-this.moveSpeed, 0);
-                break;
-            case Direction.RIGHT:
-                this._cameraRBody.linearVelocity = cc.v2(this.moveSpeed, 0);
-                break;
-            case Direction.NONE:
-                this._cameraRBody.linearVelocity = cc.v2(0, 0);
-                break;
-            default:
-                cc.error("CameraMove: Unknown move direction!");
-                break;
-        }
+        // switch (this._moveDirection) {
+        //     case Direction.UP:
+        //         this._cameraRBody.linearVelocity = cc.v2(0, this.moveSpeed);
+        //         break;
+        //     case Direction.DOWN:
+        //         this._cameraRBody.linearVelocity = cc.v2(0, -this.moveSpeed);
+        //         break;
+        //     case Direction.LEFT:
+        //         this._cameraRBody.linearVelocity = cc.v2(-this.moveSpeed, 0);
+        //         break;
+        //     case Direction.RIGHT:
+        //         this._cameraRBody.linearVelocity = cc.v2(this.moveSpeed, 0);
+        //         break;
+        //     case Direction.NONE:
+        //         this._cameraRBody.linearVelocity = cc.v2(0, 0);
+        //         break;
+        //     default:
+        //         cc.error("CameraMove: Unknown move direction!");
+        //         break;
+        // }
+
+        this._cameraRBody.linearVelocity = cc.v2(
+            (this._keyboardControl.isKeyDown(cc.macro.KEY.d) || this._keyboardControl.isKeyDown(cc.macro.KEY.right) ? this.moveSpeed : 0) - (this._keyboardControl.isKeyDown(cc.macro.KEY.a) || this._keyboardControl.isKeyDown(cc.macro.KEY.left) ? this.moveSpeed : 0),
+            (this._keyboardControl.isKeyDown(cc.macro.KEY.w) || this._keyboardControl.isKeyDown(cc.macro.KEY.up) ? this.moveSpeed : 0) - (this._keyboardControl.isKeyDown(cc.macro.KEY.s) || this._keyboardControl.isKeyDown(cc.macro.KEY.down) ? this.moveSpeed : 0)
+        )
     }
 
     updateDirection () {

@@ -151,6 +151,10 @@ export default class CreateTerrain extends cc.Component {
         }
     }
 
+    public generateMap(){
+        this.generateTerrain();
+    }
+
     generateRiver(startX: number, startY: number) {
         try {
             let x = startX;

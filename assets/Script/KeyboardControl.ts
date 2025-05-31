@@ -8,7 +8,7 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class Keyboard extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     private _keyDown : boolean[] = [];

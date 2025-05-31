@@ -1810,7 +1810,7 @@
     "terrainHeight": 150,
     "blockSize": 32,
     "scale": 15,
-    "seed": 12345,
+    "seed": -1,
     "seaLevel": -0.5,
     "planeSize": 0.5,
     "mountainSize": 0.5,

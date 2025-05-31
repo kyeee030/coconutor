@@ -313,7 +313,7 @@ export default class CreateTerrain extends cc.Component {
         const gridX : number = Math.floor(x / this.blockSize);
         const gridY : number = Math.floor(y / this.blockSize);
         return { gridCoordinates: {gridX, gridY}, blockSize: this.blockSize };
-    } // 輸入實際座標，回傳網格座標
+    } // 輸入實際座標，回傳網格座標 (*直接girdX * blockSize, gridY * blockSize得到該格中心位置)
 }
 
 //

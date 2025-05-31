@@ -305,11 +305,15 @@ export default class CreateTerrain extends cc.Component {
         return this.getBlockType(posX, posY);
     } // 輸入實際座標
 
-    // onLoad () {}
-
-    // start () {}
-
-    // update (dt) {}
+    getGridCoordinates (x: number, y: number): { gridCoordinates: { gridX: number, gridY: number }, blockSize: number } {
+        if( x < 0 || y < 0 || x >= this.terrainWidth * this.blockSize || y >= this.terrainHeight * this.blockSize) {
+            cc.error('Coordinates out of bounds:', x, y);
+            return { gridCoordinates: { gridX: -1, gridY: -1 }, blockSize: this.blockSize }; // 超出邊界
+        }
+        const gridX : number = Math.floor(x / this.blockSize);
+        const gridY : number = Math.floor(y / this.blockSize);
+        return { gridCoordinates: {gridX, gridY}, blockSize: this.blockSize };
+    } // 輸入實際座標，回傳網格座標
 }
 
 //

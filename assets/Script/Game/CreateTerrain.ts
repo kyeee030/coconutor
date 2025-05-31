@@ -314,6 +314,41 @@ export default class CreateTerrain extends cc.Component {
         const gridY : number = Math.floor(y / this.blockSize);
         return { gridCoordinates: {gridX, gridY}, blockSize: this.blockSize };
     } // 輸入實際座標，回傳網格座標 (*直接girdX * blockSize, gridY * blockSize得到該格中心位置)
+
+    getResourceType (x: number, y: number): string {
+        if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
+            return 'OUT OF BORDER'; // 超出邊界
+        }
+        return this._resourceGrid[x][y];
+    } // 輸入網格座標
+
+    positionResourceType (x: number, y: number): string {
+        const posX = Math.floor(x / this.blockSize);
+        const posY = Math.floor(y / this.blockSize);
+        return this.getResourceType(posX, posY);
+    } // 輸入實際座標
+
+    getResourceObject (x: number, y: number): cc.Node | null {
+        if (x < 0 || x >= this.terrainWidth || y < 0 || y >= this.terrainHeight) {
+            return null; // 超出邊界
+        }
+        return this._resourceObjects[x][y] || null;
+    } // 輸入網格座標，回傳資源物件
+
+    positionResourceObject (x: number, y: number): cc.Node | null {
+        const posX = Math.floor(x / this.blockSize);
+        const posY = Math.floor(y / this.blockSize);
+        return this.getResourceObject(posX, posY);
+    } // 輸入實際座標，回傳資源物件
+
+    toggleResourceObject (x: number, y: number): void {
+        const resourceObject = this.positionResourceObject(x, y);
+        if (resourceObject) {
+            resourceObject.active = !resourceObject.active; // 切換資源物件的顯示狀態
+        } else {
+            cc.log('No resource object found at:', x, y);
+        }
+    } // 輸入實際座標，切換資源物件的顯示狀態
 }
 
 //

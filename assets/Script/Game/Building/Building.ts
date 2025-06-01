@@ -35,6 +35,8 @@ export default class Building extends cc.Component {
     coolDown: number;
     @property
     attackRange: number;
+    @property(cc.Prefab)
+    wareHousePrefab: cc.Prefab = null;
 
     target: {
         dist: number,
@@ -45,6 +47,12 @@ export default class Building extends cc.Component {
         type: EnemyState,
         tag: null //index of enemy or something else
     }
+
+    @property({ type: [cc.Prefab] })
+    buildingPrefabs: cc.Prefab[] = []; // 存放所有建築物的 Prefab
+
+    @property({ type: [cc.String] })
+    buildingTypes: string[] = []; // 存放對應的建築類型名稱（與 Prefab 一一對應）
 
     // onLoad () {}
 
@@ -99,6 +107,16 @@ export default class Building extends cc.Component {
 
     createBullet () {
 
+    }
+
+    getPrefabByType(type: string): cc.Prefab {
+        console.log(`Getting prefab for building type: ${type}`);
+        const index = this.buildingTypes.indexOf(type);
+        if (index === -1) {
+            console.error(`Building type "${type}" not found!`);
+            return null;
+        }
+        return this.buildingPrefabs[index];
     }
 }
 

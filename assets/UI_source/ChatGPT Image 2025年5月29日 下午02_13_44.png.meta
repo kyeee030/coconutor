@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "08893662-add1-4e1a-9cf2-ee61c4fd6f99",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1024,
+  "height": 1024,
+  "platformSettings": {},
+  "subMetas": {
+    "ChatGPT Image 2025年5月29日 下午02_13_44": {
+      "ver": "1.0.6",
+      "uuid": "7b2d205c-6d22-457e-b7a8-83a707880f1c",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "08893662-add1-4e1a-9cf2-ee61c4fd6f99",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 9.5,
+      "offsetY": 41.5,
+      "trimX": 78,
+      "trimY": 6,
+      "width": 887,
+      "height": 929,
+      "rawWidth": 1024,
+      "rawHeight": 1024,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

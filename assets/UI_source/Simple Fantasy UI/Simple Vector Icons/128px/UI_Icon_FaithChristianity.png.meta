@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "4e45fce0-b51f-42f1-8987-9467b6f7dd8f",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 128,
+  "height": 128,
+  "platformSettings": {},
+  "subMetas": {
+    "UI_Icon_FaithChristianity": {
+      "ver": "1.0.6",
+      "uuid": "21afe259-a1e2-4df8-a0c9-790de542c960",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "4e45fce0-b51f-42f1-8987-9467b6f7dd8f",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -0.5,
+      "offsetY": 0.5,
+      "trimX": 28,
+      "trimY": 17,
+      "width": 71,
+      "height": 93,
+      "rawWidth": 128,
+      "rawHeight": 128,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -2,11 +2,16 @@
   "collision-matrix": [
     [
       true
+    ],
+    [
+      false,
+      false
     ]
   ],
   "excluded-modules": [],
   "group-list": [
-    "default"
+    "default",
+    "UI"
   ],
   "start-scene": "00f6f751-cf57-46c2-afc1-d1df0cd1d5c8",
   "design-resolution-width": 960,
@@ -15,9 +20,21 @@
   "fit-height": true,
   "use-project-simulator-setting": false,
   "simulator-orientation": false,
-  "use-customize-simulator": false,
+  "use-customize-simulator": true,
   "simulator-resolution": {
     "width": 960,
     "height": 640
+  },
+  "preview-port": 7456,
+  "clear-simulator-cache": true,
+  "facebook": {
+    "enable": false,
+    "appID": "",
+    "live": {
+      "enable": false
+    },
+    "audience": {
+      "enable": false
+    }
   }
 }

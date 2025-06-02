@@ -20,7 +20,7 @@
         "__id__": 4
       },
       {
-        "__id__": 49
+        "__id__": 47
       },
       {
         "__id__": 54
@@ -188,13 +188,13 @@
     "_active": true,
     "_components": [
       {
+        "__id__": 44
+      },
+      {
+        "__id__": 45
+      },
+      {
         "__id__": 46
-      },
-      {
-        "__id__": 47
-      },
-      {
-        "__id__": 48
       }
     ],
     "_prefab": null,
@@ -425,12 +425,6 @@
       },
       {
         "__id__": 43
-      },
-      {
-        "__id__": 44
-      },
-      {
-        "__id__": 45
       }
     ],
     "_prefab": null,
@@ -2114,27 +2108,6 @@
     "_id": "2dF6L94hxNVJ7km6nro870"
   },
   {
-    "__type__": "8671493ZmNG34wkk2jL46PW",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 8
-    },
-    "_enabled": true,
-    "_id": "fbi8KaW9FJso/3SofKqnco"
-  },
-  {
-    "__type__": "b6aeb7Cd2lOZpBy523GxHQe",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 8
-    },
-    "_enabled": true,
-    "moveSpeed": 1000,
-    "_id": "68eOfFietHkqStBN4OnrbA"
-  },
-  {
     "__type__": "cc.Canvas",
     "_name": "",
     "_objFlags": 0,
@@ -2210,6 +2183,12 @@
     "_active": true,
     "_components": [
       {
+        "__id__": 48
+      },
+      {
+        "__id__": 49
+      },
+      {
         "__id__": 50
       },
       {
@@ -2275,7 +2254,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 49
+      "__id__": 47
     },
     "_enabled": true,
     "mapGrid": {
@@ -2316,7 +2295,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 49
+      "__id__": 47
     },
     "_enabled": true,
     "GameDuration": 300,
@@ -2336,7 +2315,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 49
+      "__id__": 47
     },
     "_enabled": true,
     "timeInterval": 5,
@@ -2349,12 +2328,36 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 49
+      "__id__": 47
     },
     "_enabled": true,
     "incidentInterval": 10,
     "incidentRate": 0.1,
     "_id": "34NTc30H1B1p68SZ0cA6fb"
+  },
+  {
+    "__type__": "b6aeb7Cd2lOZpBy523GxHQe",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 47
+    },
+    "_enabled": true,
+    "moveSpeed": 1000,
+    "cameraNode": {
+      "__id__": 8
+    },
+    "_id": "c4a/JTn2FIeaZ+uai8UUNm"
+  },
+  {
+    "__type__": "8671493ZmNG34wkk2jL46PW",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 47
+    },
+    "_enabled": true,
+    "_id": "f6SfmfjttGKqNo2XpSnLSS"
   },
   {
     "__type__": "cc.Node",

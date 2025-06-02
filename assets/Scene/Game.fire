@@ -20,10 +20,10 @@
         "__id__": 4
       },
       {
-        "__id__": 48
+        "__id__": 49
       },
       {
-        "__id__": 53
+        "__id__": 54
       }
     ],
     "_active": false,
@@ -188,13 +188,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 45
-      },
-      {
         "__id__": 46
       },
       {
         "__id__": 47
+      },
+      {
+        "__id__": 48
       }
     ],
     "_prefab": null,
@@ -421,9 +421,6 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 41
-      },
-      {
         "__id__": 42
       },
       {
@@ -431,6 +428,9 @@
       },
       {
         "__id__": 44
+      },
+      {
+        "__id__": 45
       }
     ],
     "_prefab": null,
@@ -507,7 +507,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1516,
-      "height": 916
+      "height": 1016
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -539,8 +539,8 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
+    "_groupIndex": 2,
+    "groupIndex": 2,
     "_id": "31OueHcsJOypnQ805UbRoB"
   },
   {
@@ -1779,6 +1779,9 @@
     "_components": [
       {
         "__id__": 40
+      },
+      {
+        "__id__": 41
       }
     ],
     "_prefab": null,
@@ -2036,7 +2039,18 @@
     "minimapCamera": {
       "__id__": 2
     },
+    "minimapEnabled": false,
     "_id": "6aV4I+P9lA5LNqwxB9IPvb"
+  },
+  {
+    "__type__": "8671493ZmNG34wkk2jL46PW",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 35
+    },
+    "_enabled": true,
+    "_id": "a6n2XOWtZMmpYxO5AV36dX"
   },
   {
     "__type__": "cc.Camera",
@@ -2046,7 +2060,7 @@
       "__id__": 8
     },
     "_enabled": true,
-    "_cullingMask": 4294967295,
+    "_cullingMask": -5,
     "_clearFlags": 7,
     "_backgroundColor": {
       "__type__": "cc.Color",
@@ -2196,9 +2210,6 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 49
-      },
-      {
         "__id__": 50
       },
       {
@@ -2206,6 +2217,9 @@
       },
       {
         "__id__": 52
+      },
+      {
+        "__id__": 53
       }
     ],
     "_prefab": null,
@@ -2261,7 +2275,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 48
+      "__id__": 49
     },
     "_enabled": true,
     "mapGrid": {
@@ -2302,7 +2316,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 48
+      "__id__": 49
     },
     "_enabled": true,
     "GameDuration": 300,
@@ -2322,7 +2336,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 48
+      "__id__": 49
     },
     "_enabled": true,
     "timeInterval": 5,
@@ -2335,7 +2349,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 48
+      "__id__": 49
     },
     "_enabled": true,
     "incidentInterval": 10,

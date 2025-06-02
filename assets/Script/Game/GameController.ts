@@ -1,11 +1,16 @@
 import CreateTerrain from "./CreateTerrain";
+import TimeSystem, { TimeState } from "./Environment/TimeSystem";
+import { IncidentType } from "./Environment/IncidentSystem";
+import IncidentSystem from "./Environment/IncidentSystem";
+import InfoManager from "./UI/InfoManager";
+import Cursor, { CursorMode } from "./UI/GameTools/cursor";
 
 const {ccclass, property} = cc._decorator;
 
 export enum GameState {
-    PREPARATION = 0,
-    DAY = 1,
-    NIGHT = 2,
+    INIT = 0,
+    DEFFENSING = 1,
+    BUILDING = 2,
     ENDING = 3
 }
 //------------------//
@@ -20,80 +25,140 @@ interface BlockInfo {
 export default class GameController extends cc.Component {
 
     @property
-    timer: number;
+    GameDuration: number = 300;
 
-    preStatusTime: number;
+    @property(cc.Node)
+    InfoManager: cc.Node = null;
 
-    @property
-    gameState: GameState;
+    @property(cc.Node)
+    cursorNode: cc.Node = null;
 
-    @property
-    dayTime: number;
+    @property(cc.Button)
+    BuildingButton: cc.Button = null;
 
-    preparationTime: number;
 
+    // system components
+    public timeSystem: TimeSystem;
+    public terrain: CreateTerrain;
+    public incidentSystem: IncidentSystem;
+
+    private gameTime: number = 0;
+    private incident : IncidentType = IncidentType.NONE;
+    private infoManager: InfoManager = null;
+    private buildingMode: boolean = false;
+
+    //====== System Callback==========//
+    onLoad(){}
+    
 
     start () {
         this.init();
     }
 
-    init () {
-        this.schedule(this.timerCallBack, 1)
-        this.timer = 0;
-        this.preStatusTime = 0;
-        this.gameState = GameState.PREPARATION;
-        this.dayTime = (this.dayTime==null) ? 10 : this.dayTime;
-        this.preparationTime = 3;
-        //CreateTerrain.generateTerrain();
+    update(dt: number){
+        this.updateGameTime(dt);
+        this.updateIncidentSystem(dt);
+        this.updateUI();
+        this.updateEnemy();
     }
 
-    timerCallBack () { //timer
-        this.timer +=1;
-        switch (this.gameState) {
-            case GameState.PREPARATION:
-                if (this.timer - this.preStatusTime == this.preparationTime)
-                    this.gameState = GameState.DAY;
-            break;
-            case GameState.DAY:
-                if (this.timer - this.preStatusTime == this.dayTime)
-                    this.gameState = GameState.NIGHT;
-            break;
-            case GameState.NIGHT:
-                if (this.timer - this.preStatusTime == this.dayTime)
-                    this.gameState = GameState.DAY;
-            break;
-            default:
-            break;
+
+    // ====== Private Methods ========== //
+    private init () {
+
+        // get required components
+        this.infoManager = this.InfoManager.getComponent(InfoManager);
+        this.timeSystem = this.node.getComponent(TimeSystem);
+        this.terrain = this.node.getComponent(CreateTerrain);
+        this.incidentSystem = this.node.getComponent(IncidentSystem);
+        if (!this.timeSystem || !this.terrain || !this.incidentSystem) {
+            console.error("GameController: Missing required components (TimeSystem or CreateTerrain)");
+            return;
+        }
+
+
+        // start systems
+        this.timeSystem.start();
+        this.terrain.start();
+        this.incidentSystem.start();
+        console.log("GameController initialized with TimeSystem and CreateTerrain.");
+
+        // add event listeners
+        this.BuildingButton.node.on('click', this.updateBuildingMode, this);
+        cc.systemEvent.on('building-position', this.onBuildingPlaced, this);
+
+        // initialize local variables
+        this.gameTime = 0;
+        this.incident = IncidentType.NONE;
+        this.infoManager.updateWavesLabel(0);
+        this.infoManager.updateDay(this.timeSystem.getCurrentTimeState());
+        this.infoManager.updateGameTime(this.gameTime);
+        this.infoManager.updateIncident(this.incident);
+        this.buildingMode = false;
+    }
+
+    private updateBuildingMode() {
+        const cursor = this.cursorNode.getComponent(Cursor);
+        if(cursor.getCurrentMode() === CursorMode.NORMAL){
+            this.cursorNode.getComponent(Cursor).changeState(CursorMode.BUILDING);
         }
     }
 
-    // update (dt) {}
-}
 
-//
-//                       _oo0oo_
-//                      o8888888o
-//                      88" . "88
-//                      (| -_- |)
-//                      0\  =  /0
-//                    ___/`---'\___
-//                  .' \\|     |// '.
-//                 / \\|||  :  |||// \
-//                / _||||| -:- |||||- \
-//               |   | \\\  -  /// |   |
-//               | \_|  ''\---/''  |_/ |
-//               \  .-\__  '-'  ___/-. /
-//             ___'. .'  /--.--\  `. .'___
-//          ."" '<  `.___\_<|>_/___.' >' "".
-//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//         \  \ `_.   \_ __\ /__ _/   .-` /  /
-//     =====`-.____`.___ \_____/___.-`___.-'=====
-//                       `=---='
-//
-//
-//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-//               佛祖保佑         永无BUG
-//
-//
-//
+    private updateIncidentSystem(dt : number){
+        this.incidentSystem.updateIncidentSystem(dt);
+        this.incident = this.incidentSystem.getCurrentIncident();
+        if (this.incident !== IncidentType.NONE) {
+            console.log("Current incident: " + IncidentType[this.incident]);
+        }
+    }
+
+    private updateGameTime(dt: number) {
+        this.timeSystem.updateGameTime(dt);
+        this.gameTime = this.timeSystem.getGameTime();
+        if (this.gameTime >= this.GameDuration) {
+            console.log("Game duration reached. Ending game.");
+            this.endGame();
+        }
+    }
+
+    private updateUI() {
+        this.infoManager.updateWavesLabel(this.timeSystem.getWaveCount());
+        this.infoManager.updateDay(this.timeSystem.getCurrentTimeState());
+        this.infoManager.updateGameTime(this.gameTime);
+        this.infoManager.updateIncident(this.incident);
+    }
+
+    private updateEnemy() {
+        if(this.timeSystem.getCurrentTimeState() === TimeState.NIGHT) {
+            // TODO1: call enemy start
+            console.log("start enemy attack");
+            this.callEnemy();
+        }
+    }
+
+    private callEnemy(){
+        // TODO2: call your generate function, and store the enemy object tag or access in gameController.
+        console.log("enemy attack from the boundry");
+    }
+
+    private onBuildingPlaced(event : cc.Event.EventCustom) {
+        const position = event.getUserData();
+        // TODO3: call your building function with parameter position.x and position.y
+        console.log(`the position get from cursor.ts:  ${position.x}, ${position.y}`);
+    }
+
+    private endGame(){
+        console.log("Ending game...");
+    }
+    
+    // Public API ========== //
+    public getGameTime(): number {
+        return this.gameTime;
+    }
+
+    public callEndTime(){
+        this.endGame();
+    }
+
+}

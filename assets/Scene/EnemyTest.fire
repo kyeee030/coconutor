@@ -76,15 +76,21 @@
       },
       {
         "__id__": 10
-      }
-    ],
-    "_active": true,
-    "_components": [
+      },
       {
         "__id__": 12
       },
       {
         "__id__": 13
+      }
+    ],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 16
+      },
+      {
+        "__id__": 17
       }
     ],
     "_prefab": null,
@@ -290,100 +296,6 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Enemy",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 2
-    },
-    "_children": [],
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 9
-      }
-    ],
-    "_prefab": null,
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 60,
-      "g": 130,
-      "b": 255,
-      "a": 255
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 32,
-      "height": 32
-    },
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_trs": {
-      "__type__": "TypedArray",
-      "ctor": "Float64Array",
-      "array": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        1,
-        1
-      ]
-    },
-    "_eulerAngles": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
-    "_id": "35qeN4l1FCnL9Lc8aHMVLw"
-  },
-  {
-    "__type__": "cc.Sprite",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 8
-    },
-    "_enabled": true,
-    "_materials": [
-      {
-        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
-      }
-    ],
-    "_srcBlendFactor": 770,
-    "_dstBlendFactor": 771,
-    "_spriteFrame": {
-      "__uuid__": "a23235d1-15db-4b95-8439-a2e005bfff91"
-    },
-    "_type": 0,
-    "_sizeMode": 0,
-    "_fillType": 0,
-    "_fillCenter": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
-    "_atlas": null,
-    "_id": "48IjRJZG1CObN7+fixQAOj"
-  },
-  {
-    "__type__": "cc.Node",
     "_name": "PathPlanning",
     "_objFlags": 0,
     "_parent": {
@@ -393,7 +305,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 11
+        "__id__": 9
       }
     ],
     "_prefab": null,
@@ -449,7 +361,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 10
+      "__id__": 8
     },
     "_enabled": true,
     "mapSize": {
@@ -459,18 +371,288 @@
     },
     "startPoint": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -3200,
+      "y": -3200
     },
     "pixelSize": {
       "__type__": "cc.Vec2",
-      "x": 16,
-      "y": 16
-    },
-    "nodePrefab": {
-      "__uuid__": "48f9343a-bd8c-44cf-82d5-0c5aa0f0daf9"
+      "x": 32,
+      "y": 32
     },
     "_id": "54CJ5FLg1Ana8yH2K2dRfa"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "TerrainGenerator",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 11
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        -480,
+        -320,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "28RRWSNa5G65DgO7K2fMSl"
+  },
+  {
+    "__type__": "c3571a3LepMEJbOkSV3hLlz",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 10
+    },
+    "_enabled": true,
+    "mapGrid": {
+      "__id__": 12
+    },
+    "grassPrefab": {
+      "__uuid__": "67b31dc3-f27b-48f5-ac49-31b87d9be65d"
+    },
+    "stonePrefab": {
+      "__uuid__": "86b39637-7f57-433a-8474-58d19d887bea"
+    },
+    "treePrefab": {
+      "__uuid__": "59adacbb-fd9e-466a-82f1-792110c3dd9d"
+    },
+    "waterPrefab": {
+      "__uuid__": "d29a6a84-e839-4b68-a066-471479b9a284"
+    },
+    "orePrefab": {
+      "__uuid__": "993c600b-4e80-49bc-b1d7-ac97b935851f"
+    },
+    "terrainWidth": 200,
+    "terrainHeight": 200,
+    "blockSize": 32,
+    "scale": 40,
+    "seed": 1653146514651,
+    "seaLevel": -0.5,
+    "planeSize": 0.5,
+    "mountainSize": 0.3,
+    "biomeMixArea": 0.1,
+    "biomeMix": 0.3,
+    "riverProbability": 0.05,
+    "riverSpread": 0.8,
+    "resourceDensity": 0.1,
+    "_id": "be7U8qj05Nt6jBgdbtA7pw"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "MapGrid",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        -3200,
+        -3200,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "fce0+bRCFN0qd3JVr10YV6"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Enemy",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 14
+      },
+      {
+        "__id__": 15
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 60,
+      "b": 60,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 32,
+      "height": 32
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "35qeN4l1FCnL9Lc8aHMVLw"
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 13
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "a23235d1-15db-4b95-8439-a2e005bfff91"
+    },
+    "_type": 0,
+    "_sizeMode": 0,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_atlas": null,
+    "_id": "48IjRJZG1CObN7+fixQAOj"
+  },
+  {
+    "__type__": "6e59851/gtMQ7yZkOZrsFFD",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 13
+    },
+    "_enabled": true,
+    "hp": null,
+    "damage": 0,
+    "coolDown": 0,
+    "speed": 0,
+    "attackRange": 0,
+    "_id": "82YO8FhElLLq7RqW0eVrdl"
   },
   {
     "__type__": "cc.Canvas",

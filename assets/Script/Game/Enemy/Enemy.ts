@@ -19,18 +19,21 @@ export default class Enemy extends cc.Component {
 
     _enemyType: string = 'Example';
     enemyState: EnemyState;
+    //when testing property you can change it at the right side :)
 
-    @property       //when testing property you can change it at the right side :)
-    hp: number;
+    @property       
+    hp: number = 0; //if you need :)    
     @property
-    damage: number;
+    damage: number = 0;
     //splashDamage: number; //if you need :)
     @property
-    coolDown: number;
+    coolDown: number = 0;
     @property
-    speed: number;
+    speed: number = 0;
     @property
-    attackRange: number;
+    attackRange: number = 0;
+
+    _pathPlanning: cc.Node;
 
     target: {
         dist: number,
@@ -42,7 +45,12 @@ export default class Enemy extends cc.Component {
         tag: null //Index of building or somwthing else
     }
 
-    // onLoad () {}
+    onLoad () {
+        this._pathPlanning = cc.find('PathPlanning');
+        if (!this._pathPlanning) {
+            console.error('Can\'t find PathPlanning node, please check the scene!');
+        }
+    }
 
     start () {
         this.init();
@@ -67,24 +75,26 @@ export default class Enemy extends cc.Component {
 
     update (dt) {
         this.findTarget();
-        if (this.hp < 0) {
+        if (this.target) {
+            if (this.hp < 0) {
 
-        } else if(this.target.dist < this.attackRange) {
-            this.enemyState = EnemyState.ATTACK
-        } else {
-            this.enemyState = EnemyState.ATTACK
-        }
-        switch (this.enemyState) {
-            case EnemyState.MOVE:
-            case EnemyState.ATTACK:
-                this.findDirection(); 
-            break;
-            case EnemyState.DIE:
-                this.death();
-            break;
-            default:
-                this.idle();
-            break;
+            } else if(this.target.dist < this.attackRange) {
+                this.enemyState = EnemyState.ATTACK
+            } else {
+                this.enemyState = EnemyState.ATTACK
+            }
+            switch (this.enemyState) {
+                case EnemyState.MOVE:
+                case EnemyState.ATTACK:
+                    this.findDirection(); 
+                break;
+                case EnemyState.DIE:
+                    this.death();
+                break;
+                default:
+                    this.idle();
+                break;
+            }
         }
     }
 

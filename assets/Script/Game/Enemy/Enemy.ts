@@ -19,30 +19,44 @@ export default class Enemy extends cc.Component {
 
     _enemyType: string = 'Example';
     enemyState: EnemyState;
+    //when testing property you can change it at the right side :)
 
-    @property       //when testing property you can change it at the right side :)
-    hp: number;
+    //---test----//
     @property
-    damage: number;
+    testProperty: cc.Vec2 = cc.v2(0, 0); //if you need :)
+
+    //---test----//
+
+    @property       
+    hp: number = 0; //if you need :)    
+    @property
+    damage: number = 0;
     //splashDamage: number; //if you need :)
     @property
-    coolDown: number;
+    coolDown: number = 0;
     @property
-    speed: number;
+    speed: number = 0;
     @property
-    attackRange: number;
+    attackRange: number = 0;
+
+    _pathPlanning: any;
+    _nextPos: cc.Vec2 = cc.v2(0, 0);
 
     target: {
         dist: number,
-        pos: {
-            x: number,
-            y: number
-        }
+        pos: cc.Vec2,
         type: BuildingState,
         tag: null //Index of building or somwthing else
     }
 
-    // onLoad () {}
+    onLoad () {
+        this._pathPlanning = cc.find('Canvas/PathPlanning');
+        
+        this._pathPlanning = this._pathPlanning ? this._pathPlanning.getComponent('PathPlanning') : null;
+        if (!this._pathPlanning) {
+            console.error('Can\'t find PathPlanning script, please check the scene!');
+        }
+    }
 
     start () {
         this.init();
@@ -66,44 +80,81 @@ export default class Enemy extends cc.Component {
     }
 
     update (dt) {
-        this.findTarget();
-        if (this.hp < 0) {
+        const selfpos = this.findTarget();
+        if (this.target) {
+            if (this.hp < 0) {
 
-        } else if(this.target.dist < this.attackRange) {
-            this.enemyState = EnemyState.ATTACK
-        } else {
-            this.enemyState = EnemyState.ATTACK
-        }
-        switch (this.enemyState) {
-            case EnemyState.MOVE:
-            case EnemyState.ATTACK:
-                this.findDirection(); 
-            break;
-            case EnemyState.DIE:
-                this.death();
-            break;
-            default:
-                this.idle();
-            break;
+            } else if(this.target.dist < this.attackRange) {
+                this.enemyState = EnemyState.ATTACK
+            } else {
+                this.enemyState = EnemyState.MOVE;
+            }
+            switch (this.enemyState) {
+                case EnemyState.MOVE:
+                case EnemyState.ATTACK:
+                    this.findDirection(selfpos); 
+                break;
+                case EnemyState.DIE:
+                    this.death();
+                break;
+                default:
+                    this.idle();
+                break;
+            }
         }
     }
 
 
-    findTarget () { //find the target
-
+    findTarget () { //find the target and return self pos
+        if (!this._pathPlanning) 
+            cc.error('Can\'t find PathPlanning script');
+        let pos_t = this._pathPlanning.findLocation(this.node.position.x, this.node.position.y);
+        if (!pos_t) 
+            cc.error('Enemy can\'t find location, please check it position is valid!');
+        const buildings = [this.testProperty];
+        const x = pos_t.x;
+        const y = pos_t.y;
+        let minDist = Infinity;
+        for (let b of buildings) {
+            const dist = Math.sqrt(Math.pow(b.x - x, 2) + Math.pow(b.y - y, 2));
+            if(dist < minDist) {
+                minDist = dist;
+                this.target = {
+                    dist: dist,
+                    pos: new cc.Vec2(b.x, b.y),
+                    type: null, //or other state
+                    tag: null //Index of building or something else
+                };
+            }
+        }
+        return pos_t;
     }
 
-    findDirection () { //find the direction
-        /*if (target.dist < attackRange)
-            this.schedule(this.attack, this.coolDown);
+    findDirection (selfpos: cc.Vec2) { //find the direction
+        if (this.target.dist < this.attackRange)
+        {
+            //this.schedule(this.attack, this.coolDown);
+            return;
+        }
         else
             this.unschedule(this.attack);
-            this.move();
-        */
+        if((Math.pow(Math.abs(this.node.position.x - this._nextPos.x), 2) + Math.pow(Math.abs(this.node.position.y - this._nextPos.y), 2) < 10))
+        {
+            let pos_t = this._pathPlanning.findLocation(this.node.position.x, this.node.position.y);
+            this._nextPos = this._pathPlanning.findPath(selfpos, this.target.pos);
+        }
+        this.move(this._nextPos);
     }
 
-    move () { //move
-
+    move (nextPos: cc.Vec2) { //move
+        if (!nextPos) {
+            cc.error('Can\'t find direction, please check the path planning!');
+            return;
+        }   
+        let angle = Math.atan2(nextPos.y - this.node.position.y, nextPos.x - this.node.position.x);
+        //rotation();
+        this.node.x += Math.cos(angle) * this.speed;
+        this.node.y += Math.sin(angle) * this.speed;
     }
 
     attack () { //attack & call animation

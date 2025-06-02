@@ -13,6 +13,13 @@ export enum GameState {
     BUILDING = 2,
     ENDING = 3
 }
+//------------------//
+
+interface BlockInfo {
+    type: string; 
+    building: string;
+}
+//------------------//
 
 @ccclass
 export default class GameController extends cc.Component {

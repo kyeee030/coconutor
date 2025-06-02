@@ -28,7 +28,10 @@ export default class GameController extends cc.Component {
     cursorNode: cc.Node = null;
 
     @property(cc.Button)
-    BuildingButton: cc.Button = null;
+    wareHouseButton: cc.Button = null; // 按鈕用於選擇倉庫建築
+
+    @property(cc.Button)
+    swordTowerButton: cc.Button = null; // 按鈕用於選擇劍塔建築
 
     @property(Building)
     buildingManager: Building = null; // 引用 Building 組件
@@ -88,7 +91,7 @@ export default class GameController extends cc.Component {
         console.log("GameController initialized with TimeSystem and CreateTerrain.");
 
         // add event listeners
-        this.BuildingButton.node.on('click', this.updateBuildingMode, this);
+        this.setupBuildingButtons();
         cc.systemEvent.on('building-position', this.onBuildingPlaced, this);
 
         // initialize local variables
@@ -158,37 +161,7 @@ export default class GameController extends cc.Component {
             return;
         }
 
-        const position = event.getUserData();
-        console.log(`The position received from cursor.ts: ${position.x}, ${position.y}`);
-
-        const buildingPrefab = this.getBuildingPrefab();
-        if (!buildingPrefab) {
-            console.error("No building prefab found for type:", this.selectedBuildingType);
-            return;
-        }
-
-        const buildingNode = cc.instantiate(buildingPrefab);
-        buildingNode.setPosition(position.x, position.y);
-        if (this.building) {
-            if (!this.building.active) {
-                console.error("Building root node is not active!");
-                this.building.active = true; // 啟用節點
-            }
-            this.building.addChild(buildingNode);
-            console.log("Building node added to 'building' root.");
-        } else {
-            console.error("Building root node is not set in GameController!");
-        }
-
-        const buildingComponent = buildingNode.getComponent(Building);
-        if (buildingComponent) {
-            buildingComponent.setLocation(position.x, position.y); // 設置位置
-            buildingComponent.init(); // 初始化建築物
-        } else {
-            console.error("Building component not found on instantiated node!");
-        }
-
-        console.log(`Building of type "${this.selectedBuildingType}" placed at:`, position);
+        this.buildingManager.onBuildingPlaced(event, this.building, this.selectedBuildingType);
 
         this.buildingMode = false;
         const cursor = this.cursorNode.getComponent(Cursor);
@@ -196,17 +169,18 @@ export default class GameController extends cc.Component {
         console.log("Building mode deactivated after placement.");
     }
 
-    // 假設有一個方法來選擇建築物的 prefab
-    private getBuildingPrefab(): cc.Prefab {
-        console.log(`Getting prefab for building type: ${this.selectedBuildingType}`);
+    private setupBuildingButtons() {
+    // 綁定倉庫按鈕事件
+        this.wareHouseButton.node.on('click', () => {
+            this.selectBuildingType("wareHouse"); // 設置建築類型為 wareHouse
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
 
-        const prefab = this.buildingManager.getPrefabByType(this.selectedBuildingType);
-        if (!prefab) {
-            console.error(`Prefab not found for building type: ${this.selectedBuildingType}`);
-        } else {
-            console.log(`Prefab found for building type: ${this.selectedBuildingType}`);
-        }
-        return prefab;
+        // 綁定劍塔按鈕事件
+        this.swordTowerButton.node.on('click', () => {
+            this.selectBuildingType("swordTower"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
     }
 
     private endGame(){

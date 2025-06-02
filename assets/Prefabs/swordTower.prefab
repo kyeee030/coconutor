@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "wareHouse",
+    "_name": "swordTower",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -21,13 +21,10 @@
     "_components": [
       {
         "__id__": 2
-      },
-      {
-        "__id__": 3
       }
     ],
     "_prefab": {
-      "__id__": 4
+      "__id__": 3
     },
     "_opacity": 255,
     "_color": {
@@ -51,8 +48,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        71,
-        -12,
+        260.906,
+        24.53,
         0,
         0,
         0,
@@ -92,7 +89,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "f91f50b9-7f87-4399-97bc-1683fa70df0d"
+      "__uuid__": "7ebb0063-b1c9-4d81-acca-112b5b57b8be"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -106,19 +103,6 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_atlas": null,
-    "_id": ""
-  },
-  {
-    "__type__": "6815cHdTKBKcK2GAmxbZIFD",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "wareHousePrefab": null,
-    "buildingPrefabs": [],
-    "buildingTypes": [],
     "_id": ""
   },
   {

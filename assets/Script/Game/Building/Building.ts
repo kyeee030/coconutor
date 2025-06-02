@@ -117,6 +117,43 @@ export default class Building extends cc.Component {
         }
         return this.buildingPrefabs[index];
     }
+
+    onBuildingPlaced(event: cc.Event.EventCustom, buildingRoot: cc.Node, selectedBuildingType: string): void {
+        const position = event.getUserData();
+        console.log(`The position received from cursor.ts: ${position.x}, ${position.y}`);
+
+        const buildingPrefab = this.getPrefabByType(selectedBuildingType);
+        if (!buildingPrefab) {
+            console.error("No building prefab found for type:", selectedBuildingType);
+            return;
+        }
+
+        const buildingNode = cc.instantiate(buildingPrefab);
+        buildingNode.setPosition(position.x, position.y);
+
+        if (buildingRoot) {
+            if (!buildingRoot.active) {
+                console.error("Building root node is not active!");
+                buildingRoot.active = true; // 啟用節點
+            }
+            buildingRoot.addChild(buildingNode);
+            console.log("Building node added to 'building' root.");
+        } else {
+            console.error("Building root node is not set!");
+        }
+
+        const buildingComponent = buildingNode.getComponent(Building);
+        if (buildingComponent) {
+            buildingComponent.setLocation(position.x, position.y); // 設置位置
+            buildingComponent.init(); // 初始化建築物
+        } else {
+            console.error("Building component not found on instantiated node!");
+        }
+
+        console.log(`Building of type "${selectedBuildingType}" placed at:`, position);
+    }
+
+   
 }
 
 //

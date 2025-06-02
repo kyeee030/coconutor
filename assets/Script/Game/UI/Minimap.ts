@@ -21,6 +21,9 @@ export default class Minimap extends cc.Component {
     @property(cc.Node)
     minimapCamera: cc.Node = null;
 
+    @property(Boolean)
+    minimapEnabled: boolean = true;
+
     private _camera: cc.Camera = null;
     private _renderTexture: cc.RenderTexture = null;
     private _renderSpriteFrame: cc.SpriteFrame = null;
@@ -53,6 +56,7 @@ export default class Minimap extends cc.Component {
 
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+        this.setActive(this.minimapEnabled);
     }
 
     private _toggleKeyTriggered: boolean = false;
@@ -70,7 +74,7 @@ export default class Minimap extends cc.Component {
     }
 
     toggleMinimap() {
-        this.setActive(!this.node.active);
+        this.setActive(!this.node.active && this.minimapEnabled);
     }
 
     setActive(active: boolean) {
@@ -88,5 +92,15 @@ export default class Minimap extends cc.Component {
         this.minimapSize = size;
         this.node.scaleX = this.minimapSize;
         this.node.scaleY = this.minimapSize;
+    }
+
+    enable(){
+        this.minimapEnabled = true;
+        this.setActive(true);
+    }
+
+    disable(){
+        this.minimapEnabled = false;
+        this.setActive(false);
     }
 }

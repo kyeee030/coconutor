@@ -33,6 +33,21 @@ export default class GameController extends cc.Component {
     @property(cc.Button)
     swordTowerButton: cc.Button = null; // 按鈕用於選擇劍塔建築
 
+    @property(cc.Button)
+    mineButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(cc.Button)
+    turretButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(cc.Button)
+    sawmillButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(cc.Button)
+    quarryButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(cc.Button)
+    mageTowerButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
     @property(Building)
     buildingManager: Building = null; // 引用 Building 組件
 
@@ -175,10 +190,29 @@ export default class GameController extends cc.Component {
             this.selectBuildingType("wareHouse"); // 設置建築類型為 wareHouse
             this.updateBuildingMode(); // 啟用建築模式
         }, this);
-
         // 綁定劍塔按鈕事件
         this.swordTowerButton.node.on('click', () => {
             this.selectBuildingType("swordTower"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.turretButton.node.on('click', () => {
+            this.selectBuildingType("turret"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.sawmillButton.node.on('click', () => {
+            this.selectBuildingType("sawmill"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.mineButton.node.on('click', () => {
+            this.selectBuildingType("mine"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.quarryButton.node.on('click', () => {
+            this.selectBuildingType("quarry"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.mageTowerButton.node.on('click', () => {
+            this.selectBuildingType("mageTower"); // 設置建築類型為 swordTower
             this.updateBuildingMode(); // 啟用建築模式
         }, this);
     }

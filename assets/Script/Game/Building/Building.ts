@@ -33,10 +33,13 @@ export default class Building extends cc.Component {
     //splashDamage: number; //if you need :)
     @property
     coolDown: number;
+
     @property
     attackRange: number;
-    @property(cc.Prefab)
-    wareHousePrefab: cc.Prefab = null;
+
+    @property(cc.Node)
+    previewBox: cc.Node = null; // 預覽框節點
+
 
     target: {
         dist: number,
@@ -109,7 +112,7 @@ export default class Building extends cc.Component {
     }
 
     getPrefabByType(type: string): cc.Prefab {
-        console.log(`Getting prefab for building type: ${type}`);
+        //console.log(`Getting prefab for building type: ${type}`);
         const index = this.buildingTypes.indexOf(type);
         if (index === -1) {
             console.error(`Building type "${type}" not found!`);
@@ -120,7 +123,7 @@ export default class Building extends cc.Component {
 
     onBuildingPlaced(event: cc.Event.EventCustom, buildingRoot: cc.Node, selectedBuildingType: string): void {
         const position = event.getUserData();
-        console.log(`The position received from cursor.ts: ${position.x}, ${position.y}`);
+        //console.log(`The position received from cursor.ts: ${position.x}, ${position.y}`);
 
         const buildingPrefab = this.getPrefabByType(selectedBuildingType);
         if (!buildingPrefab) {
@@ -137,7 +140,7 @@ export default class Building extends cc.Component {
                 buildingRoot.active = true; // 啟用節點
             }
             buildingRoot.addChild(buildingNode);
-            console.log("Building node added to 'building' root.");
+            //console.log("Building node added to 'building' root.");
         } else {
             console.error("Building root node is not set!");
         }
@@ -150,10 +153,46 @@ export default class Building extends cc.Component {
             console.error("Building component not found on instantiated node!");
         }
 
-        console.log(`Building of type "${selectedBuildingType}" placed at:`, position);
+        //console.log(`Building of type "${selectedBuildingType}" placed at:`, position);
     }
 
-   
+    ableBuild(x: number, y: number): boolean {
+        // 假設有一個地圖數據結構 `_map`，用來存儲地形信息
+        // 例如：0 表示空地，1 表示障礙物，2 表示水域等
+        // const terrainType = this._map[x][y];
+        // if (terrainType === 0) {
+        //     return true; // 空地，允許建造
+        // } else {
+        //     return false; // 其他地形，不允許建造
+        // }
+        return true;
+    }
+
+    updatePreviewBox(x: number, y: number): void {
+        console.log(`Updating preview box`);
+        if (!this.previewBox) {
+            console.error("Preview box node is not set!");
+            return;
+        }
+
+        const canBuild = this.ableBuild(x, y);
+        if (canBuild) {
+            console.log(`Building allowed`);
+            this.previewBox.color = cc.Color.GREEN; // 綠色表示允許建造
+        } else {
+            console.log(`Building not allowed`);
+            this.previewBox.color = cc.Color.RED; // 紅色表示不允許建造
+        }
+
+        this.previewBox.setPosition(x, y); // 更新預覽框的位置
+        this.previewBox.active = true; // 顯示預覽框
+    }
+
+    hidePreviewBox(): void {
+        if (this.previewBox) {
+            this.previewBox.active = false; // 隱藏預覽框
+        }
+    }
 }
 
 //

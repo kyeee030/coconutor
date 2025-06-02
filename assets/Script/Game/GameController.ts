@@ -172,7 +172,7 @@ export default class GameController extends cc.Component {
 
     private onBuildingPlaced(event: cc.Event.EventCustom) {
         if (!this.buildingMode) {
-            console.log("Building mode is not active. Ignoring building placement.");
+            //console.log("Building mode is not active. Ignoring building placement.");
             return;
         }
 
@@ -181,7 +181,7 @@ export default class GameController extends cc.Component {
         this.buildingMode = false;
         const cursor = this.cursorNode.getComponent(Cursor);
         cursor.changeState(CursorMode.NORMAL);
-        console.log("Building mode deactivated after placement.");
+        //console.log("Building mode deactivated after placement.");
     }
 
     private setupBuildingButtons() {

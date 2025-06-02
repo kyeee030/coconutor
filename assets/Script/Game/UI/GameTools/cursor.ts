@@ -1,3 +1,4 @@
+import Building from "../../Building/Building";
 const {ccclass, property} = cc._decorator;
 
 export enum CursorMode {
@@ -39,6 +40,7 @@ class NormalState extends CursorState {
         // this.cursor.mouse_x = worldPos.x;
         // this.cursor.mouse_y = worldPos.y;
         // this.cursor.cursorNode.setPosition(worldPos);
+        
     }
 
     onMouseDown(event: cc.Event.EventMouse): void {
@@ -64,6 +66,12 @@ class BuildingState extends CursorState {
         
         // Convert to world position (relative to canvas)
         const worldPos = this.cursor.node.parent.convertToNodeSpaceAR(screenPos);
+        const buildingManager = cc.find("Canvas/Building").getComponent(Building);
+        console.log("BuildingState: onMouseMove called with worldPos:", worldPos);
+        if (buildingManager) {
+            console.log("updatePreview!");
+            buildingManager.updatePreviewBox(worldPos.x, worldPos.y);
+        }
         
         // Apply offsets
         this.cursor.mouse_x = worldPos.x + this.cursor.mouse_x_offset;
@@ -96,10 +104,21 @@ class BuildingState extends CursorState {
         // 獲取 GameController 節點並呼叫 onBuildingPlaced
         const gameController = cc.find("GameController").getComponent("GameController");
         if (gameController) {
-            console.log("find GameController!");
+            //console.log("find GameController!");
             gameController.onBuildingPlaced(buildEvent);
         } else {
             console.error("GameController not found!");
+        }
+
+        const buildingManager = cc.find("Canvas/Building").getComponent(Building);
+        if (buildingManager) {
+            const canBuild = buildingManager.ableBuild(worldPos.x, worldPos.y);
+            if (canBuild) {
+                console.log("Building allowed at:", worldPos);
+                // 呼叫建築放置邏輯
+            } else {
+                console.log("Building not allowed at:", worldPos);
+            }
         }
         
         // Return to normal state

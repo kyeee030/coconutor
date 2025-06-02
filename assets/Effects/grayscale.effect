@@ -57,7 +57,7 @@ void main () {
   float riverColorGray = (0.2126*0.0 + 0.7152*0.3 + 0.0722*1.0); // 你定義的河流藍色
   float threshold = 0.3; // 接近這個藍色的範圍大小
 
-  float dist = gray - riverColorGray;
+  float dist = abs(gray - riverColorGray);
   if(dist < threshold) {
     gray = 1.0 - gray;
   }
@@ -69,8 +69,8 @@ void main () {
 
   float inverted = 1.0 - gray;
 
-  float outputGray = invert ? (1.0 - gray) : gray;
-  gl_FragColor = vec4(outputGray, outputGray, outputGray, color.a);
+  float outputGray = (invert ? (1.0 - gray) : gray);
+  gl_FragColor = (abs(color.r - 217.0/255.0) < threshold && abs(color.g - 87.0/255.0) < threshold && abs(color.b - 99.0/255.0) < threshold) ? vec4(color.r, color.g, color.b, color.a) : vec4(outputGray, outputGray, outputGray, color.a);
 }
 
 }%

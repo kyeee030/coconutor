@@ -2039,7 +2039,7 @@
     "minimapCamera": {
       "__id__": 2
     },
-    "minimapEnabled": false,
+    "minimapEnabled": true,
     "_id": "6aV4I+P9lA5LNqwxB9IPvb"
   },
   {

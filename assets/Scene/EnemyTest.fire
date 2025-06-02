@@ -582,8 +582,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        0,
-        0,
+        8,
+        16,
         0,
         0,
         0,
@@ -647,11 +647,16 @@
       "__id__": 13
     },
     "_enabled": true,
+    "testProperty": {
+      "__type__": "cc.Vec2",
+      "x": 125,
+      "y": 80
+    },
     "hp": null,
     "damage": 0,
     "coolDown": 0,
-    "speed": 0,
-    "attackRange": 0,
+    "speed": 2,
+    "attackRange": 1,
     "_id": "82YO8FhElLLq7RqW0eVrdl"
   },
   {

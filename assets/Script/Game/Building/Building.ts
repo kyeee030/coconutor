@@ -60,25 +60,24 @@ export default class Building extends cc.Component {
         this.init();
     }
 
-    init () {
-        this.buildingState = BuildingState.IDLE;  //set initial value
-        this.hp = (this.hp == null) ? HP : this.hp;
-        this.damage = (this.damage == null) ? DAMAGE : this.damage;
-        this.coolDown = (this.damage == null) ? COOLDOWN : this.coolDown;
-        this.attackRange = (this.attackRange == null) ? ATTACKRANGE: this.attackRange;
-        
-        console.log(
-            (   this._location.x == null || this._location.y == null ||
-                this.hp == null || this.damage == null ||
-                this.coolDown == null || this.attackRange == null ||
-                this.buildingState == null) //check location and log
-            ? 'Can\'t find ' + this._buildingType + '\'s property T_T, who write this shxt code?' 
-            : 'A ' + this._buildingType + ' has been build!!'
-        );
+    init (): void {
+        if (!this._location || this._location.x === undefined || this._location.y === undefined) {
+            console.error("Building location is not set! Please call setLocation before init.");
+            return;
+        }
+
+        this.buildingState = BuildingState.IDLE;
+        this.hp = this.hp ?? HP;
+        this.damage = this.damage ?? DAMAGE;
+        this.coolDown = this.coolDown ?? COOLDOWN;
+        this.attackRange = this.attackRange ?? ATTACKRANGE;
+
+        console.log(`A building has been initialized at (${this._location.x}, ${this._location.y})`);
     }
 
-    setLocation (x: number, y: number) { //called when be built from other object
-        this._location = {x, y};
+    setLocation (x: number, y: number): void {
+        this._location = { x, y };
+        console.log(`Building location set to: (${x}, ${y})`);
     }
 
     update (dt) {

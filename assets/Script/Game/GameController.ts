@@ -41,7 +41,7 @@ export default class GameController extends cc.Component {
     public timeSystem: TimeSystem;
     public terrain: CreateTerrain;
     public incidentSystem: IncidentSystem;
-    public building: Building;
+    public building: cc.Node;
 
     private gameTime: number = 0;
     private incident : IncidentType = IncidentType.NONE;
@@ -74,7 +74,7 @@ export default class GameController extends cc.Component {
         this.timeSystem = this.node.getComponent(TimeSystem);
         this.terrain = this.node.getComponent(CreateTerrain);
         this.incidentSystem = this.node.getComponent(IncidentSystem);
-        this.building = this.node.getComponent(Building);
+        this.building = cc.find("Canvas/Building");
         if (!this.timeSystem || !this.terrain || !this.incidentSystem) {
             console.error("GameController: Missing required components (TimeSystem or CreateTerrain)");
             return;
@@ -153,30 +153,43 @@ export default class GameController extends cc.Component {
     }
 
     private onBuildingPlaced(event: cc.Event.EventCustom) {
-        // 確認是否在建築模式下
         if (!this.buildingMode) {
             console.log("Building mode is not active. Ignoring building placement.");
             return;
         }
 
-        const position = event.getUserData(); // 獲取使用者點擊的位置
+        const position = event.getUserData();
         console.log(`The position received from cursor.ts: ${position.x}, ${position.y}`);
 
-        // 呼叫 getBuildingPrefab 獲取對應的建築物 Prefab
         const buildingPrefab = this.getBuildingPrefab();
         if (!buildingPrefab) {
             console.error("No building prefab found for type:", this.selectedBuildingType);
             return;
         }
 
-        // 實例化建築物
         const buildingNode = cc.instantiate(buildingPrefab);
         buildingNode.setPosition(position.x, position.y);
-        buildingNode.parent = this.mapGrid;
+        if (this.building) {
+            if (!this.building.active) {
+                console.error("Building root node is not active!");
+                this.building.active = true; // 啟用節點
+            }
+            this.building.addChild(buildingNode);
+            console.log("Building node added to 'building' root.");
+        } else {
+            console.error("Building root node is not set in GameController!");
+        }
+
+        const buildingComponent = buildingNode.getComponent(Building);
+        if (buildingComponent) {
+            buildingComponent.setLocation(position.x, position.y); // 設置位置
+            buildingComponent.init(); // 初始化建築物
+        } else {
+            console.error("Building component not found on instantiated node!");
+        }
 
         console.log(`Building of type "${this.selectedBuildingType}" placed at:`, position);
 
-        // 重置建築模式
         this.buildingMode = false;
         const cursor = this.cursorNode.getComponent(Cursor);
         cursor.changeState(CursorMode.NORMAL);
@@ -187,17 +200,13 @@ export default class GameController extends cc.Component {
     private getBuildingPrefab(): cc.Prefab {
         console.log(`Getting prefab for building type: ${this.selectedBuildingType}`);
 
-        switch (this.selectedBuildingType) {
-            case "wareHouse":
-                return this.buildingManager.getPrefabByType("wareHouse");
-            case "defenseTower":
-                return this.buildingManager.getPrefabByType("defenseTower");
-            case "house":
-                return this.buildingManager.getPrefabByType("house");
-            default:
-                console.error(`Unknown building type: ${this.selectedBuildingType}`);
-                return null;
+        const prefab = this.buildingManager.getPrefabByType(this.selectedBuildingType);
+        if (!prefab) {
+            console.error(`Prefab not found for building type: ${this.selectedBuildingType}`);
+        } else {
+            console.log(`Prefab found for building type: ${this.selectedBuildingType}`);
         }
+        return prefab;
     }
 
     private endGame(){

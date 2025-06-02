@@ -20,7 +20,7 @@
         "__id__": 43
       },
       {
-        "__id__": 50
+        "__id__": 49
       }
     ],
     "_active": false,
@@ -818,7 +818,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Waves",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 14
     },
@@ -1930,9 +1930,6 @@
       },
       {
         "__id__": 48
-      },
-      {
-        "__id__": 49
       }
     ],
     "_prefab": null,
@@ -2081,23 +2078,18 @@
       "__id__": 43
     },
     "_enabled": true,
-    "wareHousePrefab": null,
-    "buildingPrefabs": [],
-    "buildingTypes": [],
-    "_id": "6cpe7+zaBCIbj7MrBGMbRh"
-  },
-  {
-    "__type__": "6815cHdTKBKcK2GAmxbZIFD",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 43
+    "wareHousePrefab": {
+      "__uuid__": "8a0d2fd4-3e67-4744-9245-3e7f7e76c712"
     },
-    "_enabled": true,
-    "wareHousePrefab": null,
-    "buildingPrefabs": [],
-    "buildingTypes": [],
-    "_id": "ec4xNtJDNNyZyP9Rd2dSXZ"
+    "buildingPrefabs": [
+      {
+        "__uuid__": "8a0d2fd4-3e67-4744-9245-3e7f7e76c712"
+      }
+    ],
+    "buildingTypes": [
+      "wareHouse"
+    ],
+    "_id": "6cpe7+zaBCIbj7MrBGMbRh"
   },
   {
     "__type__": "cc.Node",

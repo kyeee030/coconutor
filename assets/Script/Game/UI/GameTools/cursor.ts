@@ -90,9 +90,17 @@ class BuildingState extends CursorState {
         cc.systemEvent.dispatchEvent(buildEvent);
         
         // Place building at current position
-        const building = cc.instantiate(this.cursor.canBuildBlock);
-        this.cursor.node.parent.addChild(building);
-        building.setPosition(buildingX, buildingY);
+        // const building = cc.instantiate(this.cursor.canBuildBlock);
+        // this.cursor.node.parent.addChild(building);
+        // building.setPosition(buildingX, buildingY);
+        // 獲取 GameController 節點並呼叫 onBuildingPlaced
+        const gameController = cc.find("GameController").getComponent("GameController");
+        if (gameController) {
+            console.log("find GameController!");
+            gameController.onBuildingPlaced(buildEvent);
+        } else {
+            console.error("GameController not found!");
+        }
         
         // Return to normal state
         console.log(`BuildingState: Placed building at (${buildingX}, ${buildingY})`);

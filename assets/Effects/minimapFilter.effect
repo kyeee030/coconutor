@@ -70,7 +70,9 @@ void main () {
   float inverted = 1.0 - gray;
 
   float outputGray = (invert ? (1.0 - gray) : gray);
-  bool isIndicator = (abs(color.r - 217.0/255.0) < threshold && abs(color.g - 87.0/255.0) < threshold && abs(color.b - 99.0/255.0) < threshold) || (abs(color.r - 255.0/255.0) < threshold && abs(color.g - 0.0/255.0) < threshold && abs(color.b - 0.0/255.0) < threshold);
+  bool isIndicator = (abs(color.r - 217.0/255.0) < threshold && abs(color.g - 87.0/255.0) < threshold && abs(color.b - 99.0/255.0) < threshold) || 
+                     (abs(color.r - 255.0/255.0) < threshold && abs(color.g - 0.0/255.0) < threshold && abs(color.b - 0.0/255.0) < threshold) ||
+                     (abs(color.r - 255.0/255.0) < threshold && abs(color.g - 243.0/255.0) < threshold && abs(color.b - 0.0/255.0) < threshold);
   gl_FragColor = isIndicator ? vec4(color.r, color.g, color.b, color.a) : vec4(outputGray, outputGray, outputGray, color.a);
 }
 

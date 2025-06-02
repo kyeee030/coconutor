@@ -50,9 +50,43 @@ export default class Minimap extends cc.Component {
 
         this.node.scaleX = this.minimapSize;
         this.node.scaleY = this.minimapSize;
+
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
     }
 
-    start () {}
+    private _toggleKeyTriggered: boolean = false;
+    onKeyDown (event: cc.Event.EventKeyboard) {
+        if (event.keyCode === cc.macro.KEY.m && !this._toggleKeyTriggered) {
+            this.toggleMinimap();
+            this._toggleKeyTriggered = true;
+        }
+    }
 
-    // update (dt) {}
+    onKeyUp (event: cc.Event.EventKeyboard) {
+        if (event.keyCode === cc.macro.KEY.m) {
+            this._toggleKeyTriggered = false;
+        }
+    }
+
+    toggleMinimap() {
+        this.setActive(!this.node.active);
+    }
+
+    setActive(active: boolean) {
+        this.node.active = active;
+        if (active) {
+            this._camera.enabled = true;
+            this._renderSprite.spriteFrame = this._renderSpriteFrame;
+        } else {
+            this._camera.enabled = false;
+            this._renderSprite.spriteFrame = null;
+        }
+    }
+
+    setMinimapSize(size: number) {
+        this.minimapSize = size;
+        this.node.scaleX = this.minimapSize;
+        this.node.scaleY = this.minimapSize;
+    }
 }

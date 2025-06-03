@@ -211,12 +211,16 @@ export default class Building extends cc.Component {
     }
 
     showInfoPanel(): void {
-        console.log("Showing info panel for building:", this._buildingType);
-
-        if (!this.infoPanel) {
-            console.error("Info panel is not set!");
+        if (this.infoPanelNode && this.infoPanelNode.active) {
+            this.infoPanelNode.active = false;
             return;
         }
+        console.log("Showing info panel for building:", this._buildingType);
+
+        // if (!this.infoPanel) {
+        //     console.error("Info panel is not set!");
+        //     return;
+        // }
 
         // 如果 infoPanel 尚未實例化，則實例化並添加到建築物節點下
         if (!this.infoPanelNode) {

@@ -116,7 +116,12 @@
       "__id__": 1
     },
     "_enabled": true,
-    "wareHousePrefab": null,
+    "level": 1,
+    "attackSpeed": 1,
+    "previewBox": null,
+    "infoPanel": {
+      "__uuid__": "ce59f215-7b80-4651-a322-0e3e4ecf8f73"
+    },
     "buildingPrefabs": [],
     "buildingTypes": [],
     "_id": ""

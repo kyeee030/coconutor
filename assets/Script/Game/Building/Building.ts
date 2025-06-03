@@ -1,5 +1,6 @@
 import { EnemyState } from "../Enemy/Enemy";
-
+//TODO 1 : 做一個面板，可以點地圖上的建築，顯示該建築的功能及屬性
+//TODO 1-1 : Name 、 Level 、 HP 
 const {ccclass, property} = cc._decorator;
 
 export enum BuildingState {
@@ -17,8 +18,13 @@ const ATTACKRANGE = 7;
 
 @ccclass
 export default class Building extends cc.Component {
+    _buildingType: string = 'Example'; // 建築物類型
 
-    _buildingType: string = 'Example';
+    @property(cc.Prefab)
+    infoPanel: cc.Prefab = null; // 信息面板的 Prefab
+
+    private infoPanelNode: cc.Node = null; // 動態生成的 infoPanel 節點
+
     buildingState: BuildingState;
 
     _location: {
@@ -29,13 +35,14 @@ export default class Building extends cc.Component {
     @property       //when testing property you can change it at the right side :)
     hp: number;
     @property
+    level: number = 1; // 建築物等級
+    @property
     damage: number;
     //splashDamage: number; //if you need :)
     @property
-    coolDown: number;
-
-    @property
     attackRange: number;
+    @property
+    attackSpeed: number = 1.0; // 攻擊速度
 
     @property(cc.Node)
     previewBox: cc.Node = null; // 預覽框節點
@@ -72,10 +79,15 @@ export default class Building extends cc.Component {
         this.buildingState = BuildingState.IDLE;
         this.hp = this.hp ?? HP;
         this.damage = this.damage ?? DAMAGE;
-        this.coolDown = this.coolDown ?? COOLDOWN;
         this.attackRange = this.attackRange ?? ATTACKRANGE;
+        this._buildingType = this._buildingType || 'Example'; // 確保有一個默認的建築類型
 
         console.log(`A building has been initialized at (${this._location.x}, ${this._location.y})`);
+    }
+
+    onLoad(): void {
+        // 監聽點擊事件
+        this.node.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this);
     }
 
     setLocation (x: number, y: number): void {
@@ -123,7 +135,6 @@ export default class Building extends cc.Component {
 
     onBuildingPlaced(event: cc.Event.EventCustom, buildingRoot: cc.Node, selectedBuildingType: string): void {
         const position = event.getUserData();
-        //console.log(`The position received from cursor.ts: ${position.x}, ${position.y}`);
 
         const buildingPrefab = this.getPrefabByType(selectedBuildingType);
         if (!buildingPrefab) {
@@ -135,25 +146,30 @@ export default class Building extends cc.Component {
         buildingNode.setPosition(position.x, position.y);
 
         if (buildingRoot) {
-            if (!buildingRoot.active) {
-                console.error("Building root node is not active!");
-                buildingRoot.active = true; // 啟用節點
-            }
-            buildingRoot.addChild(buildingNode);
-            //console.log("Building node added to 'building' root.");
+            buildingRoot.addChild(buildingNode); // 將建築物添加到建築根節點
         } else {
             console.error("Building root node is not set!");
+            return;
         }
 
         const buildingComponent = buildingNode.getComponent(Building);
         if (buildingComponent) {
             buildingComponent.setLocation(position.x, position.y); // 設置位置
             buildingComponent.init(); // 初始化建築物
+
+            // 動態實例化 infoPanel 並添加到建築物節點下
+            if (buildingComponent.infoPanel) {
+                const infoPanelNode = cc.instantiate(buildingComponent.infoPanel);
+                buildingNode.addChild(infoPanelNode); // 將 infoPanel 添加到建築物節點下
+                infoPanelNode.setPosition(0, 0); // 設置 infoPanel 的相對位置
+                infoPanelNode.active = false; // 初始狀態隱藏
+                console.log("Info panel added to building node.");
+            } else {
+                console.error("Info panel prefab is not set on the building component!");
+            }
         } else {
             console.error("Building component not found on instantiated node!");
         }
-
-        //console.log(`Building of type "${selectedBuildingType}" placed at:`, position);
     }
 
     ableBuild(x: number, y: number): boolean {
@@ -191,6 +207,36 @@ export default class Building extends cc.Component {
     hidePreviewBox(): void {
         if (this.previewBox) {
             this.previewBox.active = false; // 隱藏預覽框
+        }
+    }
+
+    showInfoPanel(): void {
+        console.log("Showing info panel for building:", this._buildingType);
+
+        if (!this.infoPanel) {
+            console.error("Info panel is not set!");
+            return;
+        }
+
+        // 如果 infoPanel 尚未實例化，則實例化並添加到建築物節點下
+        if (!this.infoPanelNode) {
+            this.infoPanelNode = cc.instantiate(this.infoPanel);
+            this.node.addChild(this.infoPanelNode); // 將 infoPanel 添加到建築物節點下
+
+            // 設置面板的相對位置（例如放置在建築物右側）
+            this.infoPanelNode.setPosition(this.node.width / 2 + 50, 0); // 偏移 50 單位到右側
+
+        }
+
+        // 顯示 infoPanel
+        this.infoPanelNode.active = true;
+
+        // 設置面板內容
+        const infoPanelComponent = this.infoPanelNode.getComponent("buildingInfoPanel");
+        if (infoPanelComponent) {
+            infoPanelComponent.showBuildingInfo(this); // 傳遞當前建築物的數據
+        } else {
+            console.error("BuildingInfoPanel component not found on infoPanel node!");
         }
     }
 }

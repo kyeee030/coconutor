@@ -26,7 +26,7 @@ export default class Building extends cc.Component {
         y: number
     }
 
-    private infoPanelNode: cc.Node = null; 
+    protected infoPanelNode: cc.Node = null; 
 
     @property       //when testing property you can change it at the right side :)
     hp: number;
@@ -129,6 +129,7 @@ export default class Building extends cc.Component {
     }
 
     onBuildingPlaced(event: cc.Event.EventCustom, buildingRoot: cc.Node, selectedBuildingType: string): void {
+
         const position = event.getUserData();
 
         const buildingPrefab = this.getPrefabByType(selectedBuildingType);
@@ -176,12 +177,12 @@ export default class Building extends cc.Component {
 
         console.log("Showing Building Info Panel");
         this.infoPanelNode.active = true;
-        const nameLabel = this.infoPanelNode.getChildByName("name").getComponent(cc.Label);
+        const nameLabel = this.infoPanelNode.getChildByName("name");
         const levelLabel = this.infoPanelNode.getChildByName("level").getComponent(cc.Label);
         const hpLabel = this.infoPanelNode.getChildByName("hp").getComponent(cc.Label);
         const damageLabel = this.infoPanelNode.getChildByName("damage").getComponent(cc.Label);
         const attackLabel = this.infoPanelNode.getChildByName("attackRange").getComponent(cc.Label);
-        nameLabel.string = `${this._buildingType}`;
+        //nameLabel.string = `${this._buildingType}`;
         levelLabel.string = `Level: ${this.level || 1}`;
         hpLabel.string = `HP: ${this.hp}`;
         damageLabel.string = `Damage: ${this.damage}`;

@@ -525,6 +525,11 @@
       "x": 125,
       "y": 80
     },
+    "testProperty2": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
     "hp": null,
     "damage": 0,
     "coolDown": 0,
@@ -671,10 +676,15 @@
       "x": 105,
       "y": 100
     },
+    "testProperty2": {
+      "__type__": "cc.Vec2",
+      "x": 95,
+      "y": 95
+    },
     "hp": 50,
     "damage": 10,
     "coolDown": 3,
-    "speed": 2,
+    "speed": 1,
     "attackRange": 1,
     "_id": "91awW5CkhBvaI6JlE8+Ets"
   },

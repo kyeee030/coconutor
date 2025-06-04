@@ -24,7 +24,6 @@ export default class CameraZoom extends cc.Component {
         }
 
         this.node.on(cc.Node.EventType.MOUSE_WHEEL, this.onMouseWheel, this);
-        this.node.on(cc.Node.EventType.TOUCH_END, this.onMouseWheel, this);
     }
 
     // start () {
@@ -38,8 +37,8 @@ export default class CameraZoom extends cc.Component {
     // update (dt) {}
     onMouseWheel (event: cc.Event.EventMouse) {
         console.log("CameraMove: Mouse wheel event detected, zooming camera.");
-        const delta = event.getScrollY();
-        this._camera.zoomRatio += delta * 0.1;
+        // const delta = event.getScrollY();
+        // this._camera.zoomRatio += delta * 0.1;
     }
 
 }

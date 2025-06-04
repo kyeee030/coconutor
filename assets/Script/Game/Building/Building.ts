@@ -46,6 +46,7 @@ export default class Building extends cc.Component {
     infoPanel: cc.Prefab = null; 
 
 
+
     target: {
         dist: number,
         pos: {
@@ -64,6 +65,16 @@ export default class Building extends cc.Component {
 
     start () {
         this.init();
+        cc.log(this.level);
+    }
+    onLoad(): void {
+        this.node.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this);
+
+        if (!this.infoPanelNode) {
+            console.warn("Info panel node is not initialized yet in onLoad.");
+        } else {
+            this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
+        }
     }
 
     init (): void {
@@ -81,10 +92,7 @@ export default class Building extends cc.Component {
         console.log(`A building has been initialized at (${this._location.x}, ${this._location.y})`);
     }
 
-    onLoad(): void {
-        this.node.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this);
-        this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
-    }
+    
 
     setLocation (x: number, y: number): void {
         this._location = { x, y };
@@ -140,26 +148,27 @@ export default class Building extends cc.Component {
 
         const buildingNode = cc.instantiate(buildingPrefab);
         buildingNode.setPosition(position.x, position.y);
+        
 
-        if (buildingRoot) {
-            buildingRoot.addChild(buildingNode); // 將建築物添加到建築根節點
-        } else {
-            console.error("Building root node is not set!");
-            return;
-        }
+        // this.infoPanelNode = cc.instantiate(this.infoPanel);
+        // buildingNode.addChild(this.infoPanelNode); 
+        // this.infoPanelNode.setPosition(0, 0); 
+        // this.infoPanelNode.active = false; 
+        // console.log("Info panel added to building node.");
 
-        this.infoPanelNode = cc.instantiate(this.infoPanel);
-        buildingNode.addChild(this.infoPanelNode); 
-        this.infoPanelNode.setPosition(0, 0); 
-        this.infoPanelNode.active = false; 
-        console.log("Info panel added to building node.");
+        cc.find("Canvas").addChild(buildingNode); // 將建築物添加到 Canvas 節點下
 
-       
+        // if (buildingRoot) {
+        //     buildingRoot.addChild(buildingNode); // 將建築物添加到建築根節點
+        // } else {
+        //     console.error("Building root node is not set!");
+        //     return;
+        // }
 
     }
 
     showInfoPanel(): void {
-
+            console.log(this._buildingType);
         if (!this.infoPanel) {
             console.error("InfoPanel prefab is null!");
             return;
@@ -183,11 +192,12 @@ export default class Building extends cc.Component {
         const damageLabel = this.infoPanelNode.getChildByName("damage").getComponent(cc.Label);
         const attackLabel = this.infoPanelNode.getChildByName("attackRange").getComponent(cc.Label);
         //nameLabel.string = `${this._buildingType}`;
-        levelLabel.string = `Level: ${this.level || 1}`;
+        levelLabel.string = "Level:"+this.level.toString();
         hpLabel.string = `HP: ${this.hp}`;
         damageLabel.string = `Damage: ${this.damage}`;
         attackLabel.string = `Attack Range: ${this.attackRange}`;
         this.node.active = true;
+        console.log(this.level);
     }
 
 

@@ -41,6 +41,7 @@ export default class Enemy extends cc.Component {
 
     _pathPlanning: any;
     _nextPos: cc.Vec2 = cc.v2(0, 0);
+    _anim: cc.Animation = null;
 
     target: {
         dist: number,
@@ -56,6 +57,11 @@ export default class Enemy extends cc.Component {
         if (!this._pathPlanning) {
             console.error('Can\'t find PathPlanning script, please check the scene!');
         }
+
+        this._anim = this.node.getComponent(cc.Animation);
+        if (!this._anim) {
+            console.error('Can\'t find anim');
+        }
     }
 
     start () {
@@ -63,7 +69,7 @@ export default class Enemy extends cc.Component {
     }
 
     init() {
-        this.enemyState = EnemyState.MOVE;
+        this.enemyState = EnemyState.IDLE;
         this.hp = (this.hp == null) ? HP : this.hp;
         this.damage = (this.damage == null) ? DAMAGE : this.damage;
         this.coolDown = (this.coolDown == null) ? COOLDOWN : this.coolDown;
@@ -80,15 +86,8 @@ export default class Enemy extends cc.Component {
     }
 
     update (dt) {
-        const selfpos = this.findTarget();
+        const selfpos = this.findTarget();  
         if (this.target) {
-            if (this.hp < 0) {
-
-            } else if(this.target.dist < this.attackRange) {
-                this.enemyState = EnemyState.ATTACK
-            } else {
-                this.enemyState = EnemyState.MOVE;
-            }
             switch (this.enemyState) {
                 case EnemyState.MOVE:
                 case EnemyState.ATTACK:
@@ -127,6 +126,8 @@ export default class Enemy extends cc.Component {
                 };
             }
         }
+        if(!this.target) this.checkState(EnemyState.IDLE);
+        else if(this.enemyState == EnemyState.IDLE) this.checkState(EnemyState.MOVE);
         return pos_t;
     }
 
@@ -134,6 +135,7 @@ export default class Enemy extends cc.Component {
         if (this.target.dist < this.attackRange)
         {
             //this.schedule(this.attack, this.coolDown);
+            this.checkState(EnemyState.ATTACK);
             return;
         }
         else
@@ -150,12 +152,31 @@ export default class Enemy extends cc.Component {
         if (!nextPos) {
             cc.error('Can\'t find direction, please check the path planning!');
             return;
-        }   
+        }
+        //this.checkState(EnemyState.MOVE);
         let angle = Math.atan2(nextPos.y - this.node.position.y, nextPos.x - this.node.position.x);
         //rotation();
+        if(Math.cos(angle) > 0) this.node.scaleX = -1;
+        else this.node.scaleX = 1;
         this.node.x += Math.cos(angle) * this.speed;
         this.node.y += Math.sin(angle) * this.speed;
     }
+
+    checkState (nextState: EnemyState) {
+        // let nextState: EnemyState;
+        //  if (this.hp < 0) {
+        //     nextState = EnemyState.DIE;
+        // } else if(this.target.dist < this.attackRange) {
+        //     nextState = EnemyState.ATTACK
+        // } else {
+        //     nextState = EnemyState.MOVE;
+        // }
+        if(this.enemyState == nextState) return;
+        this.enemyState = nextState;
+        this.switchAnim();
+    }
+
+    switchAnim () {};
 
     attack () { //attack & call animation
 

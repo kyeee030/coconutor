@@ -66,10 +66,13 @@ export default class Building extends cc.Component {
     @property({ type: [cc.String] })
     buildingTypes: string[] = []; 
 
+    protected _canvas: cc.Node = null; // Canvas 節點
+
     start () {
         this.init();
         cc.log(this.level);
     }
+    
     onLoad(): void {
         this.node.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this);
 
@@ -78,6 +81,7 @@ export default class Building extends cc.Component {
         } else {
             this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
         }
+        this._canvas = cc.find("Canvas");
     }
 
     init (): void {

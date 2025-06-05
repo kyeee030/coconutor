@@ -20,7 +20,6 @@ export default class SwordTower extends Building {
     @property(cc.Node)
     infoPanelNode: cc.Node = null; 
 
-
     start() {
         super.start(); 
         this._buildingType = "SwordTower"; // 設置建築物類型
@@ -52,6 +51,8 @@ export default class SwordTower extends Building {
         // 在這裡實現生成劍的邏輯，例如生成一個劍的 Prefab
         const bulletNode = cc.instantiate(this.bullet);
         bulletNode.setPosition(this.node.position); // 設置子彈位置為建築物位置
+        this._canvas.addChild(bulletNode); // 將子彈添加到 Canvas 節點下
+        
     }
 
     // override showInfoPanel(): void {

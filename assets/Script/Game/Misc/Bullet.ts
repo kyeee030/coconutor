@@ -28,11 +28,13 @@ export default class Bullet extends cc.Component {
     @property(cc.Node)
     sprites: cc.Node[] = [];
 
+    @property(cc.Node)
+    sourceNode: cc.Node = null;
+
     protected _direction: cc.Vec2 = cc.Vec2.ZERO;
     protected _RBody: cc.RigidBody = null;
     protected _timer: number = 0;
     protected _target: cc.Node = null;
-    protected _source: cc.Node = null;
     protected _animation: cc.Animation = null;
     protected _spriteHeadAngle: number = 45; // 頭部角度
 

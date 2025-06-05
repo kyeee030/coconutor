@@ -22,6 +22,9 @@ export default class Bullet extends cc.Component {
     @property(cc.Float)
     lifetime: number = 3.0;
 
+    @property(cc.Float)
+    size: number = 0.5;
+
     @property(cc.Node)
     sprites: cc.Node[] = [];
 
@@ -30,6 +33,7 @@ export default class Bullet extends cc.Component {
     protected _timer: number = 0;
     protected _target: cc.Node = null;
     protected _source: cc.Node = null;
+    protected _animation: cc.Animation = null;
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -47,16 +51,25 @@ export default class Bullet extends cc.Component {
             }
         });
         this.sprites[Math.min(this.level - 1, this.sprites.length - 1)].active = true;
+        this._animation = this.getComponent(cc.Animation);
 
         this._timer = 0;
     }
 
     update (dt) {
         this._timer += dt;
-        if (this._timer >= this.lifetime) {
-            this.node.destroy();
+        if (this._timer >= this.lifetime && !this.disappeared) {
+            this.disappear();
+            this.disappeared = true;
             return;
         }
+    }
+
+    private disappeared: boolean = false;
+
+    disappear() {
+        console.log("deleting bullet");
+        this.node.destroy();
     }
 
     setTarget(target: cc.Node) {

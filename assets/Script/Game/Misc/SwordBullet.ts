@@ -27,4 +27,21 @@ export default class SwordBullet extends Bullet {
         this._RBody.linearVelocity = cc.v2(this._direction.x * this.speed, this._direction.y * this.speed);
         super.update(dt);
     }
+
+    disappear() {
+        this.sprites.forEach(sprite => {
+            if (sprite) {
+                sprite.active = false;
+            } else {
+                console.warn("Sprite node is not set or is null.");
+            }
+        });
+        this._direction = cc.Vec2.ZERO;
+        const animState = this._animation.play("Smoke1");
+        animState.wrapMode = cc.WrapMode.Normal;
+        console.log("SwordBullet disappear");
+        this._animation.on(cc.Animation.EventType.FINISHED, () => {
+            super.disappear();
+        }, this);
+    }
 }

@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Enemy_Goblin_Walk",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.6833333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "9d6be08f-e5dd-409f-9ad7-d09d72870202"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "db6568f9-0202-4866-94a7-c8dbf4a65d5f"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "39d7f3d2-640e-405d-b781-cf0e87d25ef9"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "0bd3a759-1a55-4321-82eb-ffe3c43a18dc"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "9d6be08f-e5dd-409f-9ad7-d09d72870202"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

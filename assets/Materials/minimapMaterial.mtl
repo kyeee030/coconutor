@@ -1,0 +1,15 @@
+{
+  "__type__": "cc.Material",
+  "_name": "grayscaleMaterial",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "61875ead-148e-4212-84f9-02d11578620d"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {}
+    }
+  }
+}

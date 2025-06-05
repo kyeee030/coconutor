@@ -18,7 +18,7 @@ export default class SwordTower extends Building {
     // @property
     // override name: string = "SwordTower"; 
     @property(cc.Node)
-    infoPanelNode: cc.Node = null; 
+    infoPanelNode: cc.Node = null;
 
     start() {
         super.start(); 
@@ -30,13 +30,9 @@ export default class SwordTower extends Building {
             this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
         }
 
-        //test
+        
         if(!this._canvas)
             this._canvas = cc.find("Canvas");
-
-        const bulletNode = cc.instantiate(this.bullet);
-        bulletNode.setPosition(this.node.position); // 設置子彈位置為建築物位置
-        this._canvas.addChild(bulletNode); // 將子彈添加到 Canvas 節點下
     }
 
     // onLoad(): void {

@@ -1,4 +1,5 @@
 import { EnemyState } from "../Enemy/Enemy";
+import Targeting from "../Misc/Targeting";
 import BuildingInfoPanel from "./BuildingInfoPanel";
 //TODO 1 : 做一個面板，可以點地圖上的建築，顯示該建築的功能及屬性
 //TODO 1-1 : Name 、 Level 、 HP 
@@ -48,6 +49,8 @@ export default class Building extends cc.Component {
     @property(cc.Prefab)
     bullet: cc.Prefab = null; // 子彈預製體
 
+    @property(cc.Node)
+    rangeNode: cc.Node = null; // 範圍節點
 
 
     target: {
@@ -67,6 +70,8 @@ export default class Building extends cc.Component {
     buildingTypes: string[] = []; 
 
     protected _canvas: cc.Node = null; // Canvas 節點
+    protected _targetingSystem: Targeting = null;
+    protected _targetNode: cc.Node = null; // 目標節點
 
     start () {
         this.init();
@@ -96,6 +101,10 @@ export default class Building extends cc.Component {
         this.attackRange = this.attackRange ?? ATTACKRANGE;
         this._buildingType = this._buildingType || 'Example'; // 確保有一個默認的建築類型
 
+        if(this.rangeNode) {
+            this._targetingSystem = this.node.getComponent(Targeting);
+        }
+
         console.log(`A building has been initialized at (${this._location.x}, ${this._location.y})`);
     }
 
@@ -116,6 +125,17 @@ export default class Building extends cc.Component {
     }
 
     searchTarget () {
+        const targets = this._targetingSystem.getTargets();
+        if(targets.length === 0) {
+            console.log("No targets found.");
+            this.buildingState = BuildingState.IDLE;
+            this.unschedule(this.attack);
+            return;
+        }
+        console.log(`Found ${targets.length} targets.`);
+        this._targetNode = targets[0];
+        this.buildingState = BuildingState.ATTACK;
+        this.schedule(this.attack, this.attackSpeed); // Schedule attack based on attack speed
         /*
         if (found new one)
             this.schedule(this.attack, this.coolDown);
@@ -188,11 +208,18 @@ export default class Building extends cc.Component {
         }
          if (this.infoPanelNode.active) {
             this.infoPanelNode.active = false;
+            this.rangeNode.active = false;
             return;
         }
 
+        if(!this.rangeNode) {
+            console.log("This building does not have a range node.");
+        }
+
+
         console.log("Showing Building Info Panel");
         this.infoPanelNode.active = true;
+        if(this.rangeNode) this.rangeNode.active = true;
         const nameLabel = this.infoPanelNode.getChildByName("name");
         const levelLabel = this.infoPanelNode.getChildByName("level").getComponent(cc.Label);
         const hpLabel = this.infoPanelNode.getChildByName("hp").getComponent(cc.Label);

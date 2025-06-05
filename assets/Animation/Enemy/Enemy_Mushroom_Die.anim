@@ -1,0 +1,109 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Enemy_Mushroom_Die",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1.1833333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "d77c1234-616e-434e-a604-c453f7b353b6"
+            }
+          },
+          {
+            "frame": 0.08333333333333333,
+            "value": {
+              "__uuid__": "46535160-a54a-41a3-a163-1a2789ef1901"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "91168b67-6eb4-4e3b-bacc-77a1471a40c5"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "3011c518-4797-4649-a241-5b1cdfbed6e1"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "118bce50-cb91-4677-8d5e-d4399885bae2"
+            }
+          },
+          {
+            "frame": 0.4166666666666667,
+            "value": {
+              "__uuid__": "e9f0a9e1-9902-4df4-bac8-c8228f941c3a"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "62e707d2-9cf5-46cc-a6d3-39c762f641a1"
+            }
+          },
+          {
+            "frame": 0.5833333333333334,
+            "value": {
+              "__uuid__": "dfcbe589-feef-4480-bc80-a73e7557a5d9"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "20ced9e7-27ca-49d2-b4aa-0255dd80b3ea"
+            }
+          },
+          {
+            "frame": 0.75,
+            "value": {
+              "__uuid__": "ede56738-996f-4a57-afa8-ed4f8543e129"
+            }
+          },
+          {
+            "frame": 0.8333333333333334,
+            "value": {
+              "__uuid__": "7146411d-38bd-4ad8-bd12-35a60e21604c"
+            }
+          },
+          {
+            "frame": 0.9166666666666666,
+            "value": {
+              "__uuid__": "0b860144-c132-462b-8b47-9a83a82242a8"
+            }
+          },
+          {
+            "frame": 1,
+            "value": {
+              "__uuid__": "80b665f0-7968-4f5a-8b05-00d04c8a7353"
+            }
+          },
+          {
+            "frame": 1.0833333333333333,
+            "value": {
+              "__uuid__": "9911ddbe-da07-4a67-bcdb-22d17ef8dfed"
+            }
+          },
+          {
+            "frame": 1.1666666666666667,
+            "value": {
+              "__uuid__": "0d50682f-2ef0-434a-a4c6-9f800a66aa77"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

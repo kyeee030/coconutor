@@ -1,6 +1,6 @@
 {
   "ver": "2.3.7",
-  "uuid": "aa3140d3-2364-4832-a2d3-825a5a004f7b",
+  "uuid": "f7f0e22c-514a-4cce-8a20-8643e79599ef",
   "importer": "texture",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -12,26 +12,26 @@
   "height": 64,
   "platformSettings": {},
   "subMetas": {
-    "UI_Banner_Wood": {
+    "012": {
       "ver": "1.0.6",
-      "uuid": "bd46ac9e-17b9-4e3e-979c-3f2b81f8cd0b",
+      "uuid": "a3c7a464-ad53-4449-acb3-249ac9656625",
       "importer": "sprite-frame",
-      "rawTextureUuid": "aa3140d3-2364-4832-a2d3-825a5a004f7b",
+      "rawTextureUuid": "f7f0e22c-514a-4cce-8a20-8643e79599ef",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
       "offsetX": 0,
       "offsetY": 0,
-      "trimX": 0,
-      "trimY": 0,
-      "width": 64,
-      "height": 64,
+      "trimX": 10,
+      "trimY": 10,
+      "width": 44,
+      "height": 44,
       "rawWidth": 64,
       "rawHeight": 64,
       "borderTop": 0,
       "borderBottom": 0,
-      "borderLeft": 29,
-      "borderRight": 25,
+      "borderLeft": 0,
+      "borderRight": 0,
       "subMetas": {}
     }
   }

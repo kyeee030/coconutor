@@ -33,6 +33,9 @@ export default class SwordTower extends Building {
         
         if(!this._canvas)
             this._canvas = cc.find("Canvas");
+
+        // test
+        this.attack();
     }
 
     // onLoad(): void {
@@ -55,14 +58,6 @@ export default class SwordTower extends Building {
         // 在這裡實現生成劍的邏輯，例如生成一個劍的 Prefab
         const bulletNode = cc.instantiate(this.bullet);
         bulletNode.setPosition(this.node.position); // 設置子彈位置為建築物位置
-        const bulletComponent = bulletNode.getComponent("SwordBullet");
-        if (!bulletComponent) {
-            console.error("SwordBullet component not found on the bullet prefab.");
-            return;
-        }
-        bulletComponent.level = this.level; // 設置子彈等級
-        bulletComponent.damage = this.damage; // 設置子彈傷害
-        bulletComponent.sourceNode = this.node; // 設置子彈來源節點為建築物節點
         this._canvas.addChild(bulletNode); // 將子彈添加到 Canvas 節點下
         
     }

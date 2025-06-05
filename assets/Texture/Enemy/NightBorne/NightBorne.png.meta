@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "70705d27-05e5-4ca8-8e6d-e1a1bfe8f407",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1840,
+  "height": 400,
+  "platformSettings": {},
+  "subMetas": {
+    "NightBorne": {
+      "ver": "1.0.6",
+      "uuid": "0d26ab7f-0885-42f3-a61f-15b5df237a7c",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "70705d27-05e5-4ca8-8e6d-e1a1bfe8f407",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -12.5,
+      "offsetY": -16,
+      "trimX": 19,
+      "trimY": 34,
+      "width": 1777,
+      "height": 364,
+      "rawWidth": 1840,
+      "rawHeight": 400,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

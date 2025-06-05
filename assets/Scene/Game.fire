@@ -17,7 +17,7 @@
         "__id__": 2
       },
       {
-        "__id__": 105
+        "__id__": 103
       },
       {
         "__id__": 111
@@ -84,19 +84,19 @@
         "__id__": 6
       },
       {
-        "__id__": 77
+        "__id__": 75
       }
     ],
     "_active": true,
     "_components": [
       {
+        "__id__": 100
+      },
+      {
+        "__id__": 101
+      },
+      {
         "__id__": 102
-      },
-      {
-        "__id__": 103
-      },
-      {
-        "__id__": 104
       }
     ],
     "_prefab": null,
@@ -321,12 +321,6 @@
       },
       {
         "__id__": 74
-      },
-      {
-        "__id__": 75
-      },
-      {
-        "__id__": 76
       }
     ],
     "_prefab": null,
@@ -3859,27 +3853,6 @@
     "_id": "2dF6L94hxNVJ7km6nro870"
   },
   {
-    "__type__": "8671493ZmNG34wkk2jL46PW",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 6
-    },
-    "_enabled": true,
-    "_id": "fbi8KaW9FJso/3SofKqnco"
-  },
-  {
-    "__type__": "b6aeb7Cd2lOZpBy523GxHQe",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 6
-    },
-    "_enabled": true,
-    "moveSpeed": 1000,
-    "_id": "68eOfFietHkqStBN4OnrbA"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Building",
     "_objFlags": 0,
@@ -3888,34 +3861,34 @@
     },
     "_children": [
       {
-        "__id__": 78
+        "__id__": 76
       },
       {
-        "__id__": 81
+        "__id__": 79
       },
       {
-        "__id__": 84
+        "__id__": 82
       },
       {
-        "__id__": 87
+        "__id__": 85
       },
       {
-        "__id__": 90
+        "__id__": 88
       },
       {
-        "__id__": 93
+        "__id__": 91
       },
       {
-        "__id__": 96
+        "__id__": 94
       },
       {
-        "__id__": 99
+        "__id__": 97
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 101
+        "__id__": 99
       }
     ],
     "_prefab": null,
@@ -3971,17 +3944,17 @@
     "_name": "wareHouse",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 77
+      "__id__": 75
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 79
+        "__id__": 77
       }
     ],
     "_prefab": {
-      "__id__": 80
+      "__id__": 78
     },
     "_opacity": 255,
     "_color": {
@@ -4035,7 +4008,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 78
+      "__id__": 76
     },
     "_enabled": true,
     "_materials": [
@@ -4065,7 +4038,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 78
+      "__id__": 76
     },
     "asset": {
       "__uuid__": "8a0d2fd4-3e67-4744-9245-3e7f7e76c712"
@@ -4078,17 +4051,17 @@
     "_name": "swordTower",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 77
+      "__id__": 75
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 82
+        "__id__": 80
       }
     ],
     "_prefab": {
-      "__id__": 83
+      "__id__": 81
     },
     "_opacity": 255,
     "_color": {
@@ -4142,7 +4115,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 81
+      "__id__": 79
     },
     "_enabled": true,
     "_materials": [
@@ -4172,7 +4145,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 81
+      "__id__": 79
     },
     "asset": {
       "__uuid__": "6620c282-1e45-40b1-bb71-add3be4ca350"
@@ -4185,17 +4158,17 @@
     "_name": "turret",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 77
+      "__id__": 75
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 85
+        "__id__": 83
       }
     ],
     "_prefab": {
-      "__id__": 86
+      "__id__": 84
     },
     "_opacity": 255,
     "_color": {
@@ -4249,7 +4222,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 84
+      "__id__": 82
     },
     "_enabled": true,
     "_materials": [
@@ -4279,7 +4252,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 84
+      "__id__": 82
     },
     "asset": {
       "__uuid__": "b0e83b26-02a0-4ed9-80bf-e6e896621e58"
@@ -4292,17 +4265,17 @@
     "_name": "mageTower",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 77
+      "__id__": 75
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 88
+        "__id__": 86
       }
     ],
     "_prefab": {
-      "__id__": 89
+      "__id__": 87
     },
     "_opacity": 255,
     "_color": {
@@ -4356,7 +4329,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 87
+      "__id__": 85
     },
     "_enabled": true,
     "_materials": [
@@ -4386,7 +4359,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 87
+      "__id__": 85
     },
     "asset": {
       "__uuid__": "a4adb21e-4128-4822-855d-c5cd6bdeedc5"
@@ -4399,17 +4372,17 @@
     "_name": "sawmill",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 77
+      "__id__": 75
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 91
+        "__id__": 89
       }
     ],
     "_prefab": {
-      "__id__": 92
+      "__id__": 90
     },
     "_opacity": 255,
     "_color": {
@@ -4463,7 +4436,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 90
+      "__id__": 88
     },
     "_enabled": true,
     "_materials": [
@@ -4493,7 +4466,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 90
+      "__id__": 88
     },
     "asset": {
       "__uuid__": "d3e2f3c4-4d57-4ea4-98c3-512e0a1adb05"
@@ -4506,17 +4479,17 @@
     "_name": "mine",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 77
+      "__id__": 75
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 94
+        "__id__": 92
       }
     ],
     "_prefab": {
-      "__id__": 95
+      "__id__": 93
     },
     "_opacity": 255,
     "_color": {
@@ -4570,7 +4543,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 93
+      "__id__": 91
     },
     "_enabled": true,
     "_materials": [
@@ -4600,7 +4573,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 93
+      "__id__": 91
     },
     "asset": {
       "__uuid__": "c213328f-928b-46af-9b6a-1d00fc7e9487"
@@ -4613,17 +4586,17 @@
     "_name": "quarry",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 77
+      "__id__": 75
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 97
+        "__id__": 95
       }
     ],
     "_prefab": {
-      "__id__": 98
+      "__id__": 96
     },
     "_opacity": 255,
     "_color": {
@@ -4677,7 +4650,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 96
+      "__id__": 94
     },
     "_enabled": true,
     "_materials": [
@@ -4707,7 +4680,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 96
+      "__id__": 94
     },
     "asset": {
       "__uuid__": "c7b458ef-5d95-4f30-a624-8c6ce927f489"
@@ -4720,13 +4693,13 @@
     "_name": "previewBox",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 77
+      "__id__": 75
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 100
+        "__id__": 98
       }
     ],
     "_prefab": null,
@@ -4782,7 +4755,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 99
+      "__id__": 97
     },
     "_enabled": true,
     "_materials": [
@@ -4814,13 +4787,13 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 77
+      "__id__": 75
     },
     "_enabled": true,
     "level": 2,
     "attackSpeed": 1,
     "previewBox": {
-      "__id__": 99
+      "__id__": 97
     },
     "infoPanel": {
       "__uuid__": "ce59f215-7b80-4651-a322-0e3e4ecf8f73"
@@ -4937,6 +4910,12 @@
     "_active": true,
     "_components": [
       {
+        "__id__": 104
+      },
+      {
+        "__id__": 105
+      },
+      {
         "__id__": 106
       },
       {
@@ -5005,7 +4984,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 105
+      "__id__": 103
     },
     "_enabled": true,
     "mapGrid": {
@@ -5046,7 +5025,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 105
+      "__id__": 103
     },
     "_enabled": true,
     "GameDuration": 300,
@@ -5078,7 +5057,7 @@
       "__id__": 50
     },
     "buildingManager": {
-      "__id__": 101
+      "__id__": 99
     },
     "mapGrid": null,
     "_id": "c9sZAGCKFP5K2tGuU1rzhH"
@@ -5088,7 +5067,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 105
+      "__id__": 103
     },
     "_enabled": true,
     "timeInterval": 5,
@@ -5101,7 +5080,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 105
+      "__id__": 103
     },
     "_enabled": true,
     "incidentInterval": 10,
@@ -5113,7 +5092,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 105
+      "__id__": 103
     },
     "_enabled": true,
     "level": 1,
@@ -5155,6 +5134,30 @@
       "quarry"
     ],
     "_id": "6cpe7+zaBCIbj7MrBGMbRh"
+  },
+  {
+    "__type__": "b6aeb7Cd2lOZpBy523GxHQe",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 103
+    },
+    "_enabled": true,
+    "moveSpeed": 1000,
+    "cameraNode": {
+      "__id__": 6
+    },
+    "_id": "c5iZzrYKdL24iaHYVPJmO3"
+  },
+  {
+    "__type__": "8671493ZmNG34wkk2jL46PW",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 103
+    },
+    "_enabled": true,
+    "_id": "0fZMWgwT1FPJ8AwisJX9Re"
   },
   {
     "__type__": "cc.Node",

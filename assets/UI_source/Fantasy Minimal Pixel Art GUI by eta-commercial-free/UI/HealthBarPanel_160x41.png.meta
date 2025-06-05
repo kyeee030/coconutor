@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "887b61f5-dc1f-47de-a20c-e1129deac2a9",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 160,
+  "height": 41,
+  "platformSettings": {},
+  "subMetas": {
+    "HealthBarPanel_160x41": {
+      "ver": "1.0.6",
+      "uuid": "1b7eb320-0c6f-42f9-a729-f598b7ff59cb",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "887b61f5-dc1f-47de-a20c-e1129deac2a9",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 160,
+      "height": 41,
+      "rawWidth": 160,
+      "rawHeight": 41,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -34,6 +34,7 @@ export default class Bullet extends cc.Component {
     protected _target: cc.Node = null;
     protected _source: cc.Node = null;
     protected _animation: cc.Animation = null;
+    protected _spriteHeadAngle: number = 45; // 頭部角度
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -103,7 +104,7 @@ export default class Bullet extends cc.Component {
         this._direction = direction.normalize();
         const angle = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
         console.log(`Setting bullet direction to angle: ${angle} degrees`);
-        this.node.angle = angle - 45;
+        this.node.angle = angle - this._spriteHeadAngle;
     }
 
     onBeginContact(contact, selfCollider, otherCollider) {

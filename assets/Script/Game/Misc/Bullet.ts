@@ -20,7 +20,7 @@ export default class Bullet extends cc.Component {
     speed: number = 0;
 
     @property(cc.Float)
-    lifetime: number = 5.0;
+    lifetime: number = 3.0;
 
     @property(cc.Node)
     sprites: cc.Node[] = [];
@@ -28,7 +28,8 @@ export default class Bullet extends cc.Component {
     protected _direction: cc.Vec2 = cc.Vec2.ZERO;
     protected _RBody: cc.RigidBody = null;
     protected _timer: number = 0;
-    protected _target: cc.Node = null; // Target node to follow
+    protected _target: cc.Node = null;
+    protected _source: cc.Node = null;
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -58,15 +59,6 @@ export default class Bullet extends cc.Component {
         }
     }
 
-    setSpeed(speed: number) {
-        this.speed = speed;
-        if (this._RBody) {
-            this._RBody.linearVelocity = cc.v2(this._direction.x * this.speed, this._direction.y * this.speed);
-        } else {
-            console.warn("RigidBody component is not available to set speed.");
-        }
-    }
-
     setTarget(target: cc.Node) {
         this._target = target;
         this.updateDirection();
@@ -80,7 +72,36 @@ export default class Bullet extends cc.Component {
 
         const targetPosition = this._target.position;
         const currentPosition = this.node.position;
+
+        if(!targetPosition || !currentPosition) {
+            console.error("Target or current position is not defined.");
+            return;
+        }
+
         this._direction = cc.v2(targetPosition.x - currentPosition.x, targetPosition.y - currentPosition.y).normalize();
         this.node.rotation = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
+    }
+
+    setDirection(direction: cc.Vec2) {
+        if (!direction || !(direction instanceof cc.Vec2)) {
+            console.error("Invalid direction provided. It must be a cc.Vec2 instance.");
+            return;
+        }
+        this._direction = direction.normalize();
+        const angle = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
+        console.log(`Setting bullet direction to angle: ${angle} degrees`);
+        this.node.angle = angle - 45;
+    }
+
+    onBeginContact(contact, selfCollider, otherCollider) {
+        if (otherCollider.node.group === "Enemy") {
+            // 對敵人造成傷害
+        } else if (otherCollider.node.group === "Building") {
+            console.log("Bullet hit a building, no damage is applied.");
+            this.node.destroy();
+            // 如果要打到自己建築有效果寫在這
+        } else {
+            console.log("Bullet hit an unhandled object.");
+        }
     }
 }

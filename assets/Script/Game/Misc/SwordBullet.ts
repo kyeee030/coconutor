@@ -18,7 +18,9 @@ export default class SwordBullet extends Bullet {
         super.onLoad();
         this.damage = 10;
         this.speed = 300;
-        this.updateDirection();
+        this.lifetime = 2.0;
+        // this.updateDirection();
+        this.setDirection(cc.v2(-0.5, -0.5)); // test
     }
 
     update (dt) {

@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Enemy_Goblin_Attack",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.6833333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "deb35592-9b14-4ab2-b8c5-c566453c3545"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "a569c6cd-c52a-4a5e-9cda-15aede879357"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "f589070a-ab0a-4893-959b-4120eb521863"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "4e1bf378-75bd-40b7-be8e-c3131b34a9d4"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "0cddb72e-2cd0-4e21-ab30-b7c5bbdb9d98"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

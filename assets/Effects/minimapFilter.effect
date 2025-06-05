@@ -1,0 +1,79 @@
+
+CCEffect %{
+  techniques:
+  - passes:
+    - vert: vs
+      frag: fs
+      blendState:
+        targets:
+        - blend: true
+      rasterizerState:
+        cullMode: none
+      properties:
+        texture: { value: white }
+        invert: { value: false }
+}%
+
+CCProgram vs %{
+
+precision highp float;
+
+#include <cc-global>
+
+in vec3 a_position;
+
+in mediump vec2 a_uv0;
+out mediump vec2 v_uv0;
+
+in vec4 a_color;
+out vec4 v_color;
+
+void main () {
+  gl_Position = cc_matViewProj * vec4(a_position, 1);
+  v_uv0 = a_uv0;
+  v_color = a_color;
+}
+
+}%
+
+CCProgram fs %{
+
+precision highp float;
+
+#include <texture>
+
+uniform sampler2D texture;
+uniform Constant {
+  bool invert;
+};
+in mediump vec2 v_uv0;
+in vec4 v_color;
+
+void main () {
+  vec4 color = v_color;
+  CCTexture(texture, v_uv0, color);
+  float gray = 0.2126*color.r + 0.7152*color.g + 0.0722*color.b;
+
+  float riverColorGray = (0.2126*0.0 + 0.7152*0.3 + 0.0722*1.0); // 你定義的河流藍色
+  float threshold = 0.3; // 接近這個藍色的範圍大小
+
+  float dist = abs(gray - riverColorGray);
+  if(dist < threshold) {
+    gray = 1.0 - gray;
+  }
+
+  float contrast = 1.9; // 1.0 為原始對比，>1 提高對比，<1 降低對比
+  gray = (gray - 0.5) * contrast + 0.5;
+
+  gray = clamp(gray, 0.0, 1.0);
+
+  float inverted = 1.0 - gray;
+
+  float outputGray = (invert ? (1.0 - gray) : gray);
+  bool isIndicator = (abs(color.r - 217.0/255.0) < threshold && abs(color.g - 87.0/255.0) < threshold && abs(color.b - 99.0/255.0) < threshold) || 
+                     (abs(color.r - 255.0/255.0) < threshold && abs(color.g - 0.0/255.0) < threshold && abs(color.b - 0.0/255.0) < threshold) ||
+                     (abs(color.r - 255.0/255.0) < threshold && abs(color.g - 243.0/255.0) < threshold && abs(color.b - 0.0/255.0) < threshold);
+  gl_FragColor = isIndicator ? vec4(color.r, color.g, color.b, color.a) : vec4(outputGray, outputGray, outputGray, color.a);
+}
+
+}%

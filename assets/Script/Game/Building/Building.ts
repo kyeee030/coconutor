@@ -45,6 +45,9 @@ export default class Building extends cc.Component {
     @property(cc.Prefab)
     infoPanel: cc.Prefab = null; 
 
+    @property(cc.Prefab)
+    bullet: cc.Prefab = null; // 子彈預製體
+
 
 
     target: {

@@ -44,12 +44,14 @@ export default class SwordTower extends Building {
 
     attack(): void {
         console.log("SwordTower is attacking!");
-        this.createSword();
+        super.attack(); // 呼叫父類別的攻擊方法
     }
 
-    createSword(): void {
+    createBullet(): void {
         console.log(`SwordTower creates a sword with damage:`);
         // 在這裡實現生成劍的邏輯，例如生成一個劍的 Prefab
+        const bulletNode = cc.instantiate(this.bullet);
+        bulletNode.setPosition(this.node.position); // 設置子彈位置為建築物位置
     }
 
     // override showInfoPanel(): void {

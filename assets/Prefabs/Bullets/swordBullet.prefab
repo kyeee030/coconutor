@@ -428,7 +428,6 @@
     "damage": 0,
     "speed": 0,
     "lifetime": 5,
-    "size": 0.5,
     "sprites": [
       {
         "__id__": 2
@@ -501,9 +500,6 @@
     "_clips": [
       {
         "__uuid__": "6b53da66-022d-4df8-a2d0-1d92a8a48ccc"
-      },
-      {
-        "__uuid__": "0fa8767e-157d-4e5f-8368-30b76c2f61c7"
       }
     ],
     "playOnLoad": false,

@@ -37,7 +37,7 @@ export default class SwordBullet extends Bullet {
             }
         });
         this._direction = cc.Vec2.ZERO;
-        const animState = this._animation.play("Smoke1");
+        const animState = this._animation.play(this.level == 3 ? "Power1" : "Smoke1");
         animState.wrapMode = cc.WrapMode.Normal;
         console.log("SwordBullet disappear");
         this._animation.on(cc.Animation.EventType.FINISHED, () => {

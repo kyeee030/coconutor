@@ -18,8 +18,7 @@ export default class SwordTower extends Building {
     // @property
     // override name: string = "SwordTower"; 
     @property(cc.Node)
-    infoPanelNode: cc.Node = null; 
-
+    infoPanelNode: cc.Node = null;
 
     start() {
         super.start(); 
@@ -30,6 +29,10 @@ export default class SwordTower extends Building {
             console.log("Info panel node is ready in start.");
             this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
         }
+
+        
+        if(!this._canvas)
+            this._canvas = cc.find("Canvas");
     }
 
     // onLoad(): void {
@@ -44,12 +47,16 @@ export default class SwordTower extends Building {
 
     attack(): void {
         console.log("SwordTower is attacking!");
-        this.createSword();
+        super.attack(); // 呼叫父類別的攻擊方法
     }
 
-    createSword(): void {
+    createBullet(): void {
         console.log(`SwordTower creates a sword with damage:`);
         // 在這裡實現生成劍的邏輯，例如生成一個劍的 Prefab
+        const bulletNode = cc.instantiate(this.bullet);
+        bulletNode.setPosition(this.node.position); // 設置子彈位置為建築物位置
+        this._canvas.addChild(bulletNode); // 將子彈添加到 Canvas 節點下
+        
     }
 
     // override showInfoPanel(): void {
@@ -111,5 +118,15 @@ export default class SwordTower extends Building {
         this.damage = damage;
         this.attackRange = attackRange;
         console.log(`SwordTower updated: HP=${this.hp}, Damage=${this.damage}, Range=${this.attackRange}`);
+    }
+
+    onBeginContact(contact, selfCollider, otherCollider) {
+        if (otherCollider.node.group === "Enemy") {
+            // 對敵人造成傷害
+            console.log("SwordTower hit an enemy!");
+            // 在這裡添加對敵人造成傷害的邏輯
+        } else if (otherCollider.node.group === "Building") {
+            console.log("SwordTower hit a building, no damage is applied.");
+        }
     }
 }

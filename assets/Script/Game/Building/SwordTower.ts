@@ -33,6 +33,9 @@ export default class SwordTower extends Building {
         
         if(!this._canvas)
             this._canvas = cc.find("Canvas");
+
+        // test
+        this.attack();
     }
 
     // onLoad(): void {

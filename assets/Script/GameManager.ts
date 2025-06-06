@@ -16,10 +16,6 @@ export default class GameManager extends cc.Component {
     @property
     text: string = 'hello';
 
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {}
-
     start () {
         const firebaseConfig = {
         apiKey: "AIzaSyA4SkWugH4h2TIzu5FEzomcmWPVtLdlPOI",

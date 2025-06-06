@@ -103,7 +103,7 @@ export default class Building extends cc.Component {
         this._buildingType = this._buildingType || 'Example'; // 確保有一個默認的建築類型
 
         if(this.rangeNode) {
-            this._targetingSystem = this.node.getComponent(Targeting);
+            this._targetingSystem = this.rangeNode.getComponent(Targeting);
         }
 
         console.log(`A building has been initialized at (${this._location.x}, ${this._location.y})`);

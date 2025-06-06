@@ -130,6 +130,9 @@ export default class GameController extends cc.Component {
         this.infoManager.updateIncident(this.incident);
         this.buildingMode = false;
         this.isGenerateEnemy = false;
+
+        cc.director.getPhysicsManager().enabled = true;
+        cc.director.getCollisionManager().enabled = true;
     }
 
     private updateBuildingMode() {

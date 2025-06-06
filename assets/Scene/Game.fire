@@ -6288,12 +6288,8 @@
       "x": 32,
       "y": 32
     },
-    "mushroomEnemy": {
-      "__uuid__": "83966e10-bd96-46cf-82ad-236d44c68170"
-    },
-    "goblinEnemy": {
-      "__uuid__": "e9a9bf78-b1aa-479a-8435-da11f844283b"
-    },
+    "mushroomEnemy": null,
+    "goblinEnemy": null,
     "_id": "5f0bSmYfVO3KYJMQpSF7zO"
   },
   {

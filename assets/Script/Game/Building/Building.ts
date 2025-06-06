@@ -1,9 +1,9 @@
 import { EnemyState } from "../Enemy/Enemy";
 import Targeting from "../Misc/Targeting";
 import BuildingInfoPanel from "./BuildingInfoPanel";
+import CreateTerrain from "../CreateTerrain";
+import GameController from "../GameController";
 import ResourceSystem from "../Environment/ResourceSystem";
-//TODO 1 : 做一個面板，可以點地圖上的建築，顯示該建築的功能及屬性
-//TODO 1-1 : Name 、 Level 、 HP 
 const {ccclass, property} = cc._decorator;
 
 export enum BuildingState {
@@ -57,6 +57,8 @@ export default class Building extends cc.Component {
     private gridSize: number = 32;
     private map:(string | null)[][] = [];
 
+    public terrain: CreateTerrain ; // 地形組件
+    public gameController: GameController = null; // 引用 GameController
     private resourceSystem: ResourceSystem = null;
     _resourceTimer : number = 0;
 
@@ -97,6 +99,9 @@ export default class Building extends cc.Component {
     }
 
     init (): void {
+        this.gameController = cc.find("GameController").getComponent(GameController);
+        this.terrain = this.gameController.getComponent(CreateTerrain); // 獲取地形組件
+        this._canvas = cc.find("Canvas");
         this._resourceTimer = 0;
         this._location = {
             x: this.node.position.x,
@@ -203,12 +208,44 @@ export default class Building extends cc.Component {
 
 
     ableBuild(x: number, y: number): boolean {
-        console.log(`Checking if able to build at (${x}, ${y})`);
-        console.log(`put Grid at: ${Math.floor( (x+2416) / this.gridSize)}, ${Math.floor( (y + 2416) / this.gridSize)}`);
-        if(this.map[Math.floor( (x+2416) / this.gridSize)][Math.floor((y + 2416 )/ this.gridSize)] == null) {
-            return true;
+
+
+         console.log(`Checking if able to build at (${x}, ${y})`);
+         console.log(`put Grid at: ${Math.floor( (x+2416) / this.gridSize)}, ${Math.floor( (y + 2416) / this.gridSize)}`);
+        if(this.map[Math.floor( (x+2416) / this.gridSize)][Math.floor((y + 2416 )/ this.gridSize)] !== null) {
+            return false;
         }
-        return false;
+        console.log(`Checking if able to build at (${x}, ${y})`);
+        const gridX = Math.floor((x + 2416) / this.gridSize);
+        const gridY = Math.floor((y + 2416) / this.gridSize);
+        // if (this.map[gridX][gridY] !== null) {
+        //     console.log("There is already a building at this position.");
+        //     this.updatePreviewBox(x, y); // 顯示紅色預覽框
+        //     return false;
+        // }
+        const grid = this.terrain.getGridInfo(x + 2416, y + 2416); // 獲取地形資訊
+        if(grid.blockType == 'water' ) {
+            return false;
+        };
+        if(this.gameController.selectedBuildingType == "sawmill" && grid.resourceType != "tree") {
+            return false;
+        }
+        if(this.gameController.selectedBuildingType == "quarry" && grid.blockType != "stone") {
+            return false;
+        }
+        if(this.gameController.selectedBuildingType == "mine" && grid.resourceType != "ore") {
+            return false;
+        }
+        //TODO can't build on tree
+        if(this.gameController.selectedBuildingType != "sawmill" && grid.resourceType == "tree"){
+            return false;
+        }
+        // //TODO can't build on other building
+        // if(!this.ableBuild(x , y)){
+        //     return false;
+        // }
+        return true; // 如果沒有建築物，則可以建造
+
     }
 
 
@@ -221,8 +258,10 @@ export default class Building extends cc.Component {
         const canBuild = this.ableBuild(x, y);
         if (canBuild) {
             this.previewBox.color = cc.Color.GREEN; // 綠色表示允許建造
+            this.previewBox.opacity = 128; // 半透明
         } else {
             this.previewBox.color = cc.Color.RED; // 紅色表示不允許建造
+            this.previewBox.opacity = 128; // 不透明
         }
 
         this.previewBox.setPosition(x, y); // 更新預覽框的位置

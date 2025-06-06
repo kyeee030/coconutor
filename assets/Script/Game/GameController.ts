@@ -199,6 +199,16 @@ export default class GameController extends cc.Component {
             cc.log("Cannot place mine on non-ore resource.");
             return;
         }
+        //TODO can't build on tree
+        if(this.selectedBuildingType != "sawmill" && grid.resourceType == "tree"){
+            cc.log("expect sawmill , no other building can be placed on tree resource.");
+            return;
+        }
+        //TODO can't build on other building
+        if(!this.buildingManager.ableBuild(position.x , position.y)){
+            cc.log("There is already a building at this position.");
+            return;
+        }
         console.log("Building placement event received.");
         console.log("building type:", this.selectedBuildingType);
         console.log("event data:", event.getUserData());

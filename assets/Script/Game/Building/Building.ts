@@ -19,7 +19,8 @@ const ATTACKRANGE = 7;
 
 @ccclass
 export default class Building extends cc.Component {
-    _buildingType: string = 'Example'; 
+    @property
+    buildingType: string = 'Example'; 
     buildingState: BuildingState;
 
     _location: {
@@ -71,10 +72,10 @@ export default class Building extends cc.Component {
     @property({ type: [cc.String] })
     buildingTypes: string[] = []; 
 
-    protected _canvas: cc.Node = null; // Canvas 節點
-    protected _targetingSystem: Targeting = null;
-    protected _targetNode: cc.Node = null; // 目標節點
-    private isShowingInfoPanel: boolean = false; // 是否正在顯示信息面板
+    _canvas: cc.Node = null; // Canvas 節點
+    _targetingSystem: Targeting = null;
+    _targetNode: cc.Node = null; // 目標節點
+    _isShowingInfoPanel: boolean = false; // 是否正在顯示信息面板
     _buildings: cc.Node[] = [];
 
     start () {
@@ -83,65 +84,36 @@ export default class Building extends cc.Component {
     
     onLoad(): void {
         this.canvas = cc.find("Canvas");
-        this.node.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this);
 
         if (!this.infoPanelNode) {
             console.warn("Info panel node is not initialized yet in onLoad.");
         } else {
             console.log("Info panel node is ready in onLoad.");
         }
-        this._canvas = cc.find("Canvas");
     }
 
     init (): void {
-        if (!this._location || this._location.x === undefined || this._location.y === undefined) {
-            console.error("Building location is not set! Please call setLocation before init.");
-            return;
-        }
-
         this.buildingState = BuildingState.IDLE;
         this.hp = HP
         this.damage = DAMAGE;
-        this.attackRange = ATTACKRANGE;
-        this._buildingType = "swordTower"; // default building
-        this.name = this._buildingType; // 設置節點名稱為建築類型
-        this.isShowingInfoPanel = false; // 初始化為不顯示信息面板
-        this.infoPanelNode.active = false; // 初始化信息面板為不顯示
-        if(this.rangeNode) {
-            this._targetingSystem = this.node.getComponent(Targeting);
-        }
+        this.attackRange = ATTACKRANGE; // default building
+        this._isShowingInfoPanel = false; // 初始化為不顯示信息面板
+        if(this.infoPanelNode)
+            this.infoPanelNode.active = false; // 初始化信息面板為不顯示
 
-        console.log(`A building has been initialized at (${this._location.x}, ${this._location.y})`);
+        // console.log(`A building has been initialized at (${this._location.x}, ${this._location.y})`);
+        if(this.buildingType !== 'Example') {
+            this.node.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this);
+            cc.log('set click event');
+        }
     }
 
     update (dt) {
         switch (this.buildingState) {
             case BuildingState.IDLE:
             case BuildingState.ATTACK:
-                this.searchTarget();
             break;
         }
-    }
-
-    searchTarget () {
-        const targets = this._targetingSystem.getTargets();
-        if(targets.length === 0) {
-            console.log("No targets found.");
-            this.buildingState = BuildingState.IDLE;
-            this.unschedule(this.attack);
-            return;
-        }
-        console.log(`Found ${targets.length} targets.`);
-        this._targetNode = targets[0];
-        this.buildingState = BuildingState.ATTACK;
-        this.schedule(this.attack, this.attackSpeed); // Schedule attack based on attack speed
-        /*
-        if (found new one)
-            this.schedule(this.attack, this.coolDown);
-        else
-            state = ...
-            this.unschedule(this.attack);
-        */
     }
 
     attack () {
@@ -170,52 +142,29 @@ export default class Building extends cc.Component {
 
         const buildingNode = cc.instantiate(buildingPrefab);
         buildingNode.setPosition(position.x, position.y);
-        
-
-        // this.infoPanelNode = cc.instantiate(this.infoPanel);
-        // buildingNode.addChild(this.infoPanelNode); 
-        // this.infoPanelNode.setPosition(0, 0); 
-        // this.infoPanelNode.active = false; 
-        // console.log("Info panel added to building node.");
 
         this.canvas.addChild(buildingNode); // 將建築物添加到 Canvas 節點下
         this._buildings.push(buildingNode);
-
-
-        // if (buildingRoot) {
-        //     buildingRoot.addChild(buildingNode); // 將建築物添加到建築根節點
-        // } else {
-        //     console.error("Building root node is not set!");
-        //     return;
-        // }
-
     }
 
-    showInfoPanel(): void {
-        if(this.isShowingInfoPanel) console.log("Info panel is already showing.");
-        else console.log("Info panel is not showing, toggling it.");
+    showInfoPanel () {
+        cc.log(this._isShowingInfoPanel);
+        if(!this.infoPanelNode) console.log("Can't find info panel node.");
         
-        this.isShowingInfoPanel = !this.isShowingInfoPanel;
-        this.infoPanelNode.active = this.isShowingInfoPanel;
-
-        if(!this.rangeNode) {
-            console.log("This building does not have a range node.");
-        }
-
+        this._isShowingInfoPanel = !this._isShowingInfoPanel;
+        this.infoPanelNode.active = this._isShowingInfoPanel;
+        if(!this._isShowingInfoPanel) return;
 
         console.log("Showing Building Info Panel");
         if(this.rangeNode) this.rangeNode.active = true;
-        const nameLabel = this.infoPanelNode.getChildByName("name").getComponent(cc.Label);
-        const levelLabel = this.infoPanelNode.getChildByName("level").getComponent(cc.Label);
-        const hpLabel = this.infoPanelNode.getChildByName("hp").getComponent(cc.Label);
-        const damageLabel = this.infoPanelNode.getChildByName("damage").getComponent(cc.Label);
-        const attackLabel = this.infoPanelNode.getChildByName("attackRange").getComponent(cc.Label);
-        //nameLabel.string = `${this._buildingType}`;
-        levelLabel.string = "Level:"+this.level.toString();
-        hpLabel.string = `HP: ${this.hp}`;
-        damageLabel.string = `Damage: ${this.damage}`;
-        attackLabel.string = `Attack Range: ${this.attackRange}`;
-        nameLabel.string = `${this._buildingType}`;
+        else console.log("This building does not have a range node.");
+        this.infoPanelNode.getComponent(BuildingInfoPanel).setBuildingInfo(
+            this.buildingType,
+            this.level,
+            this.hp,
+            this.damage,
+            this.attackRange
+        );
     }
 
 

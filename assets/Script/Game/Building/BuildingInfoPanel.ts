@@ -19,33 +19,16 @@ export default class BuildingInfoPanel extends cc.Component {
     @property(cc.Label)
     attackRangeLabel: cc.Label = null;
 
-    // @property(cc.Button)
-    // closeButton: cc.Button = null;
-
     onLoad(): void {
-        // 為 closeButton 添加點擊事件
-        // if (this.closeButton) {
-        //     this.closeButton.node.on(cc.Node.EventType.TOUCH_END, this.hide, this);
-        // } else {
-        //     console.error("Close button is not set!");
-        // }
+
     }
 
-    // showBuildingInfo(building: Building): void {
-    //     if (!building) {
-    //         console.error("Building is not defined!");
-    //         return;
-    //     }
-    //     this.nameLabel.string = `${building._buildingType}`;
-    //     this.levelLabel.string = `Level: ${building.level || 1}`;
-    //     this.hpLabel.string = `HP: ${building.hp}`;
-    //     this.damageLabel.string = `Damage: ${building.damage}`;
-    //     this.attackRangeLabel.string = `Attack Range: ${building.attackRange}`;
-    //     this.node.active = true;
-    // }
-
-    // hide(): void {
-    //     console.log("Hiding Building Info Panel");
-    //     this.node.active = false;
-    // }
+    setBuildingInfo(name: string, level: number, hp: number, damage: number, attackRange: number): void {
+        this.nameLabel.string = `${name}`;
+        this.levelLabel.string = `Level: ${level}`;
+        this.hpLabel.string = `HP: ${hp}`;
+        this.damageLabel.string = `Damage: ${damage}`;
+        this.attackRangeLabel.string = `Attack Range: ${attackRange}`;
+        this.node.active = true;
+    }
 }

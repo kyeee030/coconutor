@@ -63,6 +63,15 @@ export default class GameController extends cc.Component {
     @property(cc.Node)
     mapGrid: cc.Node = null; // 地圖的父節點
 
+    @property(cc.Node)
+    colorRenderNode: cc.Node = null; // 用於渲染地圖顏色的節點
+
+    @property(cc.AudioClip)
+    morningAudio: cc.AudioClip = null; // 早晨音效
+
+    @property(cc.AudioClip)
+    nightAudio: cc.AudioClip = null; // 晚上音效
+
 
     // system components
     public timeSystem: TimeSystem;
@@ -80,6 +89,7 @@ export default class GameController extends cc.Component {
     private pathPlanning: PathPlanning = null; // 路徑規劃系統  
     private score: number = 0;
     public selectedBuildingType: string = "wareHouse"; // 預設建築類型
+    private firstPlayAudio : boolean = true;
 
     //====== System Callback==========//
     onLoad(){}
@@ -94,6 +104,7 @@ export default class GameController extends cc.Component {
         // this.updateIncidentSystem(dt);
         this.updateUI();
         this.updateEnemy();
+        this.updateTimeRender();
     }
 
 
@@ -128,6 +139,7 @@ export default class GameController extends cc.Component {
         // initialize local variables
         this.score = 0;
         this.gameTime = 0;
+        this.firstPlayAudio = true;
         this.incident = IncidentType.NONE;
         this.infoManager.updateWavesLabel(0);
         this.infoManager.updateDay(this.timeSystem.getCurrentTimeState());
@@ -135,6 +147,7 @@ export default class GameController extends cc.Component {
         this.infoManager.updateIncident(this.incident);
         this.buildingMode = false;
         this.isGenerateEnemy = false;
+        this.colorRenderNode.opacity = 0;
     }
 
 
@@ -173,9 +186,34 @@ export default class GameController extends cc.Component {
         }
     }
 
+    private updateTimeRender() {
+        const timeState = this.timeSystem.getCurrentTimeState();
+        const currentTime = this.timeSystem.getGameTime();
+        if(timeState == TimeState.DAY) {
+            this.colorRenderNode.opacity = 0;
+            this.colorRenderNode.color = cc.Color.WHITE;
+            if(this.morningAudio && this.firstPlayAudio) {
+                cc.audioEngine.play(this.morningAudio, false, 1);
+                this.firstPlayAudio = false; // 確保音效只播放一次
+            }
+        } else if(timeState == TimeState.NIGHT) {
+            this.colorRenderNode.opacity = 100;
+            this.colorRenderNode.color = cc.Color.BLACK;
+            if(this.nightAudio && !this.firstPlayAudio) {
+                cc.audioEngine.play(this.nightAudio, false, 1);
+                this.firstPlayAudio = true; // 確保音效只播放一次
+            }
+        }
+        
+
+    }
+
     private callEnemy(){
         // TODO2: call your generate function, and store the enemy object tag or access in gameController.
-        this.pathPlanning.spawnEnemy();
+        let t = this.timeSystem.getWaveCount() * 3;
+        for(let i = 0; i < t; i++){
+            this.pathPlanning.spawnEnemy();
+        }
         console.log("enemy attack from the boundry");
     }
 
@@ -263,6 +301,8 @@ export default class GameController extends cc.Component {
 
     private endGame(){
         console.log("Ending game...");
+        this.score = this.resourceSystem.getWoods() + this.resourceSystem.getStones() + this.resourceSystem.getOres() + 300 - this.gameTime;
+        cc.director.loadScene("EndScene");
     }
     
     // Public API ========== //

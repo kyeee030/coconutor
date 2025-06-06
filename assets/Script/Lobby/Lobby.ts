@@ -15,6 +15,9 @@ export default class Lobby extends cc.Component {
     @property(cc.Node)  // 👉 新增背景 node
     backgroundNode: cc.Node = null;
 
+    @property(cc.AudioClip)
+    clickSound: cc.AudioClip = null;
+
     private time: number = 0; // 👉 加入時間累積器
 
     start() {
@@ -95,10 +98,13 @@ export default class Lobby extends cc.Component {
 
     sign_in() {
         cc.find("Canvas/sign_in_board").active = true;
+        cc.audioEngine.play(this.clickSound, false, 0.7);
     }
 
     sign_out() {
         cc.director.loadScene("start");
+        cc.audioEngine.play(this.clickSound, false, 0.7);
+
     }
 
     back() {
@@ -132,6 +138,8 @@ export default class Lobby extends cc.Component {
 
     log_in(){
         cc.find("Canvas/login_board").active = true;
+        cc.audioEngine.play(this.clickSound, false, 0.7);
+
     }
 
     handlelogin() {

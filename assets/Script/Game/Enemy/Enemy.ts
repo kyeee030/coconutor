@@ -157,6 +157,8 @@ export default class Enemy extends cc.Component {
                 scriptName = 'Quarry';
             } else if (building.name == 'mine') {
                 scriptName = 'Mine';
+            } else if (building.name == 'turret') {
+                scriptName = 'Turret';
             }
 
             this.target = {

@@ -864,6 +864,9 @@
     "backgroundNode": {
       "__id__": 5
     },
+    "clickSound": {
+      "__uuid__": "3b4b215b-5961-4de2-b9e8-7fedcdef0b91"
+    },
     "_id": "e9l24IZKlOh6FmzEhMvA6J"
   },
   {

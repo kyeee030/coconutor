@@ -52,6 +52,12 @@ export default class Building extends cc.Component {
     @property(cc.Node)
     rangeNode: cc.Node = null; // 範圍節點
 
+    @property(cc.AudioClip)
+    onBuildAudio: cc.AudioClip = null; // 建造音效
+
+    @property(cc.AudioClip)
+    onDestroyAudio: cc.AudioClip = null; // 銷毀音效
+
     private canvas: cc.Node = null; // Canvas 節點
     private mapSize: number = 4800;
     private gridSize: number = 32;
@@ -176,6 +182,10 @@ export default class Building extends cc.Component {
 
         this.canvas.addChild(buildingNode); // 將建築物添加到 Canvas 節點下
         this._buildings.push(buildingNode);
+
+        if( this.onBuildAudio) {
+            cc.audioEngine.play(this.onBuildAudio, false, 1);
+        }
     }
 
     setBuildingAt(gridX: number, gridY: number, buildingType: string):void{
@@ -342,14 +352,22 @@ export default class Building extends cc.Component {
                     this.resourceSystem.addOres(-10);
                 }
                 return this.resourceSystem.getWoods() >= 10 && this.resourceSystem.getStones() >= 10 && this.resourceSystem.getOres() >= 10;
+            case 'mageTower':
+                if( this.resourceSystem.getWoods() >= 15 && this.resourceSystem.getStones() >= 15 && this.resourceSystem.getOres() >= 15) {
+                    this.resourceSystem.addWoods(-15);
+                    this.resourceSystem.addStones(-15);
+                    this.resourceSystem.addOres(-15);
+                }
+                return this.resourceSystem.getWoods() >= 15 && this.resourceSystem.getStones() >= 15 && this.resourceSystem.getOres() >= 15;
         }
     }
     getHurts (damage: number) {
         this.hp -= damage;
         if (this.hp <= 0) {
             this.buildingState = BuildingState.BROKEN;
-            if (this.node && cc.isValid(this.node))
+            if (this.node && cc.isValid(this.node)){
                 this.node.destroy();
+            }
             console.log(`Building of type ${this.buildingType} has been destroyed.`);
         } else {
             console.log(`Building of type ${this.buildingType} took ${damage} damage, remaining HP: ${this.hp}`);

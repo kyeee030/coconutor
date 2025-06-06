@@ -12,6 +12,9 @@ export default class SwordTower extends Building {
     @property(cc.Node)
     headNode: cc.Node = null;
 
+    @property(cc.AudioClip)
+    attackSound: cc.AudioClip = null;
+
     private _animation: cc.Animation = null;
 
     onLoad () {
@@ -70,7 +73,6 @@ export default class SwordTower extends Building {
             this._targetNode = null;
             this.unschedule(this.attack);
             this.unscheduleAllCallbacks();
-            cc.log("gg");
         }
 
         if(this._targetNode != null && cc.isValid(this._targetNode) && this.headNode) {
@@ -97,6 +99,9 @@ export default class SwordTower extends Building {
         bulletComponent.damage = this.damage;
         bulletComponent.setTarget(this._targetNode);
         this._canvas.addChild(bulletNode); 
+        if(this.attackSound) {
+            cc.audioEngine.play(this.attackSound, false, 1);
+        }
         
     }
 

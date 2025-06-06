@@ -1259,10 +1259,15 @@
     "rangeNode": {
       "__id__": 2
     },
+    "onBuildAudio": null,
+    "onDestroyAudio": null,
     "buildingPrefabs": [],
     "buildingTypes": [],
     "headNode": {
       "__id__": 27
+    },
+    "attackSound": {
+      "__uuid__": "1cb274ea-10f3-4238-90a3-5adb3b9e3c24"
     },
     "_id": ""
   },

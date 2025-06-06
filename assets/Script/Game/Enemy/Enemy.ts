@@ -127,6 +127,8 @@ export default class Enemy extends cc.Component {
                     this.idle();
                 break;
             }
+        } else {
+            
         }
     }
 
@@ -135,7 +137,7 @@ export default class Enemy extends cc.Component {
         let pos_t = this._pathPlanning.findLocation(this.node.position.x, this.node.position.y);
         
         let building = this._buildingRoot.getNearestBuilding(new cc.Vec2(this.node.position.x, this.node.position.y));
-        if(building) {
+        if(cc.isValid(building)) {
             const x = pos_t.x;
             const y = pos_t.y;
             let b_pos = this._pathPlanning.findLocation(building.position.x, building.position.y);
@@ -164,8 +166,20 @@ export default class Enemy extends cc.Component {
                 script: building.getComponent(`${scriptName}`)
             };
         }
-        if(!this.target) this.checkState(EnemyState.IDLE);
-        else if(this.enemyState == EnemyState.IDLE) this.checkState(EnemyState.MOVE);
+        if(!cc.isValid(building) || !this.target) {
+            this.checkState(EnemyState.IDLE);
+            this.unschedule(this.attackAnimationControl);
+            this.target = {
+                dist: null,
+                pos: null,
+                type: null,
+                script: null
+            };
+            this._isAttacking = false;
+        }
+        else if(this.enemyState == EnemyState.IDLE && this.target) {
+            this.checkState(EnemyState.MOVE);
+        }
         return pos_t;
     }
 
@@ -176,10 +190,10 @@ export default class Enemy extends cc.Component {
         {
             this.checkState(EnemyState.ATTACK);
             return;
-        }
-        else {
+        } else {
             if(this.enemyState == EnemyState.ATTACK)
                 this.checkState(EnemyState.IDLE);
+            this._isAttacking = false;
             this.unschedule(this.attackAnimationControl);
         }
         if(!this._nextPos || (Math.pow(Math.abs(this.node.position.x - this._nextPos.x), 2) + Math.pow(Math.abs(this.node.position.y - this._nextPos.y), 2) < 10))
@@ -236,7 +250,7 @@ export default class Enemy extends cc.Component {
     }
 
     createDamage () {
-        if(this.target.script)
+        if(this.target !== null && cc.isValid(this.target.script))
             this.target.script.getHurts(this.damage);
     }
 }

@@ -102,7 +102,7 @@ export default class Bullet extends cc.Component {
         }
         this._direction = direction.normalize();
         const angle = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
-        console.log(`Setting bullet direction to angle: ${angle} degrees`);
+        // console.log(`Setting bullet direction to angle: ${angle} degrees`);
         this.node.angle = angle - 45;
     }
 
@@ -110,11 +110,11 @@ export default class Bullet extends cc.Component {
         if (otherCollider.node.group === "Enemy") {
             // 對敵人造成傷害
         } else if (otherCollider.node.group === "Building") {
-            console.log("Bullet hit a building, no damage is applied.");
+            // console.log("Bullet hit a building, no damage is applied.");
             this.node.destroy();
             // 如果要打到自己建築有效果寫在這
         } else {
-            console.log("Bullet hit an unhandled object.");
+            // console.log("Bullet hit an unhandled object.");
         }
     }
 }

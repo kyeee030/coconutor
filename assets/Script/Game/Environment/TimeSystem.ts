@@ -12,10 +12,10 @@ export default class TimeSystem extends cc.Component {
     timeInterval: number = 5;
 
     @property
-    dayTime: number = 100;
+    dayTime: number = 30;
 
     @property
-    nightTime: number = 100;
+    nightTime: number = 30;
 
     private timeState: TimeState = TimeState.DAY;
     private gameTime: number = 0;

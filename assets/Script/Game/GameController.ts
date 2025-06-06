@@ -5,6 +5,7 @@ import IncidentSystem from "./Environment/IncidentSystem";
 import InfoManager from "./UI/InfoManager";
 import Cursor, { CursorMode } from "./UI/GameTools/cursor";
 import Building from "./Building/Building"; 
+import PathPlanning from "./Enemy/Path/PathPlanning";
 
 const {ccclass, property} = cc._decorator;
 
@@ -67,11 +68,13 @@ export default class GameController extends cc.Component {
     public terrain: CreateTerrain;
     public incidentSystem: IncidentSystem;
     public building: cc.Node;
+    public enemyPathPlanning: PathPlanning = null;
 
     private gameTime: number = 0;
     private incident : IncidentType = IncidentType.NONE;
     private infoManager: InfoManager = null;
     private buildingMode: boolean = false;
+    private generateEnemy: boolean = false;
 
     private selectedBuildingType: string = "wareHouse"; // 預設建築類型
 
@@ -100,6 +103,7 @@ export default class GameController extends cc.Component {
         this.terrain = this.node.getComponent(CreateTerrain);
         this.incidentSystem = this.node.getComponent(IncidentSystem);
         this.building = cc.find("Canvas/Building");
+        this.enemyPathPlanning = this.node.getComponent("PathPlanning");
         if (!this.timeSystem || !this.terrain || !this.incidentSystem) {
             console.error("GameController: Missing required components (TimeSystem or CreateTerrain)");
             return;
@@ -124,6 +128,7 @@ export default class GameController extends cc.Component {
         this.infoManager.updateGameTime(this.gameTime);
         this.infoManager.updateIncident(this.incident);
         this.buildingMode = false;
+        this.generateEnemy = false;
     }
 
     private updateBuildingMode() {
@@ -165,15 +170,18 @@ export default class GameController extends cc.Component {
     }
 
     private updateEnemy() {
-        if(this.timeSystem.getCurrentTimeState() === TimeState.NIGHT) {
-            // TODO1: call enemy start
+        if(this.timeSystem.getCurrentTimeState() === TimeState.NIGHT && !this.generateEnemy) {
+            this.generateEnemy = true; // 設置為 true，表示已經生成敵人
             console.log("start enemy attack");
             this.callEnemy();
+        } else if(this.timeSystem.getCurrentTimeState() === TimeState.DAY) {
+            this.generateEnemy = false;
         }
     }
 
     private callEnemy(){
         // TODO2: call your generate function, and store the enemy object tag or access in gameController.
+        this.enemyPathPlanning.spawnEnemy(); // 假設這個方法會生成敵人
         console.log("enemy attack from the boundry");
     }
 

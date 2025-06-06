@@ -73,6 +73,8 @@ export default class Building extends cc.Component {
     protected _targetingSystem: Targeting = null;
     protected _targetNode: cc.Node = null; // 目標節點
 
+    _buildings: cc.Node[] = [];
+
     start () {
         this.init();
         cc.log(this.level);
@@ -127,12 +129,10 @@ export default class Building extends cc.Component {
     searchTarget () {
         const targets = this._targetingSystem.getTargets();
         if(targets.length === 0) {
-            console.log("No targets found.");
             this.buildingState = BuildingState.IDLE;
             this.unschedule(this.attack);
             return;
         }
-        console.log(`Found ${targets.length} targets.`);
         this._targetNode = targets[0];
         this.buildingState = BuildingState.ATTACK;
         this.schedule(this.attack, this.attackSpeed); // Schedule attack based on attack speed
@@ -184,7 +184,7 @@ export default class Building extends cc.Component {
         // console.log("Info panel added to building node.");
 
         cc.find("Canvas").addChild(buildingNode); // 將建築物添加到 Canvas 節點下
-
+        this._buildings.push(buildingNode);
         // if (buildingRoot) {
         //     buildingRoot.addChild(buildingNode); // 將建築物添加到建築根節點
         // } else {
@@ -195,7 +195,7 @@ export default class Building extends cc.Component {
     }
 
     showInfoPanel(): void {
-            console.log(this._buildingType);
+        console.log(this._buildingType);
         if (!this.infoPanel) {
             console.error("InfoPanel prefab is null!");
             return;
@@ -271,6 +271,22 @@ export default class Building extends cc.Component {
         if (this.previewBox) {
             this.previewBox.active = false; // 隱藏預覽框
         }
+    }
+
+    getNearestBuilding(pos: cc.Vec2) {
+        let nearestBuilding: cc.Node = null;
+        let minDistance = Infinity;
+
+        this._buildings.forEach(building => {
+            if(building === null) return;
+            const buildingPos2D = new cc.Vec2(building.position.x, building.position.y);
+            const distance = pos.sub(buildingPos2D).mag();
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestBuilding = building; 
+            }
+        });
+        return nearestBuilding;
     }
 } 
 

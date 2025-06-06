@@ -17,10 +17,10 @@
         "__id__": 2
       },
       {
-        "__id__": 103
+        "__id__": 108
       },
       {
-        "__id__": 111
+        "__id__": 117
       }
     ],
     "_active": false,
@@ -85,18 +85,21 @@
       },
       {
         "__id__": 75
+      },
+      {
+        "__id__": 100
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 100
+        "__id__": 105
       },
       {
-        "__id__": 101
+        "__id__": 106
       },
       {
-        "__id__": 102
+        "__id__": 107
       }
     ],
     "_prefab": null,
@@ -180,8 +183,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -3200,
-        -3200,
+        -2400,
+        -2400,
         0,
         0,
         0,
@@ -4835,6 +4838,170 @@
     "_id": "a7upNMOzRJkIWrRcSeV3Xg"
   },
   {
+    "__type__": "cc.Node",
+    "_name": "EnemyMushroom",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 101
+      },
+      {
+        "__id__": 102
+      },
+      {
+        "__id__": 103
+      }
+    ],
+    "_prefab": {
+      "__id__": 104
+    },
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 30,
+      "height": 34
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        16,
+        16,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "28q9A+9qpOOIOScCqwVhKv"
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 100
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "e4588dbc-b126-4bc3-8ccc-ad3e2d25d6bd"
+    },
+    "_type": 0,
+    "_sizeMode": 1,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_atlas": null,
+    "_id": "5blEI81lNIdqH+rQOkL/Ec"
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 100
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "57236869-7509-41b6-8e53-02704fd469d4"
+    },
+    "_clips": [
+      {
+        "__uuid__": "57236869-7509-41b6-8e53-02704fd469d4"
+      },
+      {
+        "__uuid__": "fa62f870-3a6b-46b3-aa09-8ec3815c0e6b"
+      },
+      {
+        "__uuid__": "394c7d0f-386c-4d90-8874-6e236b7e1828"
+      },
+      null
+    ],
+    "playOnLoad": true,
+    "_id": "4brjZa0XNNVr+Bq3qbypSv"
+  },
+  {
+    "__type__": "9eb87XD3wBByLLAxatTmiQE",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 100
+    },
+    "_enabled": true,
+    "testProperty": {
+      "__type__": "cc.Vec2",
+      "x": 120,
+      "y": 120
+    },
+    "testProperty2": {
+      "__type__": "cc.Vec2",
+      "x": 95,
+      "y": 95
+    },
+    "hp": 50,
+    "damage": 10,
+    "coolDown": 3,
+    "speed": 1,
+    "attackRange": 1,
+    "_id": "6crR7wWA9GKY9JVnZZexpC"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 100
+    },
+    "asset": {
+      "__uuid__": "74c33464-31ee-4205-b9b5-321e6947aaf7"
+    },
+    "fileId": "",
+    "sync": false
+  },
+  {
     "__type__": "cc.Canvas",
     "_name": "",
     "_objFlags": 0,
@@ -4910,25 +5077,28 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 104
-      },
-      {
-        "__id__": 105
-      },
-      {
-        "__id__": 106
-      },
-      {
-        "__id__": 107
-      },
-      {
-        "__id__": 108
-      },
-      {
         "__id__": 109
       },
       {
         "__id__": 110
+      },
+      {
+        "__id__": 111
+      },
+      {
+        "__id__": 112
+      },
+      {
+        "__id__": 113
+      },
+      {
+        "__id__": 114
+      },
+      {
+        "__id__": 115
+      },
+      {
+        "__id__": 116
       }
     ],
     "_prefab": null,
@@ -4984,7 +5154,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 108
     },
     "_enabled": true,
     "mapGrid": {
@@ -5025,7 +5195,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 108
     },
     "_enabled": true,
     "GameDuration": 300,
@@ -5067,12 +5237,12 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 108
     },
     "_enabled": true,
     "timeInterval": 5,
-    "dayTime": 100,
-    "nightTime": 100,
+    "dayTime": 5,
+    "nightTime": 30,
     "_id": "10wvP4R/lKqqjIv6hZAoJ8"
   },
   {
@@ -5080,7 +5250,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 108
     },
     "_enabled": true,
     "incidentInterval": 10,
@@ -5092,7 +5262,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 108
     },
     "_enabled": true,
     "level": 1,
@@ -5140,7 +5310,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 108
     },
     "_enabled": true,
     "moveSpeed": 1000,
@@ -5154,10 +5324,41 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 108
     },
     "_enabled": true,
     "_id": "0fZMWgwT1FPJ8AwisJX9Re"
+  },
+  {
+    "__type__": "ec0251O0xxABq0/eqh9NzDx",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 108
+    },
+    "_enabled": true,
+    "mapSize": {
+      "__type__": "cc.Vec2",
+      "x": 150,
+      "y": 150
+    },
+    "startPoint": {
+      "__type__": "cc.Vec2",
+      "x": -2400,
+      "y": -2400
+    },
+    "pixelSize": {
+      "__type__": "cc.Vec2",
+      "x": 32,
+      "y": 32
+    },
+    "mushroomEnemy": {
+      "__uuid__": "74c33464-31ee-4205-b9b5-321e6947aaf7"
+    },
+    "goblinEnemy": {
+      "__uuid__": "0ca7cc2a-811e-4762-89e6-4ed47abd5070"
+    },
+    "_id": "ebSNoKXhJDmqq9ObU0i5ly"
   },
   {
     "__type__": "cc.Node",

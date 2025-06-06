@@ -48,6 +48,7 @@ export default class SimpleCursor extends cc.Component {
 
         // Ensure cursorNode's visibility matches the initial 'active' state
         this.cursorNode.active = this.active;
+        //this.previewBoxComp.active = this.active;
 
         if (!this.mainCamera && this.followMouse) {
             console.warn("Main Camera is not assigned. Mouse following might be inaccurate if the camera is moved or scaled, or if the cursorNode is not parented to the Canvas.");
@@ -62,6 +63,11 @@ export default class SimpleCursor extends cc.Component {
         // Clean up system-level event listeners
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+    }
+
+    init(){
+        this.cursorNode.x = Math.floor(this._dx / BLOCKSIDE) * BLOCKSIDE;
+        this.cursorNode.y = Math.floor(this._dy / BLOCKSIDE) * BLOCKSIDE;
     }
 
     private onKeyDown(event: cc.Event.EventKeyboard): void {
@@ -128,6 +134,13 @@ export default class SimpleCursor extends cc.Component {
 
     update(dt: number): void {
         if (!this.active || !this.cursorNode) { // Check 'active' state
+            this._dx = this.mainCamera.node.getPosition().x;
+            this._dy = this.mainCamera.node.getPosition().y;
+            this.cursorNode.x = Math.floor(this._dx / BLOCKSIDE) * BLOCKSIDE;
+            this.cursorNode.y = Math.floor(this._dy / BLOCKSIDE) * BLOCKSIDE;
+            this.previewBoxComp.updatePreviewBox(this.cursorNode.x, this.cursorNode.y);
+            this.previewBoxComp.active = false;
+            this.previewBoxComp.opacity = 0;
             return;
         }
 
@@ -154,7 +167,11 @@ export default class SimpleCursor extends cc.Component {
             this.cursorNode.y = Math.floor(this._dy / BLOCKSIDE) * BLOCKSIDE;
 
         this.previewBoxComp = this.building.getComponent('Building');
+        this.previewBoxComp.active = true;
+        this.previewBoxComp.opacity = 128; // Set to semi-transparent
         this.previewBoxComp.updatePreviewBox(this.cursorNode.x, this.cursorNode.y);
+        console.log(`KeyboardCursor: Updated cursor position to (${this.cursorNode.x}, ${this.cursorNode.y})`);
+        
         
         
             // Optional: Clamp position to Canvas boundaries
@@ -175,7 +192,8 @@ export default class SimpleCursor extends cc.Component {
     public setCursorActive(active: boolean): void {
         this.active = active;
         if (this.cursorNode) {
-            this.cursorNode.active = this.active; // Control visibility
+            this.cursorNode.active = this.active; // Control visibility\
+            //this.previewBoxComp.active = this.active; // Control preview box visibility
         }
 
         // If becoming inactive, reset movement flags to prevent stuck movement

@@ -161,9 +161,13 @@ export default class Enemy extends cc.Component {
             const by = b_pos.y;
 
             let scriptName = 'SwordTower';
-            // if (building instanceof Swordtower) {
-            //     scriptName = 'SwordTower';
-            // }
+            if (building.name == 'swordTower') {
+                scriptName = 'wareHouse';
+            } else if (building.name == 'wareHouse') {
+                scriptName = 'WareHouse';
+            } else if (building.name == 'cannonTower') {
+                scriptName = 'CannonTower';
+            }
 
             this.target = {
                 dist: Math.sqrt(Math.pow(x-bx, 2) + Math.pow(y-by, 2)),
@@ -245,7 +249,7 @@ export default class Enemy extends cc.Component {
     }
 
     createDamage () {
-        this.target.script.getHurts(this.damage);
+        // this.target.script.getHurts(this.damage);
     }
 }
 

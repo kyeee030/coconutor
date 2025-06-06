@@ -293,4 +293,14 @@ export default class Building extends cc.Component {
         });
         return nearestBuilding;
     }
+
+    getHurts(damage: number) {
+        this.hp -= damage;
+        if (this.hp <= 0) {
+            this.buildingState = BuildingState.BROKEN;
+            console.log(`Building at (${this._location.x}, ${this._location.y}) has been destroyed.`);
+        } else {
+            console.log(`Building at (${this._location.x}, ${this._location.y}) took ${damage} damage, remaining HP: ${this.hp}`);
+        }
+    }
 } 

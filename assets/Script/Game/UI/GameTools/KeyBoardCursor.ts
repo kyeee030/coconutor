@@ -140,7 +140,6 @@ export default class SimpleCursor extends cc.Component {
             this.cursorNode.y = Math.floor(this._dy / BLOCKSIDE) * BLOCKSIDE;
             this.previewBoxComp.updatePreviewBox(this.cursorNode.x, this.cursorNode.y);
             this.previewBoxComp.active = false;
-            this.previewBoxComp.opacity = 0;
             return;
         }
 
@@ -168,7 +167,6 @@ export default class SimpleCursor extends cc.Component {
 
         this.previewBoxComp = this.building.getComponent('Building');
         this.previewBoxComp.active = true;
-        this.previewBoxComp.opacity = 128; // Set to semi-transparent
         this.previewBoxComp.updatePreviewBox(this.cursorNode.x, this.cursorNode.y);
         console.log(`KeyboardCursor: Updated cursor position to (${this.cursorNode.x}, ${this.cursorNode.y})`);
         

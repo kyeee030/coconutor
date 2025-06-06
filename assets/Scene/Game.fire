@@ -5990,7 +5990,9 @@
       "__id__": 4
     },
     "_enabled": true,
-    "cursorNode": null,
+    "cursorNode": {
+      "__id__": 6
+    },
     "mouse_x_offset": 0,
     "mouse_y_offset": 0,
     "mainCamera": {

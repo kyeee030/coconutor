@@ -63,6 +63,9 @@ export default class GameController extends cc.Component {
     @property(cc.Node)
     mapGrid: cc.Node = null; // 地圖的父節點
 
+    @property(cc.Node)
+    colorRenderNode: cc.Node = null; // 用於渲染地圖顏色的節點
+
 
     // system components
     public timeSystem: TimeSystem;
@@ -94,6 +97,7 @@ export default class GameController extends cc.Component {
         // this.updateIncidentSystem(dt);
         this.updateUI();
         this.updateEnemy();
+        this.updateTimeRender();
     }
 
 
@@ -135,6 +139,7 @@ export default class GameController extends cc.Component {
         this.infoManager.updateIncident(this.incident);
         this.buildingMode = false;
         this.isGenerateEnemy = false;
+        this.colorRenderNode.opacity = 0;
     }
 
 
@@ -171,6 +176,20 @@ export default class GameController extends cc.Component {
         else if (this.timeSystem.getCurrentTimeState() === TimeState.DAY) {
             this.isGenerateEnemy = false;
         }
+    }
+
+    private updateTimeRender() {
+        const timeState = this.timeSystem.getCurrentTimeState();
+        const currentTime = this.timeSystem.getGameTime();
+        if(timeState == TimeState.DAY) {
+            this.colorRenderNode.opacity = 0;
+            this.colorRenderNode.color = cc.Color.WHITE;
+        } else if(timeState == TimeState.NIGHT) {
+            this.colorRenderNode.opacity = 100;
+            this.colorRenderNode.color = cc.Color.BLACK;
+        }
+        
+
     }
 
     private callEnemy(){

@@ -90,6 +90,7 @@ export default class GameController extends cc.Component {
     private score: number = 0;
     public selectedBuildingType: string = "wareHouse"; // 預設建築類型
     private firstPlayAudio : boolean = true;
+    private hardness: number = 1;
 
     //====== System Callback==========//
     onLoad(){}
@@ -97,6 +98,8 @@ export default class GameController extends cc.Component {
 
     start () {
         this.init();
+        const hardStr = cc.sys.localStorage.getItem("hardness");
+        this.hardness = hardStr ? parseInt(hardStr) : 3;
     }
 
     update(dt: number){
@@ -211,7 +214,7 @@ export default class GameController extends cc.Component {
 
     private callEnemy(){
         // TODO2: call your generate function, and store the enemy object tag or access in gameController.
-        let t = this.timeSystem.getWaveCount() * 3;
+        let t = this.timeSystem.getWaveCount() * this.hardness;
         for(let i = 0; i < t; i++){
             this.pathPlanning.spawnEnemy();
         }

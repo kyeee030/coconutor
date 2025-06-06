@@ -75,7 +75,7 @@ export default class GameController extends cc.Component {
     private buildingMode: boolean = false;
     private isGenerateEnemy: boolean = false;
     private pathPlanning: PathPlanning = null; // 路徑規劃系統  
-
+    private score: number = 0;
     private selectedBuildingType: string = "wareHouse"; // 預設建築類型
 
     //====== System Callback==========//
@@ -121,6 +121,7 @@ export default class GameController extends cc.Component {
         cc.systemEvent.on('building-position', this.onBuildingPlaced, this);
 
         // initialize local variables
+        this.score = 0;
         this.gameTime = 0;
         this.incident = IncidentType.NONE;
         this.infoManager.updateWavesLabel(0);
@@ -247,6 +248,15 @@ export default class GameController extends cc.Component {
 
     public callEndTime(){
         this.endGame();
+    }
+
+    public addScore(points: number) {
+        this.score += points;
+        console.log(`Score updated: ${this.score}`);
+    }
+
+    public getScore(): number {
+        return this.score;
     }
 
     public selectBuildingType(type: string) {

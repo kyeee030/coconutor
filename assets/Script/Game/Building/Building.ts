@@ -232,4 +232,15 @@ export default class Building extends cc.Component {
         });
         return nearestBuilding;
     }
+
+    getHurts (damage: number) {
+        this.hp -= damage;
+        if (this.hp <= 0) {
+            this.buildingState = BuildingState.BROKEN;
+            //git this.node.destroy(); // Destroy the building node
+            console.log(`Building of type ${this.buildingType} has been destroyed.`);
+        } else {
+            console.log(`Building of type ${this.buildingType} took ${damage} damage, remaining HP: ${this.hp}`);
+        }
+    }
 } 

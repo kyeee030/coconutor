@@ -1,0 +1,43 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Enemy_BotWheel_Attack",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.5166666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "b9c9ed7b-19f0-4456-a76f-8abfecc075bf"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "fddaf721-b13d-45fa-8bda-abf76a174fd2"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "b1c77154-fd73-4d6b-b543-2e0f176ae07f"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "4fd6d176-4e4d-4fbf-af9d-b0e279b01b75"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

@@ -6275,6 +6275,12 @@
     "goblinEnemy": {
       "__uuid__": "e9a9bf78-b1aa-479a-8435-da11f844283b"
     },
+    "stromheadEnemy": {
+      "__uuid__": "ca7cd88c-0475-4857-ae73-0e587378c6d1"
+    },
+    "botWheelEnemy": {
+      "__uuid__": "dcf8dc83-8869-4ebb-ae26-2e4dce4b8653"
+    },
     "_id": "5f0bSmYfVO3KYJMQpSF7zO"
   },
   {

@@ -53,8 +53,6 @@ export default class CameraMove extends cc.Component {
         }
 
         cc.director.getPhysicsManager().enabled = true;
-
-        // cc.systemEvent.on('mousewheel', this.onMouseWheel, this); // 沒用
     }
 
     update (dt) {
@@ -122,10 +120,4 @@ export default class CameraMove extends cc.Component {
             this._moveDirection = Direction.NONE;
         }
     }
-
-    onMouseWheel (event: cc.Event.EventMouse) {
-        const delta = event.getScrollY();
-        this._camera.zoomRatio += delta * 0.1;
-    }
-
 }

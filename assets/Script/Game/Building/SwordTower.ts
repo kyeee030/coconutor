@@ -52,8 +52,14 @@ export default class SwordTower extends Building {
     update(dt) {
         // super.update(dt);
         // console.log("target: ", this._targetingSystem.getTargets());
+        if(!cc.isValid(this._targetNode)) {
+            this._targetNode = null;
+        }
         const targets = this._targetingSystem.getTargets();
         if(targets.length > 0) {
+            while(!targets[0] || !cc.isValid(targets[0])){
+                targets.shift(); // 移除空的目標
+            }
             if(targets[0] != this._targetNode) {
                 this._targetNode = targets[0];
                 this.schedule(()=>{
@@ -62,9 +68,12 @@ export default class SwordTower extends Building {
             }
         } else {
             this._targetNode = null;
+            this.unschedule(this.attack);
+            this.unscheduleAllCallbacks();
+            cc.log("gg");
         }
 
-        if(this._targetNode != null && this.headNode) {
+        if(this._targetNode != null && cc.isValid(this._targetNode) && this.headNode) {
             const targetDirection = cc.v2(this._targetNode.position.x - this.node.position.x,
             this._targetNode.position.y - this.node.position.y).normalize();
             const angle = cc.misc.radiansToDegrees(Math.atan2(targetDirection.y, targetDirection.x));
@@ -75,7 +84,7 @@ export default class SwordTower extends Building {
     }
 
     attack(): void {
-        console.log("SwordTower is attacking!");
+        // console.log("SwordTower is attacking!");
         this._animation.play("SwordTowerAttack");
         super.attack(); // 呼叫父類別的攻擊方法
     }

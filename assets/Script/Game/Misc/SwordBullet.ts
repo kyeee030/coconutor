@@ -6,6 +6,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 import Bullet from "./Bullet";
+import Enemy from "../Enemy/Enemy";
 
 const {ccclass, property} = cc._decorator;
 

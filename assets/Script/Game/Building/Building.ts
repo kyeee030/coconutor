@@ -316,4 +316,18 @@ export default class Building extends cc.Component {
             console.log(`Building of type ${this.buildingType} took ${damage} damage, remaining HP: ${this.hp}`);
         }
     }
+
+    setTargetNode(targetNode: cc.Node): void {
+        if(targetNode == null) {
+            targetNode = null;
+            console.warn("Target node is null, setting to null.");
+            return;
+        }
+        if (targetNode && cc.isValid(targetNode)) {
+            this._targetNode = targetNode;
+            console.log(`Target node set to: ${targetNode.name}`);
+        } else {
+            console.warn("Invalid target node provided.");
+        }
+    }
 } 

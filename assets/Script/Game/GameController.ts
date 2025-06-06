@@ -4,6 +4,7 @@ import { IncidentType } from "./Environment/IncidentSystem";
 import IncidentSystem from "./Environment/IncidentSystem";
 import InfoManager from "./UI/InfoManager";
 import Cursor, { CursorMode } from "./UI/GameTools/cursor";
+import Building from "./Building/Building"; 
 
 const {ccclass, property} = cc._decorator;
 
@@ -34,18 +35,45 @@ export default class GameController extends cc.Component {
     cursorNode: cc.Node = null;
 
     @property(cc.Button)
-    BuildingButton: cc.Button = null;
+    wareHouseButton: cc.Button = null; // 按鈕用於選擇倉庫建築
+
+    @property(cc.Button)
+    swordTowerButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(cc.Button)
+    mineButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(cc.Button)
+    turretButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(cc.Button)
+    sawmillButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(cc.Button)
+    quarryButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(cc.Button)
+    mageTowerButton: cc.Button = null; // 按鈕用於選擇劍塔建築
+
+    @property(Building)
+    buildingManager: Building = null; // 引用 Building 組件
+
+    @property(cc.Node)
+    mapGrid: cc.Node = null; // 地圖的父節點
 
 
     // system components
     public timeSystem: TimeSystem;
     public terrain: CreateTerrain;
     public incidentSystem: IncidentSystem;
+    public building: cc.Node;
 
     private gameTime: number = 0;
     private incident : IncidentType = IncidentType.NONE;
     private infoManager: InfoManager = null;
     private buildingMode: boolean = false;
+
+    private selectedBuildingType: string = "wareHouse"; // 預設建築類型
 
     //====== System Callback==========//
     onLoad(){}
@@ -71,6 +99,7 @@ export default class GameController extends cc.Component {
         this.timeSystem = this.node.getComponent(TimeSystem);
         this.terrain = this.node.getComponent(CreateTerrain);
         this.incidentSystem = this.node.getComponent(IncidentSystem);
+        this.building = cc.find("Canvas/Building");
         if (!this.timeSystem || !this.terrain || !this.incidentSystem) {
             console.error("GameController: Missing required components (TimeSystem or CreateTerrain)");
             return;
@@ -84,7 +113,7 @@ export default class GameController extends cc.Component {
         console.log("GameController initialized with TimeSystem and CreateTerrain.");
 
         // add event listeners
-        this.BuildingButton.node.on('click', this.updateBuildingMode, this);
+        this.setupBuildingButtons();
         cc.systemEvent.on('building-position', this.onBuildingPlaced, this);
 
         // initialize local variables
@@ -99,8 +128,14 @@ export default class GameController extends cc.Component {
 
     private updateBuildingMode() {
         const cursor = this.cursorNode.getComponent(Cursor);
-        if(cursor.getCurrentMode() === CursorMode.NORMAL){
-            this.cursorNode.getComponent(Cursor).changeState(CursorMode.BUILDING);
+        if (cursor.getCurrentMode() === CursorMode.NORMAL) {
+            cursor.changeState(CursorMode.BUILDING);
+            this.buildingMode = true; // 啟用建築模式
+            console.log("Building mode activated.");
+        } else if (cursor.getCurrentMode() === CursorMode.BUILDING) {
+            cursor.changeState(CursorMode.NORMAL);
+            this.buildingMode = false; // 停用建築模式
+            console.log("Building mode deactivated.");
         }
     }
 
@@ -142,10 +177,51 @@ export default class GameController extends cc.Component {
         console.log("enemy attack from the boundry");
     }
 
-    private onBuildingPlaced(event : cc.Event.EventCustom) {
-        const position = event.getUserData();
-        // TODO3: call your building function with parameter position.x and position.y
-        console.log(`the position get from cursor.ts:  ${position.x}, ${position.y}`);
+    private onBuildingPlaced(event: cc.Event.EventCustom) {
+        if (!this.buildingMode) {
+            //console.log("Building mode is not active. Ignoring building placement.");
+            return;
+        }
+
+        this.buildingManager.onBuildingPlaced(event, this.building, this.selectedBuildingType);
+
+        this.buildingMode = false;
+        const cursor = this.cursorNode.getComponent(Cursor);
+        cursor.changeState(CursorMode.NORMAL);
+        //console.log("Building mode deactivated after placement.");
+    }
+
+    private setupBuildingButtons() {
+    // 綁定倉庫按鈕事件
+        this.wareHouseButton.node.on('click', () => {
+            this.selectBuildingType("wareHouse"); // 設置建築類型為 wareHouse
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        // 綁定劍塔按鈕事件
+        this.swordTowerButton.node.on('click', () => {
+            this.selectBuildingType("swordTower"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.turretButton.node.on('click', () => {
+            this.selectBuildingType("turret"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.sawmillButton.node.on('click', () => {
+            this.selectBuildingType("sawmill"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.mineButton.node.on('click', () => {
+            this.selectBuildingType("mine"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.quarryButton.node.on('click', () => {
+            this.selectBuildingType("quarry"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
+        this.mageTowerButton.node.on('click', () => {
+            this.selectBuildingType("mageTower"); // 設置建築類型為 swordTower
+            this.updateBuildingMode(); // 啟用建築模式
+        }, this);
     }
 
     private endGame(){
@@ -161,4 +237,8 @@ export default class GameController extends cc.Component {
         this.endGame();
     }
 
+    public selectBuildingType(type: string) {
+        this.selectedBuildingType = type;
+        console.log(`Selected building type: ${type}`);
+    }
 }

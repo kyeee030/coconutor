@@ -39,8 +39,7 @@ export default class EnemyGoblin extends Enemy {
         this._anim.play('Enemy_Goblin_Attack');
         this._isAttacking = true;
         this.scheduleOnce(() => {// this way is not good, but now I am too lazy to change it
-            //target.hp - damage
-            cc.log("attack!!!!!!!!!!");
+            this.createDamage();
         }, 0.70);
         this._anim.once('finished', () => {
             if (this.enemyState === EnemyState.ATTACK) {

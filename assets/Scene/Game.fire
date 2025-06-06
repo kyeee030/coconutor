@@ -6879,6 +6879,12 @@
     "colorRenderNode": {
       "__id__": 9
     },
+    "morningAudio": {
+      "__uuid__": "066e460a-de0d-4e62-8525-9308683c50be"
+    },
+    "nightAudio": {
+      "__uuid__": "a860c442-4808-4145-b884-6ec9f73495c3"
+    },
     "_id": "c9sZAGCKFP5K2tGuU1rzhH"
   },
   {

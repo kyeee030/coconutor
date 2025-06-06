@@ -73,7 +73,6 @@ export default class SwordTower extends Building {
             this._targetNode = null;
             this.unschedule(this.attack);
             this.unscheduleAllCallbacks();
-            cc.log("gg");
         }
 
         if(this._targetNode != null && cc.isValid(this._targetNode) && this.headNode) {

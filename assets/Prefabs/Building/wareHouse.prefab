@@ -821,6 +821,9 @@
       "__id__": 1
     },
     "_enabled": true,
+    "infoPanelNode": {
+      "__id__": 2
+    },
     "hp": 1,
     "level": 1,
     "damage": 1,
@@ -831,9 +834,7 @@
     "rangeNode": null,
     "buildingPrefabs": [],
     "buildingTypes": [],
-    "infoPanelNode": {
-      "__id__": 2
-    },
+    "headNode": null,
     "_id": ""
   },
   {

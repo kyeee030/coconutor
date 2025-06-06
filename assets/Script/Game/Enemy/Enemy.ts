@@ -175,7 +175,6 @@ export default class Enemy extends cc.Component {
                 type: null, //or other state
                 script: building.getComponent(`${scriptName}`)
             };
-            // cc.log("dist: ",x-bx, y-by, this.target.dist);
         }
         if(!this.target) this.checkState(EnemyState.IDLE);
         else if(this.enemyState == EnemyState.IDLE) this.checkState(EnemyState.MOVE);

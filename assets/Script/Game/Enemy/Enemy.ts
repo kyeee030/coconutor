@@ -160,13 +160,19 @@ export default class Enemy extends cc.Component {
             const bx = b_pos.x;
             const by = b_pos.y;
 
-            let scriptName = 'SwordTower';
+            let scriptName = '';
             if (building.name == 'swordTower') {
-                scriptName = 'wareHouse';
+                scriptName = 'SwordTower';
             } else if (building.name == 'wareHouse') {
                 scriptName = 'WareHouse';
-            } else if (building.name == 'cannonTower') {
-                scriptName = 'CannonTower';
+            } else if (building.name == 'mageTower') {
+                scriptName = 'MageTower';
+            } else if (building.name == 'sawmill') {
+                scriptName = 'Sawmill';
+            } else if (building.name == 'quarry') {
+                scriptName = 'Quarry';
+            } else if (building.name == 'mine') {
+                scriptName = 'Mine';
             }
 
             this.target = {

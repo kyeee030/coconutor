@@ -77,7 +77,7 @@ export default class GameController extends cc.Component {
     private isGenerateEnemy: boolean = false;
     private pathPlanning: PathPlanning = null; // 路徑規劃系統  
     private score: number = 0;
-    private selectedBuildingType: string = "wareHouse"; // 預設建築類型
+    public selectedBuildingType: string = "wareHouse"; // 預設建築類型
 
     //====== System Callback==========//
     onLoad(){}
@@ -176,7 +176,6 @@ export default class GameController extends cc.Component {
     }
 
     private onBuildingPlaced(event: cc.Event.EventCustom) {
-        cc.log("ggggggggggggggggggggggg");
         if (!this.buildingMode) {
             //console.log("Building mode is not active. Ignoring building placement.");
             return;

@@ -24,10 +24,13 @@
       },
       {
         "__id__": 3
+      },
+      {
+        "__id__": 4
       }
     ],
     "_prefab": {
-      "__id__": 4
+      "__id__": 5
     },
     "_opacity": 255,
     "_color": {
@@ -91,9 +94,7 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_spriteFrame": {
-      "__uuid__": "53728eba-eb1a-42c1-b17e-c6781ba35532"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 0,
     "_fillType": 0,
@@ -116,12 +117,37 @@
       "__id__": 1
     },
     "_enabled": true,
+    "buildingType": "Example",
+    "infoPanelNode": null,
+    "hp": 1,
     "level": 1,
+    "damage": 1,
+    "attackRange": 1,
     "attackSpeed": 1,
     "previewBox": null,
-    "infoPanel": null,
+    "bullet": null,
+    "rangeNode": null,
     "buildingPrefabs": [],
     "buildingTypes": [],
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "32b556bc-6f47-4d26-b55e-adf98070efbc"
+    },
+    "_clips": [
+      {
+        "__uuid__": "32b556bc-6f47-4d26-b55e-adf98070efbc"
+      }
+    ],
+    "playOnLoad": true,
     "_id": ""
   },
   {

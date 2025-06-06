@@ -4,6 +4,7 @@ import BuildingInfoPanel from "./BuildingInfoPanel";
 import CreateTerrain from "../CreateTerrain";
 import GameController from "../GameController";
 import ResourceSystem from "../Environment/ResourceSystem";
+import Warning from "../UI/GameTools/Warning";
 const {ccclass, property} = cc._decorator;
 
 export enum BuildingState {
@@ -57,6 +58,9 @@ export default class Building extends cc.Component {
 
     @property(cc.AudioClip)
     onDestroyAudio: cc.AudioClip = null; // 銷毀音效
+
+    @property(cc.Node)
+    warningNode = null; // 警告節點
 
     private canvas: cc.Node = null; // Canvas 節點
     private mapSize: number = 4800;
@@ -174,6 +178,7 @@ export default class Building extends cc.Component {
         this.buildingType = selectedBuildingType;
         if(!this.checkEnoughResources()) {
             console.warn(`Not enough resources to build ${selectedBuildingType}.`);
+            this.warningNode.showWarning("Not Enough Resources to Build " + selectedBuildingType);
             this.buildingType = 'Example'; // Reset to default type
             return;
         }

@@ -1,6 +1,8 @@
 const {ccclass, property} = cc._decorator;
 import Building from "../../Building/Building";
 
+const BLOCKSIDE = 32;
+
 @ccclass
 export default class SimpleCursor extends cc.Component {
 
@@ -28,6 +30,9 @@ export default class SimpleCursor extends cc.Component {
     private moveRight: boolean = false;
     private active: boolean = false; // Default to false, GameController will activate it
     private previewBoxComp: any;
+
+    _dx: number = 0; // Used to store the x position of the cursors
+    _dy: number = 0; // Used to store the y position of the cursor
 
     // To keep track of whether mouse movement should also control the cursor
     @property(cc.Boolean)
@@ -142,9 +147,12 @@ export default class SimpleCursor extends cc.Component {
         }
 
         if (deltaPos.x !== 0 || deltaPos.y !== 0) {
-            this.cursorNode.x += deltaPos.x;
-            this.cursorNode.y += deltaPos.y;
-        
+
+            this._dx += deltaPos.x;
+            this._dy += deltaPos.y;
+            this.cursorNode.x = Math.floor(this._dx / BLOCKSIDE) * BLOCKSIDE;
+            this.cursorNode.y = Math.floor(this._dy / BLOCKSIDE) * BLOCKSIDE;
+
         this.previewBoxComp = this.building.getComponent('Building');
         this.previewBoxComp.updatePreviewBox(this.cursorNode.x, this.cursorNode.y);
         

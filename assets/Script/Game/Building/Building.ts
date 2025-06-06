@@ -72,6 +72,7 @@ export default class Building extends cc.Component {
     protected _canvas: cc.Node = null; // Canvas 節點
     protected _targetingSystem: Targeting = null;
     protected _targetNode: cc.Node = null; // 目標節點
+    _buildings: cc.Node[] = [];
 
     start () {
         this.init();
@@ -184,6 +185,8 @@ export default class Building extends cc.Component {
         // console.log("Info panel added to building node.");
 
         cc.find("Canvas").addChild(buildingNode); // 將建築物添加到 Canvas 節點下
+        this._buildings.push(buildingNode);
+
 
         // if (buildingRoot) {
         //     buildingRoot.addChild(buildingNode); // 將建築物添加到建築根節點
@@ -271,6 +274,22 @@ export default class Building extends cc.Component {
         if (this.previewBox) {
             this.previewBox.active = false; // 隱藏預覽框
         }
+    }
+
+    getNearestBuilding(pos: cc.Vec2) {
+        let nearestBuilding: cc.Node = null;
+        let minDistance = Infinity;
+
+        this._buildings.forEach(building => {
+            if(building === null) return;
+            const buildingPos2D = new cc.Vec2(building.position.x, building.position.y);
+            const distance = pos.sub(buildingPos2D).mag();
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestBuilding = building; 
+            }
+        });
+        return nearestBuilding;
     }
 } 
 

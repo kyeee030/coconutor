@@ -23,7 +23,7 @@
         "__id__": 132
       },
       {
-        "__id__": 140
+        "__id__": 141
       }
     ],
     "_active": false,
@@ -6009,6 +6009,9 @@
       },
       {
         "__id__": 139
+      },
+      {
+        "__id__": 140
       }
     ],
     "_prefab": null,
@@ -6151,8 +6154,8 @@
     },
     "_enabled": true,
     "timeInterval": 5,
-    "dayTime": 100,
-    "nightTime": 100,
+    "dayTime": 5,
+    "nightTime": 20,
     "_id": "10wvP4R/lKqqjIv6hZAoJ8"
   },
   {
@@ -6238,6 +6241,37 @@
     },
     "_enabled": true,
     "_id": "0fZMWgwT1FPJ8AwisJX9Re"
+  },
+  {
+    "__type__": "ec0251O0xxABq0/eqh9NzDx",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 132
+    },
+    "_enabled": true,
+    "mapSize": {
+      "__type__": "cc.Vec2",
+      "x": 150,
+      "y": 150
+    },
+    "startPoint": {
+      "__type__": "cc.Vec2",
+      "x": -2400,
+      "y": -2400
+    },
+    "pixelSize": {
+      "__type__": "cc.Vec2",
+      "x": 32,
+      "y": 32
+    },
+    "mushroomEnemy": {
+      "__uuid__": "83966e10-bd96-46cf-82ad-236d44c68170"
+    },
+    "goblinEnemy": {
+      "__uuid__": "e9a9bf78-b1aa-479a-8435-da11f844283b"
+    },
+    "_id": "5f0bSmYfVO3KYJMQpSF7zO"
   },
   {
     "__type__": "cc.Node",

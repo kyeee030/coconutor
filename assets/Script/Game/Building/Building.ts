@@ -363,7 +363,7 @@ export default class Building extends cc.Component {
         if (this.hp <= 0) {
             this.buildingState = BuildingState.BROKEN;
             if (this.node && cc.isValid(this.node)){
-                if(this.map[Math.floor((this.node.position.x + 2416) / this.gridSize)][Math.floor((this.node.position.y + 2416) / this.gridSize)] === 'wareHouse') {
+                if(this.buildingType === 'wareHouse') {
                     this.gameController.callEndTime();
                     console.log("Game Over! You lost the game.");
                 }

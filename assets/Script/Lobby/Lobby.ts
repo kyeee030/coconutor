@@ -41,7 +41,7 @@ export default class Lobby extends cc.Component {
 
                 alert("註冊成功！");
                 cc.find("Canvas/sign_in_board").active = false;
-                cc.director.loadScene("Select");
+                cc.director.loadScene("Game");
             })
             .catch(e => {
                 cc.find("Canvas/sign_in_board/board/name").getComponent(cc.EditBox).string = '';
@@ -64,10 +64,15 @@ export default class Lobby extends cc.Component {
         cc.find("Canvas/sign_in_board").active = false;
         cc.find("Canvas/setting_board").active = false;
         cc.find("Canvas/leaderboard").active = false;
+        cc.find("Canvas/login_board").active = false;
     }
 
     enter() {
         this.handle_sign_in();
+    }
+
+    enter2(){
+        this.handlelogin();
     }
 
     volumn_render() {
@@ -84,6 +89,32 @@ export default class Lobby extends cc.Component {
         });
     }
 
+    log_in(){
+        cc.find("Canvas/login_board").active = true;
+    }
+
+    handlelogin() {
+        var txtEmail = cc.find("Canvas/login_board/mail");
+        var txtPassword = cc.find("Canvas/login_board/password");
+
+        var txtemail = txtEmail.getComponent(cc.EditBox).string;
+        var txtpassword = txtPassword.getComponent(cc.EditBox).string;
+
+        firebase.auth().signInWithEmailAndPassword(txtemail, txtpassword)
+            .then((userCredential) => {
+                alert("success");
+                cc.find("Canvas/sign_in_board").active = false;
+                cc.director.loadScene("Game");
+            })
+            .catch(userCredential => {
+                cc.find("Canvas/login_board/mail").getComponent(cc.EditBox).string = '';
+                cc.find("Canvas/login_board/password").getComponent(cc.EditBox).string = '';
+                txtemail = '';
+                txtpassword = '';
+                alert("failed");
+            }
+            );
+    }
 
     loadTop3Leaderboard() {
     const leaderboardRef = firebase.database().ref('/leaderboard');

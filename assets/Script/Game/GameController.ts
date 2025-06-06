@@ -257,14 +257,64 @@ export default class GameController extends cc.Component {
         console.log("finish call onBuildingPlaced");
         this.buildingMode = false;
         this.cursor.setCursorActive(false);
+        if (this.selectedBuildingType === "wareHouse") {
+            console.log("Warehouse built. Enabling other buttons.");
+            this.swordTowerButton.interactable = true;
+            this.turretButton.interactable = true;
+            this.sawmillButton.interactable = true;
+            this.mineButton.interactable = true;
+            this.quarryButton.interactable = true;
+            this.mageTowerButton.interactable = true;
+
+            this.swordTowerButton.node.getChildByName("Background").color = cc.Color.WHITE;
+            this.turretButton.node.getChildByName("Background").color = cc.Color.WHITE;
+            this.sawmillButton.node.getChildByName("Background").color = cc.Color.WHITE;
+            this.mineButton.node.getChildByName("Background").color = cc.Color.WHITE;
+            this.quarryButton.node.getChildByName("Background").color = cc.Color.WHITE;
+            this.mageTowerButton.node.getChildByName("Background").color = cc.Color.WHITE;
+        }
     }
 
     private setupBuildingButtons() {
     // 綁定倉庫按鈕事件
+        this.swordTowerButton.interactable = false;
+        this.turretButton.interactable = false;
+        this.sawmillButton.interactable = false;
+        this.mineButton.interactable = false;
+        this.quarryButton.interactable = false;
+        this.mageTowerButton.interactable = false;
+
+        this.swordTowerButton.node.getChildByName("Background").color = cc.Color.GRAY; 
+        this.turretButton.node.getChildByName("Background").color = cc.Color.GRAY; 
+        this.sawmillButton.node.getChildByName("Background").color = cc.Color.GRAY; 
+        this.mineButton.node.getChildByName("Background").color = cc.Color.GRAY; 
+        this.quarryButton.node.getChildByName("Background").color = cc.Color.GRAY; 
+        this.mageTowerButton.node.getChildByName("Background").color = cc.Color.GRAY 
+
         this.wareHouseButton.node.on('click', () => {
             this.selectBuildingType("wareHouse"); // 設置建築類型為 wareHouse
             this.buildingMode = true; // 啟用建築模式
             this.cursor.setCursorActive(true); // 啟用光標
+
+            // 禁用 warehouse 按鈕
+            this.wareHouseButton.interactable = false;
+            this.wareHouseButton.node.getChildByName("Background").color = cc.Color.GRAY; 
+
+            // 啟用其他按鈕
+            
+            // this.swordTowerButton.interactable = true;
+            // this.turretButton.interactable = true;
+            // this.sawmillButton.interactable = true;
+            // this.mineButton.interactable = true;
+            // this.quarryButton.interactable = true;
+            // this.mageTowerButton.interactable = true;
+            // this.swordTowerButton.node.getChildByName("Background").color = cc.Color.WHITE; 
+            // this.turretButton.node.getChildByName("Background").color = cc.Color.WHITE; 
+            // this.sawmillButton.node.getChildByName("Background").color = cc.Color.WHITE; 
+            // this.mineButton.node.getChildByName("Background").color = cc.Color.WHITE; 
+            // this.quarryButton.node.getChildByName("Background").color = cc.Color.WHITE; 
+            // this.mageTowerButton.node.getChildByName("Background").color = cc.Color.WHITE; 
+            
         }, this);
         // 綁定劍塔按鈕事件
         this.swordTowerButton.node.on('click', () => {

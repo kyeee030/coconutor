@@ -81,7 +81,6 @@ export default class PathPlanning extends cc.Component {
     }
 
     findPath(start: cc.Vec2, end: cc.Vec2): cc.Vec2 {  //return the direction
-        cc.log("hi");
         let dist = Math.abs(start.x - end.x) + Math.abs(start.y - end.y);
         if(start.equals(end)) return new cc.Vec2(this.startPoint.x + start.x * this.pixelSize.x, this.startPoint.y + start.y * this.pixelSize.y);   
         let dir = [
@@ -108,7 +107,6 @@ export default class PathPlanning extends cc.Component {
         while (queue.length > 0) {
             let current = queue.shift();
             if (!current) continue;
-            cc.log(`dist: ${dist}, current: ${current.w}`);
             if(current.w > dist) return new cc.Vec2(0, 0);
             if (current.x === end.x && current.y === end.y) {
                 return new cc.Vec2(

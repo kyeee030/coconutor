@@ -1,5 +1,5 @@
 import Building, { BuildingState } from "./Building";
-
+import Targeting from "../Misc/Targeting";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -13,9 +13,16 @@ export default class SwordTower extends Building {
 
     private _animation: cc.Animation = null;
 
+    onLoad () {
+        super.onLoad();
+        if(this.rangeNode) {
+            this._targetingSystem = this.node.getComponent(Targeting);
+        }
+    }
+
     start() {
         super.start(); 
-        this._buildingType = "SwordTower"; // 設置建築物類型
+        this.buildingType = "SwordTower"; // 設置建築物類型
         if (!this.infoPanelNode) {
             console.warn("Info panel node is not initialized in start.");
         } else {
@@ -29,9 +36,6 @@ export default class SwordTower extends Building {
         if(!this._canvas)
             this._canvas = cc.find("Canvas");
 
-
-
-        // test
         this.attack();
     }
 

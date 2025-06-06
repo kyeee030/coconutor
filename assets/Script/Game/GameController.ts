@@ -3,7 +3,7 @@ import TimeSystem, { TimeState } from "./Environment/TimeSystem";
 import { IncidentType } from "./Environment/IncidentSystem";
 import IncidentSystem from "./Environment/IncidentSystem";
 import InfoManager from "./UI/InfoManager";
-import Cursor, { CursorMode } from "./UI/GameTools/cursor";
+import KeyboardCursor from "./UI/GameTools/KeyBoardCursor";
 import Building from "./Building/Building";
 import PathPlanning from "./Enemy/Path/PathPlanning"; 
 
@@ -68,6 +68,7 @@ export default class GameController extends cc.Component {
     public terrain: CreateTerrain;
     public incidentSystem: IncidentSystem;
     public building: cc.Node;
+    public cursor: KeyboardCursor = null;
 
     private gameTime: number = 0;
     private incident : IncidentType = IncidentType.NONE;
@@ -100,6 +101,7 @@ export default class GameController extends cc.Component {
         // get required components
         this.infoManager = this.InfoManager.getComponent(InfoManager);
         this.timeSystem = this.node.getComponent(TimeSystem);
+        this.cursor = this.cursorNode.getComponent(KeyboardCursor);
         this.terrain = this.node.getComponent(CreateTerrain);
         this.incidentSystem = this.node.getComponent(IncidentSystem);
         this.pathPlanning = this.node.getComponent(PathPlanning);
@@ -135,19 +137,6 @@ export default class GameController extends cc.Component {
         cc.director.getCollisionManager().enabled = true;
     }
 
-    private updateBuildingMode() {
-        const cursor = this.cursorNode.getComponent(Cursor);
-        if (cursor.getCurrentMode() === CursorMode.NORMAL) {
-            cursor.changeState(CursorMode.BUILDING);
-            this.buildingMode = true; // 啟用建築模式
-            console.log("Building mode activated.");
-        } else if (cursor.getCurrentMode() === CursorMode.BUILDING) {
-            cursor.changeState(CursorMode.NORMAL);
-            this.buildingMode = false; // 停用建築模式
-            console.log("Building mode deactivated.");
-        }
-    }
-
 
     private updateIncidentSystem(dt : number){
         this.incidentSystem.updateIncidentSystem(dt);
@@ -176,14 +165,10 @@ export default class GameController extends cc.Component {
     private updateEnemy() {
         if(this.timeSystem.getCurrentTimeState() === TimeState.NIGHT && !this.isGenerateEnemy) {
             this.isGenerateEnemy = true;
-            // TODO1: call enemy start
-            console.log("start enemy attack");
             this.callEnemy();
         }
         else if (this.timeSystem.getCurrentTimeState() === TimeState.DAY) {
             this.isGenerateEnemy = false;
-            // TODO3: call enemy end
-            console.log("end enemy attack");
         }
     }
 
@@ -198,45 +183,52 @@ export default class GameController extends cc.Component {
             //console.log("Building mode is not active. Ignoring building placement.");
             return;
         }
-
+        console.log("Building placement event received.");
+        console.log("building type:", this.selectedBuildingType);
+        console.log("event data:", event.getUserData());
         this.buildingManager.onBuildingPlaced(event, this.building, this.selectedBuildingType);
-
+        console.log("finish call onBuildingPlaced");
         this.buildingMode = false;
-        const cursor = this.cursorNode.getComponent(Cursor);
-        cursor.changeState(CursorMode.NORMAL);
-        //console.log("Building mode deactivated after placement.");
+        this.cursor.setCursorActive(false);
     }
 
     private setupBuildingButtons() {
     // 綁定倉庫按鈕事件
         this.wareHouseButton.node.on('click', () => {
             this.selectBuildingType("wareHouse"); // 設置建築類型為 wareHouse
-            this.updateBuildingMode(); // 啟用建築模式
+            this.buildingMode = true; // 啟用建築模式
+            this.cursor.setCursorActive(true); // 啟用光標
         }, this);
         // 綁定劍塔按鈕事件
         this.swordTowerButton.node.on('click', () => {
             this.selectBuildingType("swordTower"); // 設置建築類型為 swordTower
-            this.updateBuildingMode(); // 啟用建築模式
+            this.buildingMode = true; // 啟用建築模式
+            this.cursor.setCursorActive(true); // 啟用光標
         }, this);
         this.turretButton.node.on('click', () => {
             this.selectBuildingType("turret"); // 設置建築類型為 swordTower
-            this.updateBuildingMode(); // 啟用建築模式
+            this.buildingMode = true; // 啟用建築模式
+            this.cursor.setCursorActive(true); // 啟用光標
         }, this);
         this.sawmillButton.node.on('click', () => {
             this.selectBuildingType("sawmill"); // 設置建築類型為 swordTower
-            this.updateBuildingMode(); // 啟用建築模式
+            this.buildingMode = true; // 啟用建築模式
+            this.cursor.setCursorActive(true); // 啟用光標
         }, this);
         this.mineButton.node.on('click', () => {
             this.selectBuildingType("mine"); // 設置建築類型為 swordTower
-            this.updateBuildingMode(); // 啟用建築模式
+            this.buildingMode = true; // 啟用建築模式
+            this.cursor.setCursorActive(true); // 啟用光標
         }, this);
         this.quarryButton.node.on('click', () => {
             this.selectBuildingType("quarry"); // 設置建築類型為 swordTower
-            this.updateBuildingMode(); // 啟用建築模式
+            this.buildingMode = true; // 啟用建築模式
+            this.cursor.setCursorActive(true); // 啟用光標
         }, this);
         this.mageTowerButton.node.on('click', () => {
             this.selectBuildingType("mageTower"); // 設置建築類型為 swordTower
-            this.updateBuildingMode(); // 啟用建築模式
+            this.buildingMode = true; // 啟用建築模式
+            this.cursor.setCursorActive(true); // 啟用光標
         }, this);
     }
 

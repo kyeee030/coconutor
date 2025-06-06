@@ -27,24 +27,25 @@ export default class Building extends cc.Component {
         y: number
     }
 
-    protected infoPanelNode: cc.Node = null; 
+    @property(cc.Node)
+    infoPanelNode: cc.Node = null;
 
     @property       //when testing property you can change it at the right side :)
-    hp: number;
+    hp: number = 1;
     @property
     level: number = 1; // 建築物等級
     @property
-    damage: number;
+    damage: number = 1;
     @property
-    attackRange: number;
+    attackRange: number = 1;
     @property
     attackSpeed: number = 1.0; // 攻擊速度
 
     @property(cc.Node)
     previewBox: cc.Node = null; // 預覽框節點
 
-    @property(cc.Prefab)
-    infoPanel: cc.Prefab = null; 
+    // @property(cc.Prefab)
+    // infoPanel: cc.Prefab = null; 
 
     @property(cc.Prefab)
     bullet: cc.Prefab = null; // 子彈預製體
@@ -52,6 +53,7 @@ export default class Building extends cc.Component {
     @property(cc.Node)
     rangeNode: cc.Node = null; // 範圍節點
 
+    private canvas: cc.Node = null; // Canvas 節點
 
     target: {
         dist: number,
@@ -80,12 +82,14 @@ export default class Building extends cc.Component {
     }
     
     onLoad(): void {
+        this.canvas = cc.find("Canvas");
         this.node.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this);
 
         if (!this.infoPanelNode) {
             console.warn("Info panel node is not initialized yet in onLoad.");
         } else {
-            this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
+            console.log("Info panel node is ready in onLoad.");
+            //this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
         }
         this._canvas = cc.find("Canvas");
     }
@@ -101,6 +105,7 @@ export default class Building extends cc.Component {
         this.damage = this.damage ?? DAMAGE;
         this.attackRange = this.attackRange ?? ATTACKRANGE;
         this._buildingType = this._buildingType || 'Example'; // 確保有一個默認的建築類型
+        this.name = this._buildingType; // 設置節點名稱為建築類型
 
         if(this.rangeNode) {
             this._targetingSystem = this.rangeNode.getComponent(Targeting);
@@ -187,7 +192,7 @@ export default class Building extends cc.Component {
         // this.infoPanelNode.active = false; 
         // console.log("Info panel added to building node.");
 
-        cc.find("Canvas").addChild(buildingNode); // 將建築物添加到 Canvas 節點下
+        this.canvas.addChild(buildingNode); // 將建築物添加到 Canvas 節點下
         this._buildings.push(buildingNode);
 
 
@@ -202,10 +207,10 @@ export default class Building extends cc.Component {
 
     showInfoPanel(): void {
             console.log(this._buildingType);
-        if (!this.infoPanel) {
-            console.error("InfoPanel prefab is null!");
-            return;
-        }
+        // if (!this.infoPanel) {
+        //     console.error("InfoPanel prefab is null!");
+        //     return;
+        // }
 
         
         if(this.infoPanelNode === null) {
@@ -226,7 +231,7 @@ export default class Building extends cc.Component {
         console.log("Showing Building Info Panel");
         this.infoPanelNode.active = true;
         if(this.rangeNode) this.rangeNode.active = true;
-        const nameLabel = this.infoPanelNode.getChildByName("name");
+        const nameLabel = this.infoPanelNode.getChildByName("name").getComponent(cc.Label);
         const levelLabel = this.infoPanelNode.getChildByName("level").getComponent(cc.Label);
         const hpLabel = this.infoPanelNode.getChildByName("hp").getComponent(cc.Label);
         const damageLabel = this.infoPanelNode.getChildByName("damage").getComponent(cc.Label);
@@ -236,6 +241,7 @@ export default class Building extends cc.Component {
         hpLabel.string = `HP: ${this.hp}`;
         damageLabel.string = `Damage: ${this.damage}`;
         attackLabel.string = `Attack Range: ${this.attackRange}`;
+        nameLabel.string = `${this._buildingType}`;
         this.node.active = true;
         console.log(this.level);
     }
@@ -295,31 +301,3 @@ export default class Building extends cc.Component {
         return nearestBuilding;
     }
 } 
-
-//
-//                       _oo0oo_
-//                      o8888888o
-//                      88" . "88
-//                      (| -_- |)
-//                      0\  =  /0
-//                    ___/`---'\___
-//                  .' \\|     |// '.
-//                 / \\|||  :  |||// \
-//                / _||||| -:- |||||- \
-//               |   | \\\  -  /// |   |
-//               | \_|  ''\---/''  |_/ |
-//               \  .-\__  '-'  ___/-. /
-//             ___'. .'  /--.--\  `. .'___
-//          ."" '<  `.___\_<|>_/___.' >' "".
-//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//         \  \ `_.   \_ __\ /__ _/   .-` /  /
-//     =====`-.____`.___ \_____/___.-`___.-'=====
-//                       `=---='
-//
-//
-//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-//               佛祖保佑         永无BUG
-//
-//
-//

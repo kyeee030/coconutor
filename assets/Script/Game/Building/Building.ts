@@ -298,6 +298,8 @@ export default class Building extends cc.Component {
                     this.resourceSystem.addOres(-10);
                 }
                 return this.resourceSystem.getWoods() >= 10 && this.resourceSystem.getStones() >= 10 && this.resourceSystem.getOres() >= 10;
+        }
+    }
     getHurts (damage: number) {
         this.hp -= damage;
         if (this.hp <= 0) {

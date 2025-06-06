@@ -6,6 +6,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 import Bullet from "./Bullet";
+import Enemy from "../Enemy/Enemy";
 
 const {ccclass, property} = cc._decorator;
 
@@ -20,7 +21,7 @@ export default class SwordBullet extends Bullet {
         this.speed = 300;
         this.lifetime = 2.0;
         // this.updateDirection();
-        this.setDirection(cc.v2(-0.5, -0.5)); // test
+        // this.setDirection(cc.v2(-0.5, -0.5)); // test
     }
 
     update (dt) {

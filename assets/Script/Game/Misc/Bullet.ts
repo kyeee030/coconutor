@@ -5,6 +5,8 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import Enemy from "../Enemy/Enemy";
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -27,6 +29,9 @@ export default class Bullet extends cc.Component {
 
     @property(cc.Node)
     sprites: cc.Node[] = [];
+
+    @property(cc.Float)
+    angleoffset: number = 0;
 
     protected _direction: cc.Vec2 = cc.Vec2.ZERO;
     protected _RBody: cc.RigidBody = null;
@@ -73,7 +78,12 @@ export default class Bullet extends cc.Component {
     }
 
     setTarget(target: cc.Node) {
+        if(!target || !cc.isValid(target)) {
+            console.error("Invalid target provided. It must be a valid cc.Node instance.");
+            return;
+        }
         this._target = target;
+        console.log(`Bullet target set to: ${target.name}`);
         this.updateDirection();
     }
 
@@ -92,7 +102,7 @@ export default class Bullet extends cc.Component {
         }
 
         this._direction = cc.v2(targetPosition.x - currentPosition.x, targetPosition.y - currentPosition.y).normalize();
-        this.node.rotation = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
+        this.setDirection(this._direction);
     }
 
     setDirection(direction: cc.Vec2) {
@@ -101,17 +111,31 @@ export default class Bullet extends cc.Component {
             return;
         }
         this._direction = direction.normalize();
-        const angle = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
+        let angle = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
         // console.log(`Setting bullet direction to angle: ${angle} degrees`);
-        this.node.angle = angle - 45;
+        // console.log("angle offset: ", this.angleoffset);
+        this.node.angle = angle - this.angleoffset;
     }
 
     onBeginContact(contact, selfCollider, otherCollider) {
         if (otherCollider.node.group === "Enemy") {
+            if(!cc.isValid(otherCollider.node)){
+                console.warn("Bullet collided with an enemy, but the enemy node is null.");
+                return;
+            }
+            console.log("Bullet hit an enemy:", otherCollider.node.name);
+            const enemy : Enemy = otherCollider.node.getComponent(otherCollider.node.name);
+            if(enemy) {
+                enemy.hp -= this.damage;
+                if (enemy.hp <= 0) {
+                    enemy.node.destroy();;
+                }
+            }
+            this.disappear();
             // 對敵人造成傷害
-        } else if (otherCollider.node.group === "Building") {
+        } else if (otherCollider.node.group === "Building" && otherCollider.node !== this._source) {
             // console.log("Bullet hit a building, no damage is applied.");
-            this.node.destroy();
+            this.disappear();
             // 如果要打到自己建築有效果寫在這
         } else {
             // console.log("Bullet hit an unhandled object.");

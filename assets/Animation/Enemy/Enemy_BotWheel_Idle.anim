@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Enemy_BotWheel_Idle",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.6833333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "e62867dd-db16-42d6-bf1f-1fbbdd9608b8"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "f74e44fc-8cf3-4933-bab0-43e927b91e4a"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "93f580f6-4caf-42e9-8185-0722d8da7546"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "86721082-22f5-4de6-9057-a7c31f247e9e"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "e62867dd-db16-42d6-bf1f-1fbbdd9608b8"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

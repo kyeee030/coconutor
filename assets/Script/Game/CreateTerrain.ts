@@ -349,6 +349,13 @@ export default class CreateTerrain extends cc.Component {
             cc.log('No resource object found at:', x, y);
         }
     } // 輸入實際座標，切換資源物件的顯示狀態
+
+    getGridInfo (x: number, y: number): { blockType: string, resourceType: string} {
+        const blockType = this.positionBlockType(x, y);
+        const resourceType = this.positionResourceType(x, y);
+
+        return { blockType, resourceType};
+    }
 }
 
 //

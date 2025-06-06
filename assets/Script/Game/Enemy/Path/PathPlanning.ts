@@ -33,7 +33,13 @@ export default class PathPlanning extends cc.Component {
 
     @property(cc.Prefab)
     goblinEnemy: cc.Prefab = null;  
-    
+
+    @property(cc.Prefab)
+    stromheadEnemy: cc.Prefab = null;
+
+    @property(cc.Prefab)
+    botWheelEnemy: cc.Prefab = null;
+
     _nodes: NodeElement[][] = [];
 
     _canvas = cc.find('Canvas');
@@ -75,6 +81,7 @@ export default class PathPlanning extends cc.Component {
     }
 
     findPath(start: cc.Vec2, end: cc.Vec2): cc.Vec2 {  //return the direction
+        let dist = Math.abs(start.x - end.x) + Math.abs(start.y - end.y);
         if(start.equals(end)) return new cc.Vec2(this.startPoint.x + start.x * this.pixelSize.x, this.startPoint.y + start.y * this.pixelSize.y);   
         let dir = [
             new cc.Vec2(1, 0),
@@ -86,20 +93,21 @@ export default class PathPlanning extends cc.Component {
             new cc.Vec2(-1, 1),
             new cc.Vec2(-1, -1)
         ];
-        let queue: cc.Vec3[] = [];
+        let queue: cc.Vec4[] = [];
         let visited: boolean[][] = Array.from({ length: this.mapSize.x }, () => Array(this.mapSize.y).fill(false));
         for(let i=0; i< 8; ++i) {
             let it = dir[i];
             let newX = start.x + it.x;
             let newY = start.y + it.y;
             if (this.checkValid(newX, newY) && !visited[newX][newY]) {
-                queue.push(new cc.Vec3(newX, newY, i));
+                queue.push(new cc.Vec4(newX, newY, i, 0));
                 visited[newX][newY] = true;
             }
         }
         while (queue.length > 0) {
             let current = queue.shift();
             if (!current) continue;
+            if(current.w > dist) return new cc.Vec2(0, 0);
             if (current.x === end.x && current.y === end.y) {
                 return new cc.Vec2(
                     this.startPoint.x + (dir[current.z].x + start.x) * this.pixelSize.x,
@@ -111,7 +119,7 @@ export default class PathPlanning extends cc.Component {
                 let newX = current.x + it.x;
                 let newY = current.y + it.y;
                 if (this.checkValid(newX, newY) && !visited[newX][newY]) {
-                    queue.push(new cc.Vec3(newX, newY, current.z));
+                    queue.push(new cc.Vec4(newX, newY, current.z, current.w+1));
                     visited[newX][newY] = true;
                 }
             }
@@ -144,14 +152,22 @@ export default class PathPlanning extends cc.Component {
             pos.y += this.mapSize.y * this.pixelSize.y;
             pos.x += Math.floor(Math.random()*this.mapSize.x)*this.pixelSize.x;
         }
-        pos = new cc.Vec2(-48, -48);
-        t = Math.floor(Math.random()*2);
-        if(t == 0) {
+        pos = new cc.Vec2(512, 512);
+        t = Math.floor(Math.random()*4);
+        if(t == 0 || 1) {
             let enemy = cc.instantiate(this.mushroomEnemy);
             enemy.setPosition(pos.x, pos.y, 0);
             this._canvas.addChild(enemy);
-        } else {
+        } else if(t == 1) {
             let enemy = cc.instantiate(this.goblinEnemy);
+            enemy.setPosition(pos.x, pos.y, 0);
+            this._canvas.addChild(enemy);
+        } else if(t == 2) {
+            let enemy = cc.instantiate(this.stromheadEnemy);
+            enemy.setPosition(pos.x, pos.y, 0);
+            this._canvas.addChild(enemy);
+        } else {
+            let enemy = cc.instantiate(this.botWheelEnemy);
             enemy.setPosition(pos.x, pos.y, 0);
             this._canvas.addChild(enemy);
         }

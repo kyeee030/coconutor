@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "51ca88b2-6a6f-457d-a243-14ac5c290592",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 117,
+  "height": 182,
+  "platformSettings": {},
+  "subMetas": {
+    "GAS dash with FX": {
+      "ver": "1.0.6",
+      "uuid": "94ae43bb-6361-4dad-a749-082581c3dfec",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "51ca88b2-6a6f-457d-a243-14ac5c290592",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 11,
+      "offsetY": -3.5,
+      "trimX": 22,
+      "trimY": 8,
+      "width": 95,
+      "height": 173,
+      "rawWidth": 117,
+      "rawHeight": 182,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

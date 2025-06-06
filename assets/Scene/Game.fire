@@ -1475,13 +1475,14 @@
       "__id__": 11
     },
     "_enabled": true,
+    "infoPanelNode": null,
+    "hp": 1,
     "level": 2,
+    "damage": 1,
+    "attackRange": 1,
     "attackSpeed": 1,
     "previewBox": {
       "__id__": 33
-    },
-    "infoPanel": {
-      "__uuid__": "ce59f215-7b80-4651-a322-0e3e4ecf8f73"
     },
     "bullet": null,
     "rangeNode": null,
@@ -6182,10 +6183,13 @@
       "__id__": 132
     },
     "_enabled": true,
+    "infoPanelNode": null,
+    "hp": 1,
     "level": 1,
+    "damage": 1,
+    "attackRange": 1,
     "attackSpeed": 1,
     "previewBox": null,
-    "infoPanel": null,
     "bullet": null,
     "rangeNode": null,
     "buildingPrefabs": [

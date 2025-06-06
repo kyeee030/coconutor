@@ -27,24 +27,25 @@ export default class Building extends cc.Component {
         y: number
     }
 
-    protected infoPanelNode: cc.Node = null; 
+    @property(cc.Node)
+    infoPanelNode: cc.Node = null;
 
     @property       //when testing property you can change it at the right side :)
-    hp: number;
+    hp: number = 1;
     @property
     level: number = 1; // 建築物等級
     @property
-    damage: number;
+    damage: number = 1;
     @property
-    attackRange: number;
+    attackRange: number = 1;
     @property
     attackSpeed: number = 1.0; // 攻擊速度
 
     @property(cc.Node)
     previewBox: cc.Node = null; // 預覽框節點
 
-    @property(cc.Prefab)
-    infoPanel: cc.Prefab = null; 
+    // @property(cc.Prefab)
+    // infoPanel: cc.Prefab = null; 
 
     @property(cc.Prefab)
     bullet: cc.Prefab = null; // 子彈預製體
@@ -87,7 +88,8 @@ export default class Building extends cc.Component {
         if (!this.infoPanelNode) {
             console.warn("Info panel node is not initialized yet in onLoad.");
         } else {
-            this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
+            console.log("Info panel node is ready in onLoad.");
+            //this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
         }
         this._canvas = cc.find("Canvas");
     }
@@ -103,6 +105,7 @@ export default class Building extends cc.Component {
         this.damage = this.damage ?? DAMAGE;
         this.attackRange = this.attackRange ?? ATTACKRANGE;
         this._buildingType = this._buildingType || 'Example'; // 確保有一個默認的建築類型
+        this.name = this._buildingType; // 設置節點名稱為建築類型
 
         if(this.rangeNode) {
             this._targetingSystem = this.node.getComponent(Targeting);
@@ -201,10 +204,10 @@ export default class Building extends cc.Component {
 
     showInfoPanel(): void {
             console.log(this._buildingType);
-        if (!this.infoPanel) {
-            console.error("InfoPanel prefab is null!");
-            return;
-        }
+        // if (!this.infoPanel) {
+        //     console.error("InfoPanel prefab is null!");
+        //     return;
+        // }
 
         
         if(this.infoPanelNode === null) {
@@ -225,7 +228,7 @@ export default class Building extends cc.Component {
         console.log("Showing Building Info Panel");
         this.infoPanelNode.active = true;
         if(this.rangeNode) this.rangeNode.active = true;
-        const nameLabel = this.infoPanelNode.getChildByName("name");
+        const nameLabel = this.infoPanelNode.getChildByName("name").getComponent(cc.Label);
         const levelLabel = this.infoPanelNode.getChildByName("level").getComponent(cc.Label);
         const hpLabel = this.infoPanelNode.getChildByName("hp").getComponent(cc.Label);
         const damageLabel = this.infoPanelNode.getChildByName("damage").getComponent(cc.Label);
@@ -235,6 +238,7 @@ export default class Building extends cc.Component {
         hpLabel.string = `HP: ${this.hp}`;
         damageLabel.string = `Damage: ${this.damage}`;
         attackLabel.string = `Attack Range: ${this.attackRange}`;
+        nameLabel.string = `${this._buildingType}`;
         this.node.active = true;
         console.log(this.level);
     }
@@ -292,15 +296,5 @@ export default class Building extends cc.Component {
             }
         });
         return nearestBuilding;
-    }
-
-    getHurts(damage: number) {
-        this.hp -= damage;
-        if (this.hp <= 0) {
-            this.buildingState = BuildingState.BROKEN;
-            console.log(`Building at (${this._location.x}, ${this._location.y}) has been destroyed.`);
-        } else {
-            console.log(`Building at (${this._location.x}, ${this._location.y}) took ${damage} damage, remaining HP: ${this.hp}`);
-        }
     }
 } 

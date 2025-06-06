@@ -1,13 +1,53 @@
 // Lobby.ts
+import GameController from "../Game/GameController";
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class Lobby extends cc.Component {
 
+    @property({ type: cc.AudioClip })
+    background_bgm: cc.AudioClip = null;
+
+    @property(cc.Slider)
+    slider: cc.Slider = null;
+
+    @property(cc.Node)  // 👉 新增背景 node
+    backgroundNode: cc.Node = null;
+
+    private time: number = 0; // 👉 加入時間累積器
+
     start() {
+        // 同步滑桿與音量
+        const currentVolume = cc.audioEngine.getMusicVolume();
+        this.slider.progress = currentVolume;
+
+        // ✅ 播放音樂之前先設音量，並設定為「循環播放」
+        cc.audioEngine.setMusicVolume(currentVolume);
+        cc.audioEngine.playMusic(this.background_bgm, true); // ✅ true 表示循環播放
+
         this.scheduleOnce(this.loadTop3Leaderboard, 0.2);
-        //this.loadTop3Leaderboard();
     }
+
+    update(dt: number) {
+        this.time += dt;
+
+        // 使用 sin 波改變 R/G/B
+        const r = Math.floor(127 * Math.sin(this.time) + 128);
+        const g = Math.floor(127 * Math.sin(this.time + 2) + 128);
+        const b = Math.floor(127 * Math.sin(this.time + 4) + 128);
+
+        if (this.backgroundNode) {
+            this.backgroundNode.color = new cc.Color(r, g, b);
+        }
+    }
+
+    set_volume() {
+        const volume = this.slider.progress;
+        cc.audioEngine.setMusicVolume(volume);  // ✅ 即時調整背景音樂音量
+        cc.log("音量調整為：", volume);
+    }
+
 
     handle_sign_in() {
         var txtname = cc.find("Canvas/sign_in_board/board/name");
@@ -41,7 +81,8 @@ export default class Lobby extends cc.Component {
 
                 alert("註冊成功！");
                 cc.find("Canvas/sign_in_board").active = false;
-                cc.director.loadScene("Game");
+                cc.audioEngine.stopMusic();
+                cc.director.loadScene("Select");
             })
             .catch(e => {
                 cc.find("Canvas/sign_in_board/board/name").getComponent(cc.EditBox).string = '';
@@ -104,7 +145,8 @@ export default class Lobby extends cc.Component {
             .then((userCredential) => {
                 alert("success");
                 cc.find("Canvas/sign_in_board").active = false;
-                cc.director.loadScene("Game");
+                cc.audioEngine.stopMusic();
+                cc.director.loadScene("Select");
             })
             .catch(userCredential => {
                 cc.find("Canvas/login_board/mail").getComponent(cc.EditBox).string = '';
@@ -170,6 +212,4 @@ export default class Lobby extends cc.Component {
     show_scoreboard(){
         cc.find("Canvas/leaderboard").active = true;
     }
-    
-
 }

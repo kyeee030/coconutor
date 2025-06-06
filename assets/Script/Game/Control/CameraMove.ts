@@ -97,8 +97,8 @@ export default class CameraMove extends cc.Component {
         }
 
         this._cameraRBody.linearVelocity = cc.v2(
-            (this._keyboardControl.isKeyDown(cc.macro.KEY.d) || this._keyboardControl.isKeyDown(cc.macro.KEY.right) ? this.moveSpeed : 0) - (this._keyboardControl.isKeyDown(cc.macro.KEY.a) || this._keyboardControl.isKeyDown(cc.macro.KEY.left) ? Math.max(0, this.moveSpeed + backspeed.x) : backspeed.x),
-            (this._keyboardControl.isKeyDown(cc.macro.KEY.w) || this._keyboardControl.isKeyDown(cc.macro.KEY.up) ? this.moveSpeed : 0) - (this._keyboardControl.isKeyDown(cc.macro.KEY.s) || this._keyboardControl.isKeyDown(cc.macro.KEY.down) ? Math.max(0, this.moveSpeed + backspeed.y) : backspeed.y)
+            (this._keyboardControl.isKeyDown(cc.macro.KEY.right) ? this.moveSpeed : 0) - (this._keyboardControl.isKeyDown(cc.macro.KEY.left) ? Math.max(0, this.moveSpeed + backspeed.x) : backspeed.x),
+            (this._keyboardControl.isKeyDown(cc.macro.KEY.up) ? this.moveSpeed : 0) - (this._keyboardControl.isKeyDown(cc.macro.KEY.down) ? Math.max(0, this.moveSpeed + backspeed.y) : backspeed.y)
         )
     }
 

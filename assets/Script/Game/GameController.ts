@@ -298,6 +298,8 @@ export default class GameController extends cc.Component {
 
     private endGame(){
         console.log("Ending game...");
+        this.score = this.resourceSystem.getWoods() + this.resourceSystem.getStones() + this.resourceSystem.getOres() + 300 - this.gameTime;
+        cc.director.loadScene("EndScene");
     }
     
     // Public API ========== //

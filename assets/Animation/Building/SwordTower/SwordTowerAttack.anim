@@ -3,7 +3,7 @@
   "_name": "SwordTowerAttack",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.05,
+  "_duration": 0.08333333333333333,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -18,13 +18,13 @@
             }
           },
           {
-            "frame": 0.016666666666666666,
+            "frame": 0.03333333333333333,
             "value": {
               "__uuid__": "8f63ec82-b9d9-41d5-b875-9ca40f3b525c"
             }
           },
           {
-            "frame": 0.03333333333333333,
+            "frame": 0.06666666666666667,
             "value": {
               "__uuid__": "ac847d53-0aea-4a00-9db0-68ddd5639246"
             }

@@ -23,6 +23,8 @@ export default class SwordTower extends Building {
     @property(cc.Node)
     headNode: cc.Node = null;
 
+    private _animation: cc.Animation = null;
+
     start() {
         super.start(); 
         this._buildingType = "SwordTower"; // 設置建築物類型
@@ -33,9 +35,12 @@ export default class SwordTower extends Building {
             this.infoPanelNode.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this.infoPanelNode);
         }
 
+        this._animation = this.headNode.getComponent(cc.Animation);
         
         if(!this._canvas)
             this._canvas = cc.find("Canvas");
+
+
 
         // test
         this.attack();
@@ -43,7 +48,7 @@ export default class SwordTower extends Building {
 
     update(dt) {
         super.update(dt);
-        if(this._targetNode) {
+        if(this._targetNode && this.headNode) {
             const targetDirection = cc.v2(this._targetNode.position.x - this.node.position.x,
             this._targetNode.position.y - this.node.position.y).normalize();
             const angle = cc.misc.radiansToDegrees(Math.atan2(targetDirection.y, targetDirection.x));
@@ -68,6 +73,7 @@ export default class SwordTower extends Building {
 
     attack(): void {
         console.log("SwordTower is attacking!");
+        this._animation.play("SwordTowerAttack");
         super.attack(); // 呼叫父類別的攻擊方法
     }
 

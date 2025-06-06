@@ -71,8 +71,8 @@
         0,
         0,
         1,
-        1,
-        1,
+        2,
+        2,
         1
       ]
     },
@@ -279,7 +279,7 @@
     "coolDown": 3,
     "speed": 1,
     "attackRange": 5,
-    "scaleDirection": -1,
+    "scaleDirection": -2,
     "_id": ""
   },
   {

@@ -141,18 +141,18 @@ export default class PathPlanning extends cc.Component {
     spawnEnemy() {
         let t = Math.floor(Math.random() * 4);
         let pos = cc.v2(this.startPoint.x, this.startPoint.y);
-        if(t == 0 || 1) {
+        if(t == 0) {
             pos.y += Math.floor(Math.random()*this.mapSize.y)*this.pixelSize.y;
         } else if(t == 1) {
             pos.x += Math.floor(Math.random()*this.mapSize.x)*this.pixelSize.x;
         } else if(t == 2) {
-            pos.x += this.mapSize.x * this.pixelSize.x;
+            pos.x += (this.mapSize.x - 1) * this.pixelSize.x;
             pos.y += Math.floor(Math.random()*this.mapSize.y)*this.pixelSize.y;
         } else {
-            pos.y += this.mapSize.y * this.pixelSize.y;
+            pos.y += (this.mapSize.y - 1) * this.pixelSize.y;
             pos.x += Math.floor(Math.random()*this.mapSize.x)*this.pixelSize.x;
         }
-        pos = new cc.Vec2(0, 0);
+        //pos = new cc.Vec2(0, 0);
         t = Math.floor(Math.random()*4);
         if(t == 0) {
             let enemy = cc.instantiate(this.mushroomEnemy);

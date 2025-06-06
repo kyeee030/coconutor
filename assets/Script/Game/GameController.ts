@@ -175,7 +175,10 @@ export default class GameController extends cc.Component {
 
     private callEnemy(){
         // TODO2: call your generate function, and store the enemy object tag or access in gameController.
-        this.pathPlanning.spawnEnemy();
+        let t = this.timeSystem.getWaveCount() * 3;
+        for(let i = 0; i < t; i++){
+            this.pathPlanning.spawnEnemy();
+        }
         console.log("enemy attack from the boundry");
     }
 

@@ -34,6 +34,7 @@ export default class Bullet extends cc.Component {
     protected _target: cc.Node = null;
     protected _source: cc.Node = null;
     protected _animation: cc.Animation = null;
+    protected _angleoffset: number = 0;
 
     // LIFE-CYCLE CALLBACKS:
 

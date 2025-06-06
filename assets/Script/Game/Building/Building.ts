@@ -117,6 +117,7 @@ export default class Building extends cc.Component {
     }
 
     update (dt) {
+        // console.log(`Building update called. Current state: ${this.buildingState}`);
         switch (this.buildingState) {
             case BuildingState.IDLE:
             case BuildingState.ATTACK:
@@ -127,13 +128,15 @@ export default class Building extends cc.Component {
 
     searchTarget () {
         const targets = this._targetingSystem.getTargets();
-        if(targets.length === 0) {
+        // console.log(`Searching for targets... Found ${targets.length} targets.`);
+        if(targets.length == 0) {
+            this._targetNode = null;
             console.log("No targets found.");
             this.buildingState = BuildingState.IDLE;
             this.unschedule(this.attack);
             return;
         }
-        console.log(`Found ${targets.length} targets.`);
+        // console.log(`Found ${targets.length} targets.`);
         this._targetNode = targets[0];
         this.buildingState = BuildingState.ATTACK;
         this.schedule(this.attack, this.attackSpeed); // Schedule attack based on attack speed

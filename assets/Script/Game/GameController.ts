@@ -6,6 +6,7 @@ import InfoManager from "./UI/InfoManager";
 import KeyboardCursor from "./UI/GameTools/KeyBoardCursor";
 import Building from "./Building/Building";
 import PathPlanning from "./Enemy/Path/PathPlanning"; 
+import ResourceSystem from "./Environment/ResourceSystem";
 
 const {ccclass, property} = cc._decorator;
 
@@ -67,6 +68,7 @@ export default class GameController extends cc.Component {
     public timeSystem: TimeSystem;
     public terrain: CreateTerrain;
     public incidentSystem: IncidentSystem;
+    public resourceSystem: ResourceSystem;
     public building: cc.Node;
     public cursor: KeyboardCursor = null;
 
@@ -89,7 +91,7 @@ export default class GameController extends cc.Component {
 
     update(dt: number){
         this.updateGameTime(dt);
-        this.updateIncidentSystem(dt);
+        // this.updateIncidentSystem(dt);
         this.updateUI();
         this.updateEnemy();
     }
@@ -99,6 +101,7 @@ export default class GameController extends cc.Component {
     private init () {
 
         // get required components
+        this.resourceSystem = this.node.getComponent(ResourceSystem);
         this.infoManager = this.InfoManager.getComponent(InfoManager);
         this.timeSystem = this.node.getComponent(TimeSystem);
         this.cursor = this.cursorNode.getComponent(KeyboardCursor);
@@ -157,6 +160,7 @@ export default class GameController extends cc.Component {
         this.infoManager.updateDay(this.timeSystem.getCurrentTimeState());
         this.infoManager.updateGameTime(this.gameTime);
         this.infoManager.updateIncident(this.incident);
+        this.infoManager.updateResource(this.resourceSystem.getWoods(), this.resourceSystem.getStones(), this.resourceSystem.getOres());
     }
 
     private updateEnemy() {

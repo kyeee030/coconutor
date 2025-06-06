@@ -1,0 +1,55 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Enemy_BotWheel_Death",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.85,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "8191323c-7948-481f-ab16-b3867984ee07"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "14393bd4-c883-43d4-a160-18f881c59bfb"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "335c0686-66c1-474d-819f-ea0627e08e7a"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "23bda202-7345-4c45-b81b-3a452d2bd9f5"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "a136cca0-f82b-4f79-8fb2-60eddf89f102"
+            }
+          },
+          {
+            "frame": 0.8333333333333334,
+            "value": {
+              "__uuid__": "1a0970f5-8dbd-4a10-98d5-a6a76ca59ef0"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

@@ -45,6 +45,9 @@ export default class Enemy extends cc.Component {
     @property
     attackRange: number = 0;
 
+    @property
+    scaleDirection: number = 1; //if you need :)
+
     _pathPlanning: any;
     _nextPos: cc.Vec2 = cc.v2(0, 0);
     _anim: cc.Animation = null;
@@ -160,6 +163,7 @@ export default class Enemy extends cc.Component {
                 type: null, //or other state
                 tag: null //Index of building or something else
             };
+            // cc.log("dist: ",x-bx, y-by, this.target.dist);
         }
         if(!this.target) this.checkState(EnemyState.IDLE);
         else if(this.enemyState == EnemyState.IDLE) this.checkState(EnemyState.MOVE);
@@ -181,7 +185,6 @@ export default class Enemy extends cc.Component {
         }
         if((Math.pow(Math.abs(this.node.position.x - this._nextPos.x), 2) + Math.pow(Math.abs(this.node.position.y - this._nextPos.y), 2) < 10))
         {
-            let pos_t = this._pathPlanning.findLocation(this.node.position.x, this.node.position.y);
             this._nextPos = this._pathPlanning.findPath(selfpos, this.target.pos);
         }
         this.move(this._nextPos);
@@ -194,8 +197,8 @@ export default class Enemy extends cc.Component {
         }
         let angle = Math.atan2(nextPos.y - this.node.position.y, nextPos.x - this.node.position.x);
 
-        if(Math.cos(angle) > 0) this.node.scaleX = -1;
-        else this.node.scaleX = 1;
+        if(Math.cos(angle) > 0) this.node.scaleX = this.scaleDirection * -1;
+        else this.node.scaleX = this.scaleDirection;
         this.node.x += Math.cos(angle) * this.speed;
         this.node.y += Math.sin(angle) * this.speed;
     }

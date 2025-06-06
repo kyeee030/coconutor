@@ -33,7 +33,13 @@ export default class PathPlanning extends cc.Component {
 
     @property(cc.Prefab)
     goblinEnemy: cc.Prefab = null;  
-    
+
+    @property(cc.Prefab)
+    stromheadEnemy: cc.Prefab = null;
+
+    @property(cc.Prefab)
+    botWheelEnemy: cc.Prefab = null;
+
     _nodes: NodeElement[][] = [];
 
     _canvas = cc.find('Canvas');
@@ -144,14 +150,22 @@ export default class PathPlanning extends cc.Component {
             pos.y += this.mapSize.y * this.pixelSize.y;
             pos.x += Math.floor(Math.random()*this.mapSize.x)*this.pixelSize.x;
         }
-        pos = new cc.Vec2(-48, -48);
-        t = Math.floor(Math.random()*2);
+        pos = new cc.Vec2(512, 512);
+        t = Math.floor(Math.random()*4);
         if(t == 0) {
             let enemy = cc.instantiate(this.mushroomEnemy);
             enemy.setPosition(pos.x, pos.y, 0);
             this._canvas.addChild(enemy);
-        } else {
+        } else if(t == 1) {
             let enemy = cc.instantiate(this.goblinEnemy);
+            enemy.setPosition(pos.x, pos.y, 0);
+            this._canvas.addChild(enemy);
+        } else if(t == 2) {
+            let enemy = cc.instantiate(this.stromheadEnemy);
+            enemy.setPosition(pos.x, pos.y, 0);
+            this._canvas.addChild(enemy);
+        } else {
+            let enemy = cc.instantiate(this.botWheelEnemy);
             enemy.setPosition(pos.x, pos.y, 0);
             this._canvas.addChild(enemy);
         }

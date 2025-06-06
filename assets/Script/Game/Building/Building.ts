@@ -221,8 +221,13 @@ export default class Building extends cc.Component {
         let nearestBuilding: cc.Node = null;
         let minDistance = Infinity;
 
+        if(!this._buildings || this._buildings.length === 0) {
+            return null;
+        }
+        this._buildings = this._buildings.filter(b => b && cc.isValid(b));
+
         this._buildings.forEach(building => {
-            if(building === null) return;
+            if (!building) return null;
             const buildingPos2D = new cc.Vec2(building.position.x, building.position.y);
             const distance = pos.sub(buildingPos2D).mag();
             if (distance < minDistance) {
@@ -237,7 +242,8 @@ export default class Building extends cc.Component {
         this.hp -= damage;
         if (this.hp <= 0) {
             this.buildingState = BuildingState.BROKEN;
-            //git this.node.destroy(); // Destroy the building node
+            if (this.node && cc.isValid(this.node))
+                this.node.destroy();
             console.log(`Building of type ${this.buildingType} has been destroyed.`);
         } else {
             console.log(`Building of type ${this.buildingType} took ${damage} damage, remaining HP: ${this.hp}`);

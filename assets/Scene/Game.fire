@@ -6505,6 +6505,12 @@
     },
     "bullet": null,
     "rangeNode": null,
+    "onBuildAudio": {
+      "__uuid__": "22a734f8-05f7-4235-bcfa-1d8b9dfb3d0a"
+    },
+    "onDestroyAudio": {
+      "__uuid__": "e4db8c79-1028-4bcb-80ed-7b72c3204365"
+    },
     "buildingPrefabs": [
       {
         "__uuid__": "8a0d2fd4-3e67-4744-9245-3e7f7e76c712"
@@ -6818,6 +6824,8 @@
     "previewBox": null,
     "bullet": null,
     "rangeNode": null,
+    "onBuildAudio": null,
+    "onDestroyAudio": null,
     "buildingPrefabs": [
       {
         "__uuid__": "8a0d2fd4-3e67-4744-9245-3e7f7e76c712"

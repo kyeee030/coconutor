@@ -20,10 +20,10 @@
         "__id__": 4
       },
       {
-        "__id__": 132
+        "__id__": 133
       },
       {
-        "__id__": 141
+        "__id__": 142
       }
     ],
     "_active": false,
@@ -192,6 +192,9 @@
       },
       {
         "__id__": 131
+      },
+      {
+        "__id__": 132
       }
     ],
     "_prefab": null,
@@ -5163,7 +5166,7 @@
     "_name": "compass2",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 104
+      "__id__": 105
     },
     "_children": [],
     "_active": true,
@@ -5270,7 +5273,7 @@
     "_name": "compass3",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 104
+      "__id__": 105
     },
     "_children": [],
     "_active": true,
@@ -5992,9 +5995,6 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 133
-      },
-      {
         "__id__": 134
       },
       {
@@ -6014,6 +6014,9 @@
       },
       {
         "__id__": 140
+      },
+      {
+        "__id__": 141
       }
     ],
     "_prefab": null,
@@ -6069,7 +6072,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 132
+      "__id__": 133
     },
     "_enabled": true,
     "mapGrid": {
@@ -6110,7 +6113,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 132
+      "__id__": 133
     },
     "_enabled": true,
     "GameDuration": 300,
@@ -6154,7 +6157,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 132
+      "__id__": 133
     },
     "_enabled": true,
     "timeInterval": 5,
@@ -6167,7 +6170,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 132
+      "__id__": 133
     },
     "_enabled": true,
     "incidentInterval": 10,
@@ -6179,7 +6182,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 132
+      "__id__": 133
     },
     "_enabled": true,
     "level": 1,
@@ -6227,7 +6230,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 132
+      "__id__": 133
     },
     "_enabled": true,
     "moveSpeed": 1000,
@@ -6241,7 +6244,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 132
+      "__id__": 133
     },
     "_enabled": true,
     "_id": "0fZMWgwT1FPJ8AwisJX9Re"
@@ -6251,7 +6254,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 132
+      "__id__": 133
     },
     "_enabled": true,
     "mapSize": {

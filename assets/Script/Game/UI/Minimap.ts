@@ -28,8 +28,12 @@ export default class Minimap extends cc.Component {
     private _renderTexture: cc.RenderTexture = null;
     private _renderSpriteFrame: cc.SpriteFrame = null;
     private _renderSprite: cc.Sprite = null;
+    private _animation: cc.Animation = null;
+    private _active: boolean = false;
 
     onLoad () {
+        this._animation = this.getComponent(cc.Animation);
+
         this._camera = this.minimapCamera.getComponent(cc.Camera);
         this._renderSprite = this.mapRenderObject.getComponent(cc.Sprite);
         if (!this._camera || !this._renderSprite) {
@@ -74,18 +78,24 @@ export default class Minimap extends cc.Component {
     }
 
     toggleMinimap() {
-        this.setActive(!this.node.active && this.minimapEnabled);
+        // this.setActive(!this.node.active && this.minimapEnabled);
+        this.setActive(!this._active);
     }
 
     setActive(active: boolean) {
-        this.node.active = active;
-        if (active) {
-            this._camera.enabled = true;
-            this._renderSprite.spriteFrame = this._renderSpriteFrame;
-        } else {
-            this._camera.enabled = false;
-            this._renderSprite.spriteFrame = null;
+        if (this._active === active) {
+            return; // No change in state
         }
+        this._active = active;
+        this.minimapCamera.active = active;
+        if (active) {
+            this._renderSprite.spriteFrame = this._renderSpriteFrame;
+            this._animation.play("ShowMinimap");
+        } else {
+            this._renderSprite.spriteFrame = null;
+            this._animation.play("HideMinimap");
+        }
+        
     }
 
     setMinimapSize(size: number) {

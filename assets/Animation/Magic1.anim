@@ -1,0 +1,93 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Magic1",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.35,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": null
+          },
+          {
+            "frame": 0.03333333333333333,
+            "value": {
+              "__uuid__": "334116be-b778-48c7-8727-edc3cc40a6cf"
+            }
+          },
+          {
+            "frame": 0.06666666666666667,
+            "value": {
+              "__uuid__": "59f4d416-bc55-4a65-becd-dfaebbddcdd9"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "bcbddf29-8745-4631-8fee-e4f29e88d11c"
+            }
+          },
+          {
+            "frame": 0.13333333333333333,
+            "value": {
+              "__uuid__": "09a191fd-08e7-4d6a-bdc0-4f5cf420b444"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "c6166155-9828-4d7f-9b65-cfcdff7068f9"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "1984f5d4-b84f-4ab0-bd68-f23fbb32df1f"
+            }
+          },
+          {
+            "frame": 0.23333333333333334,
+            "value": {
+              "__uuid__": "665a0a15-70d5-4937-b520-3b6afd07acfb"
+            }
+          },
+          {
+            "frame": 0.26666666666666666,
+            "value": {
+              "__uuid__": "171a8e40-8b65-4190-bffe-b24f96e6da46"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "794d81be-c3a9-44a8-93c2-183a7175bff7"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": null
+          }
+        ]
+      }
+    },
+    "paths": {
+      "lv1": {
+        "props": {
+          "active": [
+            {
+              "frame": 0,
+              "value": false
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}

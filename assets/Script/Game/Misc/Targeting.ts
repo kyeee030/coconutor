@@ -20,6 +20,7 @@ export default class Targeting extends cc.Component {
     private _building: Building = null;
     private _target: Set<cc.Node>;
     private _blocksize: number = 64;
+    private _rbody: cc.RigidBody = null;
 
 
     onLoad () {
@@ -28,11 +29,15 @@ export default class Targeting extends cc.Component {
         }
         this._blocksize = cc.find("GameController").getComponent("CreateTerrain").blockSize;
         this._area = this.node.getComponent(cc.PhysicsCircleCollider);
+        this._rbody = this.node.getComponent(cc.RigidBody);
         this._building = this.selfNode.getComponent(Building);
-        this._area.radius = this._building.attackRange * this._blocksize;
-        this._area.apply();
-        this.node.width = this._area.radius * 2;
-        this.node.height = this._area.radius * 2;
+
+        this.scheduleOnce(() => {
+            this._area.radius = this._building.attackRange * this._blocksize;
+            this._area.apply();
+            this.node.width = this._area.radius * 2;
+            this.node.height = this._area.radius * 2;
+        }, 0);
         console.log(`Targeting area radius set to: ${this._area.radius}`);
         this._target = new Set<cc.Node>();
 
@@ -64,5 +69,7 @@ export default class Targeting extends cc.Component {
         }
     }
 
-    // update (dt) {}
+    update (dt) {
+        this._rbody.angularVelocity = 10;
+    }
 }

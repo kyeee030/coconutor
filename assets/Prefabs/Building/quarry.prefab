@@ -797,7 +797,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "d0377ae9-b440-4b0a-a354-b1294fa4b591"
+      "__uuid__": "e3276e4e-c167-4072-a499-1693acaa15ce"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -835,6 +835,25 @@
     "rangeNode": null,
     "buildingPrefabs": [],
     "buildingTypes": [],
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "25736d1c-9c9c-4e9b-bf2f-163238645b66"
+    },
+    "_clips": [
+      {
+        "__uuid__": "25736d1c-9c9c-4e9b-bf2f-163238645b66"
+      }
+    ],
+    "playOnLoad": true,
     "_id": ""
   },
   {

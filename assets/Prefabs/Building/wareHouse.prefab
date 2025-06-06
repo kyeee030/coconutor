@@ -28,10 +28,13 @@
       },
       {
         "__id__": 22
+      },
+      {
+        "__id__": 23
       }
     ],
     "_prefab": {
-      "__id__": 23
+      "__id__": 24
     },
     "_opacity": 255,
     "_color": {
@@ -43,8 +46,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 32,
-      "height": 32
+      "width": 128,
+      "height": 128
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -797,7 +800,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "f91f50b9-7f87-4399-97bc-1683fa70df0d"
+      "__uuid__": "b219458b-e6d6-4971-8ddb-d52c919978ec"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -835,6 +838,25 @@
     "rangeNode": null,
     "buildingPrefabs": [],
     "buildingTypes": [],
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "49ad5cad-58e5-4a7c-9533-ed64d043462e"
+    },
+    "_clips": [
+      {
+        "__uuid__": "49ad5cad-58e5-4a7c-9533-ed64d043462e"
+      }
+    ],
+    "playOnLoad": true,
     "_id": ""
   },
   {

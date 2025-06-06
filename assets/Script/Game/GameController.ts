@@ -28,7 +28,7 @@ interface BlockInfo {
 export default class GameController extends cc.Component {
 
     @property
-    GameDuration: number = 300;
+    GameDuration: number = 10;
 
     @property(cc.Node)
     InfoManager: cc.Node = null;
@@ -162,7 +162,7 @@ export default class GameController extends cc.Component {
     private updateGameTime(dt: number) {
         this.timeSystem.updateGameTime(dt);
         this.gameTime = this.timeSystem.getGameTime();
-        if (this.gameTime >= this.GameDuration) {
+        if (this.timeSystem.getWaveCount() >= this.GameDuration) {
             console.log("Game duration reached. Ending game.");
             this.endGame();
         }
@@ -252,7 +252,6 @@ export default class GameController extends cc.Component {
         }
         console.log("Building placement event received.");
         console.log("building type:", this.selectedBuildingType);
-        console.log("event data:", event.getUserData());
         this.buildingManager.onBuildingPlaced(event, this.building, this.selectedBuildingType);
         console.log("finish call onBuildingPlaced");
         this.buildingMode = false;

@@ -6706,6 +6706,9 @@
     "building": {
       "__id__": 119
     },
+    "previewBox": {
+      "__id__": 141
+    },
     "followMouse": true,
     "_id": "f1CrAXx0pAO6qM+wZNheRa"
   },
@@ -6844,7 +6847,7 @@
       "__id__": 147
     },
     "_enabled": true,
-    "GameDuration": 300,
+    "GameDuration": 10,
     "InfoManager": {
       "__id__": 11
     },

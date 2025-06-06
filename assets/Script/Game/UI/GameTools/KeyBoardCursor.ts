@@ -168,7 +168,6 @@ export default class SimpleCursor extends cc.Component {
         this.previewBoxComp = this.building.getComponent('Building');
         this.previewBoxComp.active = true;
         this.previewBoxComp.updatePreviewBox(this.cursorNode.x, this.cursorNode.y);
-        console.log(`KeyboardCursor: Updated cursor position to (${this.cursorNode.x}, ${this.cursorNode.y})`);
         
         
         

@@ -220,12 +220,9 @@ export default class Building extends cc.Component {
     ableBuild(x: number, y: number): boolean {
 
 
-         console.log(`Checking if able to build at (${x}, ${y})`);
-         console.log(`put Grid at: ${Math.floor( (x+2416) / this.gridSize)}, ${Math.floor( (y + 2416) / this.gridSize)}`);
         if(this.map[Math.floor( (x+2416) / this.gridSize)][Math.floor((y + 2416 )/ this.gridSize)] !== null) {
             return false;
         }
-        console.log(`Checking if able to build at (${x}, ${y})`);
         const gridX = Math.floor((x + 2416) / this.gridSize);
         const gridY = Math.floor((y + 2416) / this.gridSize);
         // if (this.map[gridX][gridY] !== null) {
@@ -304,7 +301,6 @@ export default class Building extends cc.Component {
     }
 
     updateResouce() {
-        console.log(`Updating resources for building type: ${this.buildingType}`);
         switch (this.buildingType) {
             case 'sawmill':
                 this.resourceSystem.addWoods(1);

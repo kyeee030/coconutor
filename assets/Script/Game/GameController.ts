@@ -176,7 +176,6 @@ export default class GameController extends cc.Component {
     }
 
     private onBuildingPlaced(event: cc.Event.EventCustom) {
-        cc.log("ggggggggggggggggggggggg");
         if (!this.buildingMode) {
             //console.log("Building mode is not active. Ignoring building placement.");
             return;

@@ -243,7 +243,13 @@ export default class Building extends cc.Component {
         if (this.hp <= 0) {
             this.buildingState = BuildingState.BROKEN;
             if (this.node && cc.isValid(this.node))
+            {
+                let root = cc.find("Canvas/Building").getComponent(Building);
+                if (root) {
+                    root.map[Math.floor((this.node.position.x + 2416) / this.gridSize)][Math.floor((this.node.position.y + 2416) / this.gridSize)] = null; // 清除地圖上的建築物
+                }
                 this.node.destroy();
+            }
             console.log(`Building of type ${this.buildingType} has been destroyed.`);
         } else {
             console.log(`Building of type ${this.buildingType} took ${damage} damage, remaining HP: ${this.hp}`);

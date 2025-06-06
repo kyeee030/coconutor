@@ -55,6 +55,9 @@ export default class Building extends cc.Component {
     rangeNode: cc.Node = null; // 範圍節點
 
     private canvas: cc.Node = null; // Canvas 節點
+    private mapSize: number = 4800;
+    private gridSize: number = 32;
+    private map:(string | null)[][] = [];
 
     target: {
         dist: number,
@@ -106,6 +109,12 @@ export default class Building extends cc.Component {
             this.node.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this);
             cc.log('set click event');
         }
+
+        const gridCount = this.mapSize / this.gridSize;
+        this.map = Array.from({ length: gridCount + 200 }, () => Array(gridCount + 200).fill(null)); // 初始化地圖為空
+        console.log('gridCount:', gridCount);
+
+        console.log(`A building has been initialized at (${this._location.x}, ${this._location.y})`);
     }
 
     update (dt) {
@@ -142,11 +151,20 @@ export default class Building extends cc.Component {
 
         const buildingNode = cc.instantiate(buildingPrefab);
         buildingNode.setPosition(position.x, position.y);
+        this.setBuildingAt(Math.floor((position.x  + 2416) / this.gridSize ), Math.floor((position.y + 2416) / this.gridSize), selectedBuildingType);
 
         this.canvas.addChild(buildingNode); // 將建築物添加到 Canvas 節點下
         this._buildings.push(buildingNode);
     }
 
+    setBuildingAt(gridX: number, gridY: number, buildingType: string):void{
+        if(this.map[gridX][gridY] == null){
+            this.map[gridX][gridY] = buildingType;
+            console.log(`Building of type ${buildingType} set at grid (${gridX}, ${gridY})`);
+        }
+    }
+
+   
     showInfoPanel () {
         cc.log(this._isShowingInfoPanel);
         if(!this.infoPanelNode) console.log("Can't find info panel node.");
@@ -169,16 +187,14 @@ export default class Building extends cc.Component {
 
 
     ableBuild(x: number, y: number): boolean {
-        // 假設有一個地圖數據結構 `_map`，用來存儲地形信息
-        // 例如：0 表示空地，1 表示障礙物，2 表示水域等
-        // const terrainType = this._map[x][y];
-        // if (terrainType === 0) {
-        //     return true; // 空地，允許建造
-        // } else {
-        //     return false; // 其他地形，不允許建造
-        // }
-        return true;
+        console.log(`Checking if able to build at (${x}, ${y})`);
+        console.log(`put Grid at: ${Math.floor( (x+2416) / this.gridSize)}, ${Math.floor( (y + 2416) / this.gridSize)}`);
+        if(this.map[Math.floor( (x+2416) / this.gridSize)][Math.floor((y + 2416 )/ this.gridSize)] == null) {
+            return true;
+        }
+        return false;
     }
+
 
     updatePreviewBox(x: number, y: number): void {
         if (!this.previewBox) {
@@ -215,5 +231,16 @@ export default class Building extends cc.Component {
             }
         });
         return nearestBuilding;
+    }
+
+    getHurts (damage: number) {
+        this.hp -= damage;
+        if (this.hp <= 0) {
+            this.buildingState = BuildingState.BROKEN;
+            //git this.node.destroy(); // Destroy the building node
+            console.log(`Building of type ${this.buildingType} has been destroyed.`);
+        } else {
+            console.log(`Building of type ${this.buildingType} took ${damage} damage, remaining HP: ${this.hp}`);
+        }
     }
 } 

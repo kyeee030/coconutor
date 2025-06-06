@@ -28,13 +28,15 @@ export default class Bullet extends cc.Component {
     @property(cc.Node)
     sprites: cc.Node[] = [];
 
+    @property(cc.Float)
+    angleoffset: number = 0;
+
     protected _direction: cc.Vec2 = cc.Vec2.ZERO;
     protected _RBody: cc.RigidBody = null;
     protected _timer: number = 0;
     protected _target: cc.Node = null;
     protected _source: cc.Node = null;
     protected _animation: cc.Animation = null;
-    protected _angleoffset: number = 0;
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -75,6 +77,7 @@ export default class Bullet extends cc.Component {
 
     setTarget(target: cc.Node) {
         this._target = target;
+        console.log(`Bullet target set to: ${target.name}`);
         this.updateDirection();
     }
 
@@ -93,7 +96,7 @@ export default class Bullet extends cc.Component {
         }
 
         this._direction = cc.v2(targetPosition.x - currentPosition.x, targetPosition.y - currentPosition.y).normalize();
-        this.node.rotation = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
+        this.setDirection(this._direction);
     }
 
     setDirection(direction: cc.Vec2) {
@@ -102,9 +105,10 @@ export default class Bullet extends cc.Component {
             return;
         }
         this._direction = direction.normalize();
-        const angle = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
+        let angle = cc.misc.radiansToDegrees(Math.atan2(this._direction.y, this._direction.x));
         // console.log(`Setting bullet direction to angle: ${angle} degrees`);
-        this.node.angle = angle - 45;
+        // console.log("angle offset: ", this.angleoffset);
+        this.node.angle = angle - this.angleoffset;
     }
 
     onBeginContact(contact, selfCollider, otherCollider) {

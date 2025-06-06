@@ -97,7 +97,7 @@ export default class SwordTower extends Building {
     }
 
     createBullet(): void {
-        console.log(`SwordTower creates a sword with damage:`);
+        // console.log(`SwordTower creates a sword with damage:`);
         const bulletNode = cc.instantiate(this.bullet);
         bulletNode.setPosition(this.node.position); 
         const bulletComponent = bulletNode.getComponent(SwordBullet); 

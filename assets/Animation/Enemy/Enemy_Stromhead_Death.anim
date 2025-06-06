@@ -1,0 +1,73 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Enemy_Stromhead_Death",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1.35,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "0ab98c9c-f256-4b68-b805-a8907e559ed2"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "06f9f1f8-cf25-4197-b424-e8bf94cec714"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "08ce401a-7b8d-4d00-bac7-e9a293033fc7"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "9576b426-9435-41ad-97ce-ea93665a884b"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "fe062ebd-698a-40a9-9526-13579c05a3b1"
+            }
+          },
+          {
+            "frame": 0.8333333333333334,
+            "value": {
+              "__uuid__": "f3d6c7b8-ed12-41bf-95aa-fe9794030287"
+            }
+          },
+          {
+            "frame": 1,
+            "value": {
+              "__uuid__": "aa86215e-8f2c-47a3-b78b-3cf11751516b"
+            }
+          },
+          {
+            "frame": 1.1666666666666667,
+            "value": {
+              "__uuid__": "e897359e-5e4b-4194-9371-0284efb7b8f9"
+            }
+          },
+          {
+            "frame": 1.3333333333333333,
+            "value": {
+              "__uuid__": "b566cb35-8a43-41d5-9a86-3a450c5baf94"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

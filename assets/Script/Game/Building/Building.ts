@@ -53,6 +53,7 @@ export default class Building extends cc.Component {
     @property(cc.Node)
     rangeNode: cc.Node = null; // 範圍節點
 
+    private canvas: cc.Node = null; // Canvas 節點
 
     target: {
         dist: number,
@@ -81,6 +82,7 @@ export default class Building extends cc.Component {
     }
     
     onLoad(): void {
+        this.canvas = cc.find("Canvas");
         this.node.on(cc.Node.EventType.TOUCH_END, this.showInfoPanel, this);
 
         if (!this.infoPanelNode) {
@@ -187,7 +189,7 @@ export default class Building extends cc.Component {
         // this.infoPanelNode.active = false; 
         // console.log("Info panel added to building node.");
 
-        cc.find("Canvas").addChild(buildingNode); // 將建築物添加到 Canvas 節點下
+        this.canvas.addChild(buildingNode); // 將建築物添加到 Canvas 節點下
         this._buildings.push(buildingNode);
 
 
@@ -296,4 +298,3 @@ export default class Building extends cc.Component {
         return nearestBuilding;
     }
 } 
-

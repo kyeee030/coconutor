@@ -2245,7 +2245,7 @@
       "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
     },
     "_N$disabledSprite": {
-      "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
+      "__uuid__": "bd46ac9e-17b9-4e3e-979c-3f2b81f8cd0b"
     },
     "_N$target": {
       "__id__": 38
@@ -2614,7 +2614,7 @@
       "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
     },
     "_N$disabledSprite": {
-      "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
+      "__uuid__": "bd46ac9e-17b9-4e3e-979c-3f2b81f8cd0b"
     },
     "_N$target": {
       "__id__": 45
@@ -2983,7 +2983,7 @@
       "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
     },
     "_N$disabledSprite": {
-      "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
+      "__uuid__": "bd46ac9e-17b9-4e3e-979c-3f2b81f8cd0b"
     },
     "_N$target": {
       "__id__": 52
@@ -3352,7 +3352,7 @@
       "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
     },
     "_N$disabledSprite": {
-      "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
+      "__uuid__": "bd46ac9e-17b9-4e3e-979c-3f2b81f8cd0b"
     },
     "_N$target": {
       "__id__": 59
@@ -3721,7 +3721,7 @@
       "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
     },
     "_N$disabledSprite": {
-      "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
+      "__uuid__": "bd46ac9e-17b9-4e3e-979c-3f2b81f8cd0b"
     },
     "_N$target": {
       "__id__": 66
@@ -4090,7 +4090,7 @@
       "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
     },
     "_N$disabledSprite": {
-      "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
+      "__uuid__": "bd46ac9e-17b9-4e3e-979c-3f2b81f8cd0b"
     },
     "_N$target": {
       "__id__": 73
@@ -4122,9 +4122,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 88,
+      "g": 75,
+      "b": 75,
       "a": 255
     },
     "_contentSize": {
@@ -4459,7 +4459,7 @@
       "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
     },
     "_N$disabledSprite": {
-      "__uuid__": "25aff871-922f-4d53-a0f2-5a6b7f5c7808"
+      "__uuid__": "bd46ac9e-17b9-4e3e-979c-3f2b81f8cd0b"
     },
     "_N$target": {
       "__id__": 80

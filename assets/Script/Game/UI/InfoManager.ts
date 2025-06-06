@@ -18,6 +18,15 @@ export default class InfoManager extends cc.Component {
     
     @property(cc.Label)
     incidentLabel: cc.Label = null;
+
+    @property(cc.Label)
+    oreLabel: cc.Label = null;
+
+    @property(cc.Label)
+    stoneLabel: cc.Label = null;
+
+    @property(cc.Label)
+    woodLabel: cc.Label = null;
     
     public updateWavesLabel(waves: number): void {
         if (this.waveLabel) {
@@ -47,6 +56,12 @@ export default class InfoManager extends cc.Component {
         } else {
             console.warn("incidentLabel is not set!");
         }
+    }
+
+    public updateResource(woods : number, stones : number, ores : number){
+        this.woodLabel.string = `${woods}`;
+        this.stoneLabel.string = `${stones}`;
+        this.oreLabel.string = `${ores}`;
     }
     
     // private updateLifeIcons(): void {

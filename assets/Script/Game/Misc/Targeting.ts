@@ -35,6 +35,9 @@ export default class Targeting extends cc.Component {
         this.node.height = this._area.radius * 2;
         console.log(`Targeting area radius set to: ${this._area.radius}`);
         this._target = new Set<cc.Node>();
+
+        this.node.on("begin-contact", this.onBeginContact, this);
+        this.node.on("end-contact", this.onEndContact, this);
     }
 
     // start () {
@@ -46,6 +49,7 @@ export default class Targeting extends cc.Component {
     }
 
     onBeginContact (contact, selfCollider, otherCollider) {
+        console.log(`Contact started with: ${otherCollider.node.name}`);
         if (otherCollider.node.group === "Enemy") {
             this._target.add(otherCollider.node);
             console.log(`Target added: ${otherCollider.node.name}`);
@@ -53,6 +57,7 @@ export default class Targeting extends cc.Component {
     }
 
     onEndContact (contact, selfCollider, otherCollider) {
+        console.log(`Contact ended with: ${otherCollider.node.name}`);
         if (otherCollider.node.group === "Enemy") {
             this._target.delete(otherCollider.node);
             console.log(`Target removed: ${otherCollider.node.name}`);

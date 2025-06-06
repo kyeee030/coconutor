@@ -176,8 +176,27 @@ export default class GameController extends cc.Component {
     }
 
     private onBuildingPlaced(event: cc.Event.EventCustom) {
+        cc.log("ggggggggggggggggggggggg");
         if (!this.buildingMode) {
             //console.log("Building mode is not active. Ignoring building placement.");
+            return;
+        }
+        const position = event.getUserData();
+        let grid = this.terrain.getGridInfo(position.x + 2416, position.y + 2416);//{ blockType: string, resourceType: string }
+        if(grid.blockType == 'water' ) {
+            cc.log("Cannot place building on water.");
+            return;
+        };
+        if(this.selectedBuildingType == "sawmill" && grid.resourceType != "tree") {
+            cc.log("Cannot place sawmill on non-tree resource.");
+            return;
+        }
+        if(this.selectedBuildingType == "quarry" && grid.blockType != "stone") {
+            cc.log("Cannot place quarry on non-stone resource.");
+            return;
+        }
+        if(this.selectedBuildingType == "mine" && grid.resourceType != "ore") {
+            cc.log("Cannot place mine on non-ore resource.");
             return;
         }
         console.log("Building placement event received.");

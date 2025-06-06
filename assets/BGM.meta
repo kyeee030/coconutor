@@ -1,0 +1,17 @@
+{
+  "ver": "1.1.3",
+<<<<<<<< HEAD:assets/Texture/Building/Lumberyard.meta
+  "uuid": "4d095689-a498-4788-acd2-52e17d25de00",
+========
+  "uuid": "1360a04d-31a8-4dc9-8d12-d5a6c960902e",
+>>>>>>>> stable:assets/BGM.meta
+  "importer": "folder",
+  "isBundle": false,
+  "bundleName": "",
+  "priority": 1,
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
+  "subMetas": {}
+}

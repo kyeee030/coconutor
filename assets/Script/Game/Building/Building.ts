@@ -1,6 +1,7 @@
 import { EnemyState } from "../Enemy/Enemy";
 import Targeting from "../Misc/Targeting";
 import BuildingInfoPanel from "./BuildingInfoPanel";
+import ResourceSystem from "../Environment/ResourceSystem";
 //TODO 1 : 做一個面板，可以點地圖上的建築，顯示該建築的功能及屬性
 //TODO 1-1 : Name 、 Level 、 HP 
 const {ccclass, property} = cc._decorator;
@@ -45,9 +46,6 @@ export default class Building extends cc.Component {
     @property(cc.Node)
     previewBox: cc.Node = null; // 預覽框節點
 
-    // @property(cc.Prefab)
-    // infoPanel: cc.Prefab = null; 
-
     @property(cc.Prefab)
     bullet: cc.Prefab = null; // 子彈預製體
 
@@ -58,6 +56,9 @@ export default class Building extends cc.Component {
     private mapSize: number = 4800;
     private gridSize: number = 32;
     private map:(string | null)[][] = [];
+
+    private resourceSystem: ResourceSystem = null;
+    _resourceTimer : number = 0;
 
     target: {
         dist: number,
@@ -87,7 +88,7 @@ export default class Building extends cc.Component {
     
     onLoad(): void {
         this.canvas = cc.find("Canvas");
-
+        this.resourceSystem = cc.find("GameController").getComponent(ResourceSystem);
         if (!this.infoPanelNode) {
             console.warn("Info panel node is not initialized yet in onLoad.");
         } else {
@@ -96,6 +97,11 @@ export default class Building extends cc.Component {
     }
 
     init (): void {
+        this._resourceTimer = 0;
+        this._location = {
+            x: this.node.position.x,
+            y: this.node.position.y
+        };
         this.buildingState = BuildingState.IDLE;
         this.hp = HP
         this.damage = DAMAGE;
@@ -114,10 +120,13 @@ export default class Building extends cc.Component {
         this.map = Array.from({ length: gridCount + 200 }, () => Array(gridCount + 200).fill(null)); // 初始化地圖為空
         console.log('gridCount:', gridCount);
 
-        console.log(`A building has been initialized at (${this._location.x}, ${this._location.y})`);
     }
 
     update (dt) {
+        this._resourceTimer += dt;
+        if (this._resourceTimer >= 1) this.updateResouce();
+        this._resourceTimer = this._resourceTimer % 1;
+
         switch (this.buildingState) {
             case BuildingState.IDLE:
             case BuildingState.ATTACK:
@@ -144,11 +153,18 @@ export default class Building extends cc.Component {
     }
 
     onBuildingPlaced(event: cc.Event.EventCustom, buildingRoot: cc.Node, selectedBuildingType: string): void {
-
+        // if(!this.checkEnoughResources()) {
+        //     console.warn(`Not enough resources to build ${selectedBuildingType}.`);
+        //     return;
+        //     // TODO USER INFO
+        // }
         const position = event.getUserData();
-
         const buildingPrefab = this.getPrefabByType(selectedBuildingType);
-
+        this.buildingType = selectedBuildingType;
+        if(!this.checkEnoughResources()) {
+            console.warn(`Not enough resources to build ${selectedBuildingType}.`);
+            return;
+        }
         const buildingNode = cc.instantiate(buildingPrefab);
         buildingNode.setPosition(position.x, position.y);
         this.setBuildingAt(Math.floor((position.x  + 2416) / this.gridSize ), Math.floor((position.y + 2416) / this.gridSize), selectedBuildingType);
@@ -233,6 +249,57 @@ export default class Building extends cc.Component {
         return nearestBuilding;
     }
 
+    updateResouce() {
+        console.log(`Updating resources for building type: ${this.buildingType}`);
+        switch (this.buildingType) {
+            case 'sawmill':
+                this.resourceSystem.addWoods(1);
+                break;
+            case 'quarry':
+                this.resourceSystem.addStones(1);
+                break;
+            case 'mine':
+                this.resourceSystem.addOres(1);
+                break;
+            default:
+                break;
+        }
+    }
+
+    checkEnoughResources(){
+        switch (this.buildingType) {
+            case 'sawmill':
+                if (this.resourceSystem.getWoods() >= 25) this.resourceSystem.addWoods(-25);
+                return this.resourceSystem.getWoods() >= 25;
+            case 'quarry':
+                if( this.resourceSystem.getStones() >= 25) this.resourceSystem.addStones(-25);
+                return this.resourceSystem.getStones() >= 25;
+            case 'mine':
+                if( this.resourceSystem.getOres() >= 10) this.resourceSystem.addOres(-10);
+                return this.resourceSystem.getOres() >= 10;
+            case 'wareHouse':
+                if( this.resourceSystem.getWoods() >= 20 && this.resourceSystem.getStones() >= 10 && this.resourceSystem.getOres() >= 5) {
+                    this.resourceSystem.addWoods(-20);
+                    this.resourceSystem.addStones(-1);
+                    this.resourceSystem.addOres(-5);
+                }
+                return this.resourceSystem.getWoods() >= 20 && this.resourceSystem.getStones() >= 10 && this.resourceSystem.getOres() >= 5;
+            case 'swordTower':
+                if( this.resourceSystem.getWoods() >= 5 && this.resourceSystem.getStones() >= 5 && this.resourceSystem.getOres() >= 5) {
+                    this.resourceSystem.addWoods(-5);
+                    this.resourceSystem.addStones(-5);
+                    this.resourceSystem.addOres(-5);
+                }
+                return this.resourceSystem.getWoods() >= 5 && this.resourceSystem.getStones() >= 5 && this.resourceSystem.getOres() >= 5;
+            case 'turret':
+                if( this.resourceSystem.getWoods() >= 10 && this.resourceSystem.getStones() >= 10 && this.resourceSystem.getOres() >= 10) {
+                    this.resourceSystem.addWoods(-10);
+                    this.resourceSystem.addStones(-10);
+                    this.resourceSystem.addOres(-10);
+                }
+                return this.resourceSystem.getWoods() >= 10 && this.resourceSystem.getStones() >= 10 && this.resourceSystem.getOres() >= 10;
+        }
+    }
     getHurts (damage: number) {
         this.hp -= damage;
         if (this.hp <= 0) {

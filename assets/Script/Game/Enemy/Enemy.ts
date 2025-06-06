@@ -1,6 +1,8 @@
 import { BuildingState } from "../Building/Building";
 import Building from "../Building/Building";
 import PathPlanning from "./Path/PathPlanning";
+import Swordtower from "../Building/SwordTower";
+
 
 const {ccclass, property} = cc._decorator;
 export enum EnemyState {
@@ -49,7 +51,7 @@ export default class Enemy extends cc.Component {
     scaleDirection: number = 1; //if you need :)
 
     _pathPlanning: any;
-    _nextPos: cc.Vec2 = cc.v2(0, 0);
+    _nextPos: cc.Vec2 = null;
     _anim: cc.Animation = null;
 
     _isAttacking: boolean = false; //if you need :)
@@ -60,7 +62,7 @@ export default class Enemy extends cc.Component {
         dist: number,
         pos: cc.Vec2,
         type: BuildingState,
-        tag: null //Index of building or somwthing else
+        script: any // Reference to the building script
     }
 
     onLoad () {
@@ -157,11 +159,17 @@ export default class Enemy extends cc.Component {
             let b_pos = this._pathPlanning.findLocation(building.position.x, building.position.y);
             const bx = b_pos.x;
             const by = b_pos.y;
+
+            let scriptName = 'SwordTower';
+            // if (building instanceof Swordtower) {
+            //     scriptName = 'SwordTower';
+            // }
+
             this.target = {
                 dist: Math.sqrt(Math.pow(x-bx, 2) + Math.pow(y-by, 2)),
                 pos: new cc.Vec2(bx, by),
                 type: null, //or other state
-                tag: null //Index of building or something else
+                script: building.getComponent(`${scriptName}`)
             };
             // cc.log("dist: ",x-bx, y-by, this.target.dist);
         }
@@ -183,11 +191,12 @@ export default class Enemy extends cc.Component {
                 this.checkState(EnemyState.IDLE);
             this.unschedule(this.attackAnimationControl);
         }
-        if((Math.pow(Math.abs(this.node.position.x - this._nextPos.x), 2) + Math.pow(Math.abs(this.node.position.y - this._nextPos.y), 2) < 10))
+        if(!this._nextPos || (Math.pow(Math.abs(this.node.position.x - this._nextPos.x), 2) + Math.pow(Math.abs(this.node.position.y - this._nextPos.y), 2) < 10))
         {
             this._nextPos = this._pathPlanning.findPath(selfpos, this.target.pos);
         }
-        this.move(this._nextPos);
+        if(this._nextPos)
+            this.move(this._nextPos);
     }
 
     move (nextPos: cc.Vec2) { //move
@@ -233,6 +242,10 @@ export default class Enemy extends cc.Component {
 
     attackAnimationControl () {
 
+    }
+
+    createDamage () {
+        this.target.script.getHurts(this.damage);
     }
 }
 

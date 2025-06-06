@@ -81,6 +81,8 @@ export default class PathPlanning extends cc.Component {
     }
 
     findPath(start: cc.Vec2, end: cc.Vec2): cc.Vec2 {  //return the direction
+        cc.log("hi");
+        let dist = Math.abs(start.x - end.x) + Math.abs(start.y - end.y);
         if(start.equals(end)) return new cc.Vec2(this.startPoint.x + start.x * this.pixelSize.x, this.startPoint.y + start.y * this.pixelSize.y);   
         let dir = [
             new cc.Vec2(1, 0),
@@ -92,20 +94,22 @@ export default class PathPlanning extends cc.Component {
             new cc.Vec2(-1, 1),
             new cc.Vec2(-1, -1)
         ];
-        let queue: cc.Vec3[] = [];
+        let queue: cc.Vec4[] = [];
         let visited: boolean[][] = Array.from({ length: this.mapSize.x }, () => Array(this.mapSize.y).fill(false));
         for(let i=0; i< 8; ++i) {
             let it = dir[i];
             let newX = start.x + it.x;
             let newY = start.y + it.y;
             if (this.checkValid(newX, newY) && !visited[newX][newY]) {
-                queue.push(new cc.Vec3(newX, newY, i));
+                queue.push(new cc.Vec4(newX, newY, i, 0));
                 visited[newX][newY] = true;
             }
         }
         while (queue.length > 0) {
             let current = queue.shift();
             if (!current) continue;
+            cc.log(`dist: ${dist}, current: ${current.w}`);
+            if(current.w > dist) return new cc.Vec2(0, 0);
             if (current.x === end.x && current.y === end.y) {
                 return new cc.Vec2(
                     this.startPoint.x + (dir[current.z].x + start.x) * this.pixelSize.x,
@@ -117,7 +121,7 @@ export default class PathPlanning extends cc.Component {
                 let newX = current.x + it.x;
                 let newY = current.y + it.y;
                 if (this.checkValid(newX, newY) && !visited[newX][newY]) {
-                    queue.push(new cc.Vec3(newX, newY, current.z));
+                    queue.push(new cc.Vec4(newX, newY, current.z, current.w+1));
                     visited[newX][newY] = true;
                 }
             }
@@ -152,7 +156,7 @@ export default class PathPlanning extends cc.Component {
         }
         pos = new cc.Vec2(512, 512);
         t = Math.floor(Math.random()*4);
-        if(t == 0) {
+        if(t == 0 || 1) {
             let enemy = cc.instantiate(this.mushroomEnemy);
             enemy.setPosition(pos.x, pos.y, 0);
             this._canvas.addChild(enemy);

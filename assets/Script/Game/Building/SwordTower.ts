@@ -42,18 +42,18 @@ export default class SwordTower extends Building {
     }
 
     update(dt) {
-        switch (this.buildingState) {
-            case BuildingState.IDLE:
-                this.headNode.angle += 1;
-                break;
-            case BuildingState.ATTACK:
-                const targetDirection = cc.v2(this._targetNode.position.x - this.node.position.x,
-                    this._targetNode.position.y - this.node.position.y).normalize();
-                const angle = cc.misc.radiansToDegrees(Math.atan2(targetDirection.y, targetDirection.x));
-                this.headNode.angle = angle;
-                break;
-        }
         super.update(dt);
+        if(this._targetNode) {
+            const targetDirection = cc.v2(this._targetNode.position.x - this.node.position.x,
+            this._targetNode.position.y - this.node.position.y).normalize();
+            const angle = cc.misc.radiansToDegrees(Math.atan2(targetDirection.y, targetDirection.x));
+            this.headNode.angle = angle;
+        } else {
+            this.headNode.angle += 1;
+        }
+        
+        
+        
     }
 
     // onLoad(): void {

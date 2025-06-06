@@ -12,15 +12,13 @@ export default class EndScene extends cc.Component {
     @property(cc.Label)
     nameLabel: cc.Label = null;
 
-    @property(GameController)
-    GameController: GameController = null;
 
     @property(Lobby)
     Lobby: Lobby = null;
 
     start() {
         const scoreStr = cc.sys.localStorage.getItem("lastScore");
-        const score = this.GameController.getScore();
+        const score = scoreStr ? parseInt(scoreStr) : 0;
 
         this.scoreLabel.string = `Your score: ${score}`;
 

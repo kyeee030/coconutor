@@ -164,6 +164,7 @@ export default class GameController extends cc.Component {
         this.gameTime = this.timeSystem.getGameTime();
         if (this.timeSystem.getWaveCount() >= this.GameDuration) {
             console.log("Game duration reached. Ending game.");
+            console.log("wave count: " + this.timeSystem.getWaveCount());
             this.endGame();
         }
     }
@@ -350,7 +351,9 @@ export default class GameController extends cc.Component {
 
     private endGame(){
         console.log("Ending game...");
-        this.score = this.resourceSystem.getWoods() + this.resourceSystem.getStones() + this.resourceSystem.getOres() + 300 - this.gameTime;
+        this.addScore(100);
+        console.log("Final score: " + this.score);
+        cc.sys.localStorage.setItem("lastScore", this.score.toString());
         cc.director.loadScene("EndScene");
     }
     

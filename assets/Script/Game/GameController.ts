@@ -354,7 +354,7 @@ export default class GameController extends cc.Component {
 
     private endGame(){
         console.log("Ending game...");
-        this.addScore(100);
+        this.addScore(this.resourceSystem.getWoods() + this.resourceSystem.getStones() + this.resourceSystem.getOres() + this.timeSystem.getWaveCount() * 10);
         console.log("Final score: " + this.score);
         cc.sys.localStorage.setItem("lastScore", this.score.toString());
         cc.director.loadScene("EndScene");

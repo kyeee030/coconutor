@@ -6844,7 +6844,7 @@
       "__id__": 147
     },
     "_enabled": true,
-    "GameDuration": 20,
+    "GameDuration": 15,
     "InfoManager": {
       "__id__": 11
     },

@@ -16,12 +16,13 @@ export default class Select extends cc.Component {
 
     select_hard(){
         cc.director.loadScene("Game");
-        this.hard = 2;
-        
+        this.hard = 10;
+        cc.sys.localStorage.setItem("hardness", this.hard.toString());
     }
 
     select_soft(){
         cc.director.loadScene("Game");
-        this.hard = 1;
+        this.hard = 3;
+        cc.sys.localStorage.setItem("hardness", this.hard.toString());
     }
 }
